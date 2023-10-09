@@ -1,0 +1,64 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile.oldd                                      :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/03/15 16:29:22 by rleskine          #+#    #+#              #
+#    Updated: 2023/10/09 16:12:34 by rleskine         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+NAME		=	miniRT
+
+SRCDIR		=	src
+SRC			=	minirt.c minirt2.c
+
+OBJDIR		=	obj
+OBJ			=	$(foreach o, $(SRC:.c=.o), $(OBJDIR)/$(o))
+
+#INCLUDE		=	-I include
+#INCLUDE	=	$(foreach i, $(INC), -I ./$(INCDIR)/$(i))
+
+LIB			=	libft
+LIBINC		=	$(foreach l, $(LIB), -I $(l) -L $(l) -l$(l:lib%=%))
+
+INCDIR		=	include
+INCLUDE		=	-I $(INCDIR) $(foreach l, $(LIB), -I $l)
+#LIBS		=	./libft/libft.a ./libftprintf/libftprintf.a
+LIBDIR		=	$(basename $(notdir $(LIBS)))
+#LIBINC		=	$(addprefix -I, $(LIBDIR)) $(addprefix -L, $(LIBDIR))
+#LIBFLAGS	=	-lft -lftprintf
+CFLAGS		=	-Wall -Wextra -Werror
+SFLAGS		=	-fsanitize:address -g
+# -fsanitize=address
+
+CC =	cc
+
+all: $(LIBS) $(NAME)
+
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) $(INCLUDE) $(LIBINC) -o $@ $(OBJ)
+
+$(OBJ): $(OBJDIR)/%.o: $(SRCDIR)/%.c
+	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $(SRCDIR)/$(notdir $(@:.o=.c))
+#$<
+
+$(LIBS): %:
+	$(MAKE) -C $(basename $(notdir $@))
+
+#bonus: $(LIBS)
+#	$(CC) $(CFLAGS) $(INCLUDE) $(LIBFLAGS) -o client ./bonus/client.c
+#	$(CC) $(CFLAGS) $(INCLUDE) $(LIBFLAGS) -o server ./bonus/server.c
+
+clean:
+	$(foreach lib, $(LIBDIR), $(MAKE) -C $(lib) clean;)
+
+fclean: clean
+	$(foreach lib, $(LIBDIR), $(MAKE) -C $(lib) fclean;)
+	/bin/rm -f $(NAME)
+
+re: fclean all
+
+.PHONY: bonus
