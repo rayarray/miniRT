@@ -36,6 +36,7 @@ obj/
 *.dylib
 
 # Executables
+miniRT
 *.exe
 *.out
 *.app

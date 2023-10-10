@@ -6,13 +6,14 @@
 #    By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 16:29:22 by rleskine          #+#    #+#              #
-#    Updated: 2023/10/26 16:23:46 by rleskine         ###   ########.fr        #
+#    Updated: 2023/12/12 11:45:28 by rleskine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	miniRT
 
-SRC			=	minirt.c minirt2.c vector.c camera.c tracer.c scene.c
+SRC			=	minirt.c minirt2.c \
+				ambient_lighting.c
 
 LIBS		=	libft
 
