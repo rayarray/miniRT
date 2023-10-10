@@ -1,0 +1,3 @@
+Tutorial video about implementing polymorphism in C using virtual function
+pointer table:
+https://www.youtube.com/watch?v=2v_qM5SJDlY

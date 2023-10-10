@@ -3,16 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+         #
+#    By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 16:29:22 by rleskine          #+#    #+#              #
-#    Updated: 2023/10/10 11:20:31 by rleskine         ###   ########.fr        #
+#    Updated: 2023/10/10 17:13:50 by tsankola         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	miniRT
 
-SRC			=	minirt.c minirt2.c
+SRC			=	minirt.c minirt2.c \
+				ambient_lighting.c
 
 LIBS		=	libft
 
