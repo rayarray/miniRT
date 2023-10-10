@@ -6,8 +6,10 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:02:44 by rleskine          #+#    #+#             */
-/*   Updated: 2023/10/09 13:16:06 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/10/10 16:12:57 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <stdlib.h>
 
 int	emptyFunction(void);
