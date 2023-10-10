@@ -1,10 +1,14 @@
+# Executable
+miniRT
+
 # MLX
 MLX42/
 
 # Prerequisites
 *.d
 
-# Object files
+# Object files and obj/ dir
+obj/
 *.o
 *.ko
 *.obj

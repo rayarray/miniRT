@@ -6,7 +6,7 @@
 #    By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 16:29:22 by rleskine          #+#    #+#              #
-#    Updated: 2023/10/10 11:20:31 by rleskine         ###   ########.fr        #
+#    Updated: 2023/10/10 15:38:28 by rleskine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,34 +19,46 @@ LIBS		=	libft
 SRCDIR		=	src
 OBJDIR		=	obj
 INCDIR		=	include MLX42/include/MLX42
+LIBFLG		=	-lm
 
-OBJ			=	$(foreach o, $(SRC:.c=.o), $(OBJDIR)/$(o))
-LIBINC		=	$(foreach l, $(LIBS), -I $(l) -L $(l) -l$(l:lib%=%))
-LIBARC		=	$(foreach l, $(LIBS), $(l)/$(l).a)
-INCLUDE		=	$(foreach i, $(INCDIR),-I $(i)) $(foreach l, $(LIBS), -I $l)
+OBJ			=	$(foreach o, $(SRC:.c=.o),$(OBJDIR)/$(o))
+LIBINC		=	$(foreach l, $(LIBS),-I $(l) -L $(l) -l$(l:lib%=%))
+LIBARC		=	$(foreach l, $(LIBS),$(l)/$(l).a)
+INCLUDE		=	$(foreach i, $(INCDIR),-I $(i)) $(foreach l, $(LIBS),-I $l)
 
 CFLAGS		=	-Wall -Wextra -Werror
 SFLAGS		=	-fsanitize:address -g
 
 CC 			=	cc
 
-# ========== MLX42 =========
+# == Determine OS and CPU core count =
+OS := $(shell uname)
+
+ifeq ($(OS),Linux)
+  NPROCS:=$(shell grep -c ^processor /proc/cpuinfo)
+endif
+ifeq ($(OS),Darwin) # Assume Mac OS X
+  NPROCS:=$(shell sysctl hw.ncpu | grep -o '[0-9]\+')
+endif
+# ====================================
+
+# =============== MLX42 ==============
 # libmlx42.a: MLX42/build/libmlx42.a
 # MLX42.h	: MLX42/include/MLX42/MLX42.h
 MLX42		=	-framework Cocoa -framework OpenGL -framework IOKit MLX42/build/libmlx42.a -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
-# ==========================
+# ====================================
 
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBARC)
-	$(CC) $(CFLAGS) $(INCLUDE) $(LIBINC) $(MLX42) -o $@ $(OBJ)
+	$(CC) $(CFLAGS) $(INCLUDE) $(LIBFLG) $(LIBINC) $(MLX42) -o $@ $(OBJ)
 
 $(OBJ): $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@if [ ! -d $(OBJDIR) ]; then mkdir $(OBJDIR); fi
 	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $(SRCDIR)/$(notdir $(@:.o=.c))
 
 $(LIBARC): %:
-	$(MAKE) -j4 -C $(basename $(notdir $@))
+	$(MAKE) -j$(NPROCS) -C $(basename $(notdir $@))
 
 clean:
 	$(foreach l, $(LIBS),$(MAKE) -C $(l) clean;)
