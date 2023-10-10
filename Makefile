@@ -6,7 +6,7 @@
 #    By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 16:29:22 by rleskine          #+#    #+#              #
-#    Updated: 2023/10/09 16:57:30 by rleskine         ###   ########.fr        #
+#    Updated: 2023/10/10 11:20:31 by rleskine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,22 +18,28 @@ LIBS		=	libft
 
 SRCDIR		=	src
 OBJDIR		=	obj
-INCDIR		=	include
+INCDIR		=	include MLX42/include/MLX42
 
 OBJ			=	$(foreach o, $(SRC:.c=.o), $(OBJDIR)/$(o))
 LIBINC		=	$(foreach l, $(LIBS), -I $(l) -L $(l) -l$(l:lib%=%))
 LIBARC		=	$(foreach l, $(LIBS), $(l)/$(l).a)
-INCLUDE		=	-I $(INCDIR) $(foreach l, $(LIBS), -I $l)
+INCLUDE		=	$(foreach i, $(INCDIR),-I $(i)) $(foreach l, $(LIBS), -I $l)
 
 CFLAGS		=	-Wall -Wextra -Werror
 SFLAGS		=	-fsanitize:address -g
 
 CC 			=	cc
 
+# ========== MLX42 =========
+# libmlx42.a: MLX42/build/libmlx42.a
+# MLX42.h	: MLX42/include/MLX42/MLX42.h
+MLX42		=	-framework Cocoa -framework OpenGL -framework IOKit MLX42/build/libmlx42.a -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
+# ==========================
+
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBARC)
-	$(CC) $(CFLAGS) $(INCLUDE) $(LIBINC) -o $@ $(OBJ)
+	$(CC) $(CFLAGS) $(INCLUDE) $(LIBINC) $(MLX42) -o $@ $(OBJ)
 
 $(OBJ): $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@if [ ! -d $(OBJDIR) ]; then mkdir $(OBJDIR); fi
