@@ -1,12 +1,20 @@
-# Ambient lighting: identifier | ambient lighting ratio | colors (RGB)
+# Ambient lighting: type identifier | ambient lighting ratio | colors (RGB)
 A	0.2	255,255,255
-# Camera: identifier | xyz coordinates | orientation vector | FOV
+# Camera: type identifier | xyz coordinates | orientation vector | FOV
 C	-50.0,0,20	0,0,1	70
-# Light: identifier | xyz coordinates | brightness ratio | colors (RGB)
-L	-40.0,50.0,0.0	0.610,0,255
-# Sphere: identifier | xyz coordinates | diameter | colors (RGB)
+# Light: type identifier | xyz coordinates | brightness ratio | colors (RGB)
+L	-40.0,50.0,0.0	0.6	10,0,255
+# Sphere: type identifier | xyz coordinates | diameter | colors (RGB)
 sp	0.0,0.0,20.6	12.6	10,0,255
-# Plane: identifier | xyz coordinates of a point | normal vector | colors (RGB)
+# Plane: type identifier | xyz coordinates of a point | normal vector | colors (RGB)
 pl	0.0,0.0,-10.0	0.0,1.0,0.0	0,0,225
-# Cylinder: identifer | xyz coordinates | vector of axis of cylinder | diameter | height | colors (RGB)
+# Cylinder: type identifer | xyz coordinates | vector of axis of cylinder | diameter | height | colors (RGB)
 cy	50.0,0.0,20.6	0.0,0.0,1.0	14.2	21.42	10,0,255
+
+
+#A	double	t_color
+#C	t_vector	t_vector(unit)	int
+#L	t_vector	double	t_color
+#sp	t_vector	double	t_color
+#pl	t_vector	t_vector	t_color
+#cy	t_vector	t_vector	double	double	t_color

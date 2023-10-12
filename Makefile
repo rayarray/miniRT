@@ -6,14 +6,14 @@
 #    By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 16:29:22 by rleskine          #+#    #+#              #
-#    Updated: 2023/12/12 11:45:28 by rleskine         ###   ########.fr        #
+#    Updated: 2023/12/12 11:47:33 by rleskine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	miniRT
+NAME		=	miniRT_parser
 
-SRC			=	minirt.c minirt2.c \
-				ambient_lighting.c
+SRC			=	get_next_line.c get_next_line_utils.c line_parser.c \
+				parser_utilities.c scene_reader.c
 
 LIBS		=	libft
 
