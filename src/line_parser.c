@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:01:09 by tsankola          #+#    #+#             */
-/*   Updated: 2023/10/12 23:54:35 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/10/12 23:58:51 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,5 @@ int main(int argc, char *argv[])
 {
 	if (argc == 2)
 		printf("%f\n", atof(argv[1]));
-	printf("%d\n", 1234567890123456789.1);
 	return (0);
 }

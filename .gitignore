@@ -37,6 +37,7 @@ obj/
 
 # Executables
 miniRT
+miniRT*
 *.exe
 *.out
 *.app
