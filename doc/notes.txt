@@ -1,3 +1,24 @@
-Tutorial video about implementing polymorphism in C using virtual function
-pointer table:
+Tutorial videos about implementing polymorphism and inheritance in C using
+virtual function pointer table:
+https://www.youtube.com/watch?v=oS3a7wn9P_s
 https://www.youtube.com/watch?v=2v_qM5SJDlY
+Whole course:
+https://www.state-machine.com/video-course
+
+Allowed functions:
+
+fcntl
+	open
+
+unistd
+	close, read, write
+
+stdio
+	printf, perror, strerror
+
+stdlib
+	malloc, free, exit
+
+All functions of the mathlibrary (-lm man man 3 math)
+
+All functions of the MinilibX

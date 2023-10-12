@@ -6,41 +6,35 @@
 #    By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 16:29:22 by rleskine          #+#    #+#              #
-#    Updated: 2023/10/10 17:13:50 by tsankola         ###   ########.fr        #
+#    Updated: 2023/10/12 23:36:04 by tsankola         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	miniRT
+NAME		=	miniRT_parser
 
-SRC			=	minirt.c minirt2.c \
-				ambient_lighting.c
+SRC			=	get_next_line.c get_next_line_utils.c line_parser.c \
+				parser_utilities.c scene_reader.c
 
 LIBS		=	libft
 
 SRCDIR		=	src
 OBJDIR		=	obj
-INCDIR		=	include MLX42/include/MLX42
+INCDIR		=	include libft
 
 OBJ			=	$(foreach o, $(SRC:.c=.o), $(OBJDIR)/$(o))
 LIBINC		=	$(foreach l, $(LIBS), -I $(l) -L $(l) -l$(l:lib%=%))
 LIBARC		=	$(foreach l, $(LIBS), $(l)/$(l).a)
-INCLUDE		=	$(foreach i, $(INCDIR),-I $(i)) $(foreach l, $(LIBS), -I $l)
+INCLUDE		=	$(foreach i, $(INCDIR),-I $(i))
 
 CFLAGS		=	-Wall -Wextra -Werror
 SFLAGS		=	-fsanitize:address -g
 
 CC 			=	cc
 
-# ========== MLX42 =========
-# libmlx42.a: MLX42/build/libmlx42.a
-# MLX42.h	: MLX42/include/MLX42/MLX42.h
-MLX42		=	-framework Cocoa -framework OpenGL -framework IOKit MLX42/build/libmlx42.a -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
-# ==========================
-
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBARC)
-	$(CC) $(CFLAGS) $(INCLUDE) $(LIBINC) $(MLX42) -o $@ $(OBJ)
+	$(CC) $(CFLAGS) $(INCLUDE) $(LIBINC) -o $@ $(OBJ)
 
 $(OBJ): $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@if [ ! -d $(OBJDIR) ]; then mkdir $(OBJDIR); fi
