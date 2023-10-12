@@ -33,6 +33,7 @@ MLX42/
 
 # Executables
 miniRT
+miniRT*
 *.exe
 *.out
 *.app

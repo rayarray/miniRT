@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 21:00:37 by tsankola          #+#    #+#             */
-/*   Updated: 2023/10/12 23:51:10 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/10/12 23:58:34 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int	skip_whitespace(const char **cptr)
 
 double	rt_atof(const char *a)
 {
-	const char	*c;
-	double		f;
-	int			sign;
-	long int	fractions;
+	const char			*c;
+	double				f;
+	int					sign;
+	unsigned long int	fractions;
 
 	fractions = 10;
 	c = a;
@@ -46,7 +46,7 @@ double	rt_atof(const char *a)
 	while (ft_isdigit(*c))
 	{
 		f = f + sign * ((double)(*c - '0')) / fractions;
-		fractions *= 10;						// long overflow possible
+		fractions *= 10;
 	}
 	return (f);
 }
