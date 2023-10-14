@@ -6,11 +6,11 @@
 #    By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 16:29:22 by rleskine          #+#    #+#              #
-#    Updated: 2023/10/14 20:30:39 by tsankola         ###   ########.fr        #
+#    Updated: 2023/10/14 20:54:14 by tsankola         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	miniRT_parser
+NAME		=	miniRT
 
 PARSER		=	get_next_line.c get_next_line_utils.c line_parser.c \
 				parser_utilities.c scene_reader.c rt_split.c rt_conversions.c
