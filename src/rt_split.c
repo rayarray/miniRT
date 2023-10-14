@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 13:19:38 by tsankola          #+#    #+#             */
-/*   Updated: 2023/10/14 13:35:35 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/10/14 19:36:16 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ static int	rt_splitfree(char **s)
 	return (1);
 }
 
+// Like ft_split but can have multiple different characters as delimiters
 char	**rt_split(char const *s, const char *c)
 {
 	size_t	pos;
