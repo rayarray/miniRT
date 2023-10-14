@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:01:09 by tsankola          #+#    #+#             */
-/*   Updated: 2023/10/12 23:58:51 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/10/14 13:36:20 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,12 @@ struct s_element		*parse_line(const char *line)
 	const char				*cptr;
 	struct s_element	*elemptr;
 	t_element_type		etype;
+	char	*args;
 
 	cptr = line;
 	while (*cptr != '\0')
 	{
+		args = rt_split(line, " \t|;");
 		skip_whitespace(&cptr);
 		etype = get_type_and_advance(&cptr);
 		elemptr = element_factory(etype);

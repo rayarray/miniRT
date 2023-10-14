@@ -1,38 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_typedef.h                                       :+:      :+:    :+:   */
+/*   elem_ambient_lighting.h                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 16:45:14 by tsankola          #+#    #+#             */
-/*   Updated: 2023/10/13 22:51:25 by tsankola         ###   ########.fr       */
+/*   Created: 2023/10/14 13:09:16 by tsankola          #+#    #+#             */
+/*   Updated: 2023/10/14 13:12:34 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RT_TYPEDEF_H
-# define RT_TYPEDEF_H
+#ifdef ELEM_AMBIENT_LIGHTING_H
+# define ELEM_AMBIENT_LIGHTING_H
+# include "rt_typedef.h"
+# include "element.h"
 
-typedef struct s_color
+struct s_ambient_lighting
 {
-	unsigned char	red;
-	unsigned char	green;
-	unsigned char	blue;
-}	t_color;
-
-/* // Vector == point in this project, right?
-typedef struct s_coord
-{
-	double	x;
-	double	y;
-	double	z;
-}	t_coord; */
-
-typedef struct s_vector
-{
-	double	x;
-	double	y;
-	double	z;
-}	t_vector;
+	struct s_element		base;
+	double					lighting_ratio;
+	t_color					color;
+};
 
 #endif

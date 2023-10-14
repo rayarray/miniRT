@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 17:02:32 by tsankola          #+#    #+#             */
-/*   Updated: 2023/10/12 23:51:10 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/10/14 13:35:50 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ static const char	*valid_element_ids[7] = {"A", "C", "L", "sp", "pl", "cy", NULL
 struct s_element
 {
 	t_element_type	type;
+	// Insert vtable here with at least: constructor, destructor
 };
+
+static const struct s_element *(*element_ators[e_NAE])(const char **args);	// dynamic array?
 
 struct s_ambient_lighting
 {
@@ -98,6 +101,7 @@ int		rt_realloc(unsigned char **buf, size_t *bufsize, int factor);
 char	**alloc_lines(size_t arraysize, size_t linesize);
 double	rt_atof(const char *a);
 int		skip_whitespace(const char **cptr);
+char	**rt_split(char const *s, const char *c);
 
 // Line_parser.c
 struct s_element	*parse_lines(const char **lines);

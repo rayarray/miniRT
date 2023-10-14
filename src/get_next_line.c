@@ -6,11 +6,12 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:01:39 by tsankola          #+#    #+#             */
-/*   Updated: 2023/10/12 21:45:41 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/10/14 12:58:57 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <stdint.h>
 #include "get_next_line.h"
 
 static void	del_reader(t_reader *reader)
