@@ -12,9 +12,9 @@ pl	0.0,0.0,-10.0	0.0,1.0,0.0	0,0,225
 cy	50.0,0.0,20.6	0.0,0.0,1.0	14.2	21.42	10,0,255
 
 
-#A	double	t_color
-#C	t_vector	t_vector(unit)	int
-#L	t_vector	double	t_color
-#sp	t_vector	double	t_color
-#pl	t_vector	t_vector	t_color
-#cy	t_vector	t_vector	double	double	t_color
+	A	double	t_color
+C	t_vector	t_vector(unit)	int
+L	t_vector	double	t_color
+sp	t_vector	double	t_color
+pl	t_vector	t_vector	t_color
+cy	t_vector	t_vector	double	double	t_color garbage

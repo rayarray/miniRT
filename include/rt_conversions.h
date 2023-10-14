@@ -1,38 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_typedef.h                                       :+:      :+:    :+:   */
+/*   rt_conversions.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 16:45:14 by tsankola          #+#    #+#             */
-/*   Updated: 2023/10/14 19:34:08 by tsankola         ###   ########.fr       */
+/*   Created: 2023/10/14 19:55:32 by tsankola          #+#    #+#             */
+/*   Updated: 2023/10/14 20:30:54 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RT_TYPEDEF_H
-# define RT_TYPEDEF_H
+#ifndef RT_CONVERTERS_H
+# define RT_CONVERTERS_H
+# include "rt_typedef.h"
+# include "element.h"
+# include "libft.h"
 
-typedef struct s_color
-{
-	unsigned char	red;
-	unsigned char	green;
-	unsigned char	blue;
-}	t_color;
-
-/* // Vector == point in this project, right?
-typedef struct s_coord
-{
-	double	x;
-	double	y;
-	double	z;
-}	t_coord; */
-
-typedef struct s_vector
-{
-	double	x;
-	double	y;
-	double	z;
-}	t_vector;
+// String conversions
+t_element_type	rt_atoetype(const char *a);
+double			rt_atof(const char *a);
+t_vector		rt_atovec(const char *a);
+t_color			rt_atocol(const char *a);
+int				rt_atofov(const char *a);
+t_vector		rt_atonorm(const char *a);
+double			rt_atolight(const char *a);
 
 #endif
