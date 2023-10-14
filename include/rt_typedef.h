@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:45:14 by tsankola          #+#    #+#             */
-/*   Updated: 2023/10/14 19:34:08 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/10/14 20:51:57 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,6 @@ typedef struct s_color
 	unsigned char	green;
 	unsigned char	blue;
 }	t_color;
-
-/* // Vector == point in this project, right?
-typedef struct s_coord
-{
-	double	x;
-	double	y;
-	double	z;
-}	t_coord; */
 
 typedef struct s_vector
 {

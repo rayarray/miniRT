@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:01:09 by tsankola          #+#    #+#             */
-/*   Updated: 2023/10/14 20:45:06 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/10/14 20:50:49 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ int	parse_line(const char *line, struct s_element_base *elem)
 	return (0);
 }
 
-
-int main(int argc, char *argv[])
+/* int main(int argc, char *argv[])
 {
 	struct s_element_base	*bases;
 	if (argc == 2)
@@ -58,4 +57,4 @@ int main(int argc, char *argv[])
 		bases = get_scene(argv[1]);
 	}
 	return (0);
-}
+} */
