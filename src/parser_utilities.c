@@ -6,14 +6,14 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 21:00:37 by tsankola          #+#    #+#             */
-/*   Updated: 2023/10/12 23:58:34 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/10/14 13:39:16 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
 int	skip_whitespace(const char **cptr)
-{
+{	// REDUNDANT
 	int	n;
 
 	n = 0;
@@ -90,7 +90,7 @@ int	rt_realloc(unsigned char **buf, size_t *bufsize, int factor)
 }
 
 char	**alloc_lines(size_t arraysize, size_t linesize)
-{
+{	// REDUNDANT
 	char	**lines;
 	int		i;
 
