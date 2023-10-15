@@ -6,14 +6,15 @@
 #    By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 16:29:22 by rleskine          #+#    #+#              #
-#    Updated: 2023/12/12 11:49:10 by rleskine         ###   ########.fr        #
+#    Updated: 2023/12/12 11:49:47 by rleskine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	miniRT_parser
 
 PARSER		=	get_next_line.c get_next_line_utils.c line_parser.c \
-				parser_utilities.c scene_reader.c rt_split.c rt_conversions.c
+				parser_utilities.c scene_reader.c rt_split.c rt_conversions.c \
+				rt_math.c rt_validations.c
 
 SRC			=	$(PARSER)
 
