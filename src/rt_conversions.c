@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 19:56:43 by tsankola          #+#    #+#             */
-/*   Updated: 2023/10/14 20:32:05 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/10/15 19:02:00 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ double	rt_atof(const char *a)
 }
 
 t_vector	rt_atovec(const char *a)
-{	// TODO check against malformed input
+{
 	t_vector	vec;
 
 	vec.x = rt_atof(a);
@@ -81,7 +81,7 @@ t_vector	rt_atovec(const char *a)
 }
 
 t_color	rt_atocol(const char *a)
-{	// TODO check against malformed input
+{
 	t_color	col;
 
 	col.red = (unsigned char)atoi(a);
@@ -90,48 +90,4 @@ t_color	rt_atocol(const char *a)
 	a = ft_strchr(a, ',');
 	col.blue = (unsigned char)atoi(++a);
 	return (col);
-}
-
-int	rt_atofov(const char *a)
-{	// TODO check against malformed input
-	int	fov;
-
-	fov = atoi(a);
-	if (fov > 180)
-		fov = 180;
-	if (fov < 0)
-		fov = 0;
-	return (fov);
-}
-
-t_vector	rt_atonorm(const char *a)
-{	// TODO check against malformed input
-	t_vector	norm;
-
-	norm = rt_atovec(a);
-	if (norm.x > 1.0)
-		norm.x = 1.0;
-	if (norm.y > 1.0)
-		norm.y = 1.0;
-	if (norm.y > 1.0)
-		norm.y = 1.0;
-	if (norm.x < -1.0)
-		norm.x = -1.0;
-	if (norm.y < -1.0)
-		norm.y = -1.0;
-	if (norm.y < -1.0)
-		norm.y = -1.0;
-	return (norm);
-}
-
-double	rt_atolight(const char *a)
-{	// TODO check against malformed input
-	double	light;
-
-	light = rt_atof(a);
-	if (light > 1.0)
-		light = 1.0;
-	if (light < -1.0)
-		light = -1.0;
-	return (light);
 }
