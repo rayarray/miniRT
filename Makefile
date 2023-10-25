@@ -6,13 +6,13 @@
 #    By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 16:29:22 by rleskine          #+#    #+#              #
-#    Updated: 2023/10/10 15:38:28 by rleskine         ###   ########.fr        #
+#    Updated: 2023/10/25 17:13:21 by rleskine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	miniRT
 
-SRC			=	minirt.c minirt2.c
+SRC			=	minirt.c minirt2.c vector.c
 
 LIBS		=	libft
 
@@ -61,13 +61,13 @@ $(LIBARC): %:
 	$(MAKE) -j$(NPROCS) -C $(basename $(notdir $@))
 
 clean:
-	$(foreach l, $(LIBS),$(MAKE) -C $(l) clean;)
-	$(foreach o, $(OBJ),rm $(o);)
-	rmdir $(OBJDIR)
+	@$(foreach l, $(LIBS),$(MAKE) -C $(l) clean;)
+	@rm -f $(foreach o, $(OBJ),$(o))
+	@if [ -d $(OBJDIR) ]; then rmdir $(OBJDIR); fi
 
 fclean: clean
-	$(foreach l, $(LIBS),$(MAKE) -C $(l) fclean;)
-	/bin/rm -f $(NAME)
+	@$(foreach l, $(LIBS),$(MAKE) -C $(l) fclean;)
+	@if [ -f $(NAME) ]; then /bin/rm $(NAME); fi
 
 re: fclean all
 

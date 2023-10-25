@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:36:12 by rleskine          #+#    #+#             */
-/*   Updated: 2023/10/10 13:27:36 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/10/25 14:55:49 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "MLX42.h"
 #include "libft.h"
 #include "minirt.h"
+#include "vector.h"
 
 #define WIDTH	512
 #define HEIGHT	512
@@ -50,7 +51,7 @@ void	ft_hook(void *param)
 	mlx_t* mlx = param;
 
 	(void)param;
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
+	if (mlx_is_key_down(mlx, MLX_KEY_ENTER))
 		mlx_close_window(mlx);
 	if (mlx_is_key_down(mlx, MLX_KEY_UP))
 		image->instances[0].y -= 5;
@@ -65,7 +66,14 @@ void	ft_hook(void *param)
 int	main(void)
 {
 	mlx_t		*mlx;
+	t_vec		v1;
+	t_vec		v2;
+	t_vec		v3;
 
+	v1 = vecInit(10, 10, 10);
+	v2 = vecInit(-5, -5, -5);
+	v3 = vecAdd(v1, v2);
+	printf("x%f y%f z%f\n", v3.x, v3.y, v3.z);
 	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
 	{
 		puts(mlx_strerror(mlx_errno));
