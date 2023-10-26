@@ -6,13 +6,13 @@
 #    By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 16:29:22 by rleskine          #+#    #+#              #
-#    Updated: 2023/10/25 17:13:21 by rleskine         ###   ########.fr        #
+#    Updated: 2023/10/26 16:23:46 by rleskine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	miniRT
 
-SRC			=	minirt.c minirt2.c vector.c
+SRC			=	minirt.c minirt2.c vector.c camera.c tracer.c scene.c
 
 LIBS		=	libft
 

@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:36:12 by rleskine          #+#    #+#             */
-/*   Updated: 2023/10/25 14:55:49 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/10/26 18:08:49 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "libft.h"
 #include "minirt.h"
 #include "vector.h"
+#include "camera.h"
 
 #define WIDTH	512
 #define HEIGHT	512
@@ -44,6 +45,8 @@ void	ft_randomize(void *param)
 			mlx_put_pixel(image, i, y, color);
 		}
 	}
+	for (int32_t i = 0; i < (int)image->width; i++)
+		mlx_put_pixel(image, 256, i, ft_pixel(0xFF, 0xFF, 0xFF, 0xFF));
 }
 
 void	ft_hook(void *param)
@@ -69,17 +72,19 @@ int	main(void)
 	t_vec		v1;
 	t_vec		v2;
 	t_vec		v3;
+	t_ray		center;
+	t_camera	camera;
 
 	v1 = vecInit(10, 10, 10);
 	v2 = vecInit(-5, -5, -5);
 	v3 = vecAdd(v1, v2);
-	printf("x%f y%f z%f\n", v3.x, v3.y, v3.z);
+	//printf("x%f y%f z%f\n", v3.x, v3.y, v3.z);
 	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
 	{
 		puts(mlx_strerror(mlx_errno));
 		return (EXIT_FAILURE);
 	}
-	if (!(image = mlx_new_image(mlx, 128, 128)))
+	if (!(image = mlx_new_image(mlx, 512, 512)))
 	{
 		mlx_close_window(mlx);
 		puts(mlx_strerror(mlx_errno));
@@ -91,7 +96,12 @@ int	main(void)
 		puts(mlx_strerror(mlx_errno));
 		return (EXIT_FAILURE);
 	}
-	mlx_loop_hook(mlx, ft_randomize, mlx);
+	center = (t_ray){(t_point){0, 0, 0}, (t_vec){0, 0, 0}};
+	camera = initCamera(image, 90, NULL, center);
+	//printf("camera asp ratio %f\n", camera.aspect_ratio);
+	printf("camera pixel00_loc x%f y%f z%f\n", camera.pixel00_loc.x, camera.pixel00_loc.y, camera.pixel00_loc.z);
+	renderCamera(image, camera);
+	//mlx_loop_hook(mlx, ft_randomize, mlx);
 	mlx_loop_hook(mlx, ft_hook, mlx);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
