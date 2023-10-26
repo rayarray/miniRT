@@ -63,5 +63,6 @@ dkms.conf
 # Temp files
 *~
 
-# Vscode
+# vscode etc.
 .vscode
+.DS_Store
