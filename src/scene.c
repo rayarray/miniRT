@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:23:22 by rleskine          #+#    #+#             */
-/*   Updated: 2023/10/26 17:45:54 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/10/26 19:04:03 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,8 @@ int	hitSphere(const t_vec center, double radius, const t_ray ray)
 	b = 2.0 * vecDot(oc, ray.destination);
 	c = vecDot(oc, oc) - radius * radius;
 	discriminant = b * b - (4 * a * c);
-	return (discriminant >= 0);
+	if (discriminant >= 0)
+		return (1);
+	else
+		return (0);
 }

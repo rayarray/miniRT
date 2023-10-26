@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:17:25 by rleskine          #+#    #+#             */
-/*   Updated: 2023/10/26 18:08:05 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/10/26 19:09:29 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,34 +16,59 @@
 #include "camera.h"
 #include "tracer.h"
 
+// t_camera	initCamera(mlx_image_t *image, int fov, void *scene, t_ray center)
+// {
+// 	t_camera	c;
+
+// 	c.fov = fov;
+// 	c.image_width = image->width;
+// 	c.aspect_ratio = image->height / image->width;
+// 	ft_printf("aspectratio %f\n", c.aspect_ratio);
+// 	c.focal_length = 1;
+// 	c.scene = scene;
+// 	c.center = center;
+// 	c.viewport_height = 2.0;
+// 	c.viewport_width = c.viewport_height
+// 		* ((double)(image->width) / image->height);
+// 	//c.viewport_u = vecAdd(c.center.destination,
+// 	//		vecInit(c.viewport_width, 0, 0));
+// 	c.viewport_u = vecInit(c.viewport_width, 0, 0);
+// 	//c.viewport_v = vecAdd(c.center.destination,
+// 	//		vecInit(0, -c.viewport_height, 0));
+// 	c.viewport_v = vecInit(0, -c.viewport_height, 0);
+// 	c.pixel_delta_u = vecDiv(c.viewport_u, image->width);
+// 	c.pixel_delta_v = vecDiv(c.viewport_v, image->height);
+// 	c.viewport_uv_half = vecDiv(vecAdd(c.viewport_u, c.viewport_v), 2);
+// 	c.viewport_upper_left = vecSub(c.center.destination, c.viewport_uv_half);
+// 	//c.viewport_upper_left = vecSub(c.center.destination, vecSub(
+// 	//			vecInit(c.focal_length, 0, 0), c.viewport_uv_half));
+// 	c.pixel00_loc = vecAdd(c.viewport_upper_left, vecMul(
+// 				vecAdd(c.pixel_delta_u, c.pixel_delta_v), 0.5));
+// 	return (c);
+// }
+
 t_camera	initCamera(mlx_image_t *image, int fov, void *scene, t_ray center)
 {
 	t_camera	c;
 
 	c.fov = fov;
 	c.image_width = image->width;
-	c.aspect_ratio = image->height / image->width;
-	ft_printf("aspectratio %f\n", c.aspect_ratio);
+	c.aspect_ratio = (double)image->width / image->height;
 	c.focal_length = 1;
 	c.scene = scene;
-	c.center = center;
 	c.viewport_height = 2.0;
 	c.viewport_width = c.viewport_height
 		* ((double)(image->width) / image->height);
-	//c.viewport_u = vecAdd(c.center.destination,
-	//		vecInit(c.viewport_width, 0, 0));
 	c.viewport_u = vecInit(c.viewport_width, 0, 0);
-	//c.viewport_v = vecAdd(c.center.destination,
-	//		vecInit(0, -c.viewport_height, 0));
 	c.viewport_v = vecInit(0, -c.viewport_height, 0);
 	c.pixel_delta_u = vecDiv(c.viewport_u, image->width);
 	c.pixel_delta_v = vecDiv(c.viewport_v, image->height);
-	c.viewport_uv_half = vecDiv(vecAdd(c.viewport_u, c.viewport_v), 2);
-	c.viewport_upper_left = vecSub(c.center.destination, c.viewport_uv_half);
-	//c.viewport_upper_left = vecSub(c.center.destination, vecSub(
-	//			vecInit(c.focal_length, 0, 0), c.viewport_uv_half));
-	c.pixel00_loc = vecAdd(c.viewport_upper_left, vecMul(
-				vecAdd(c.pixel_delta_u, c.pixel_delta_v), 0.5));
+	//c.viewport_uv_half = vecDiv(vecAdd(c.viewport_u, c.viewport_v), 2);
+	c.viewport_upper_left = vecSub(center.origin, vecInit(0, 0, c.focal_length));
+	c.viewport_upper_left = vecSub(c.viewport_upper_left, vecDiv(c.viewport_u, 2));
+	c.viewport_upper_left = vecSub(c.viewport_upper_left, vecDiv(c.viewport_v, 2));
+	c.pixel00_loc = vecAdd(c.viewport_upper_left,
+			vecMul(vecAdd(c.pixel_delta_u, c.pixel_delta_v), 0.5));
 	return (c);
 }
 
