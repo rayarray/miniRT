@@ -6,15 +6,15 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:01:09 by tsankola          #+#    #+#             */
-/*   Updated: 2023/10/14 20:45:06 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/08 21:28:16 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-/* static struct s_element	*element_factory(t_element_type etype)
+/* static struct s_elem	*element_factory(t_elem_type etype)
 {
-	struct s_element	*e;
+	struct s_elem	*e;
 
 	e = NULL;
 	if (etype == e_AMBIENT_LIGHTING)
@@ -34,7 +34,7 @@
 	return (e);
 } */
 
-int	parse_line(const char *line, struct s_element_base *elem)
+int	parse_line(const char *line, struct s_elem_base *elem)
 {
 	char	**args;
 
@@ -52,7 +52,7 @@ int	parse_line(const char *line, struct s_element_base *elem)
 
 int main(int argc, char *argv[])
 {
-	struct s_element_base	*bases;
+	struct s_elem_base	*bases;
 	if (argc == 2)
 	{
 		bases = get_scene(argv[1]);

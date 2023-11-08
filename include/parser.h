@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 17:02:32 by tsankola          #+#    #+#             */
-/*   Updated: 2023/10/14 20:45:06 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/08 21:28:16 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@
 
 static const char	delims[3] = " \t";
 
-struct s_element_base
+struct s_elem_base
 {
-	t_element_type	type;
-	char	**args;
+	t_elem_type	type;
+	char		**args;
 };
 
 // Scene_reader.c
-struct s_element_base	*get_scene(const char *filename);
+struct s_elem_base	*get_scene(const char *filename);
 
 // Utility functions
 char	**free_strarray(char ***array);
@@ -41,6 +41,6 @@ int		rt_realloc(unsigned char **buf, size_t *bufsize, int factor);
 char	**rt_split(char const *s, const char *c);
 
 // Line_parser.c
-int	parse_line(const char *line, struct s_element_base *elem);
+int	parse_line(const char *line, struct s_elem_base *elem);
 
 #endif
