@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   elem_light.h                                       :+:      :+:    :+:   */
+/*   light.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/14 13:10:48 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/08 21:24:17 by tsankola         ###   ########.fr       */
+/*   Created: 2023/11/08 18:15:12 by tsankola          #+#    #+#             */
+/*   Updated: 2023/11/08 18:16:56 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ELEM_LIGHT_H
-# define ELEM_LIGHT_
-# include "rt_typedef.h"
-# include "element.h"
+#ifndef LIGHT_H
+# define LIGHT_H
 
-struct s_light
+typedef struct s_light
 {
-	struct s_elem		base;
-	t_vector				pos;
-	double					brightness;
-	t_color					color;
-};
+
+}	t_light;
 
 #endif

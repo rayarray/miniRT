@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   elem_light.h                                       :+:      :+:    :+:   */
+/*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/14 13:10:48 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/08 21:24:17 by tsankola         ###   ########.fr       */
+/*   Created: 2023/10/25 16:42:12 by rleskine          #+#    #+#             */
+/*   Updated: 2023/10/25 16:55:17 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ELEM_LIGHT_H
-# define ELEM_LIGHT_
-# include "rt_typedef.h"
-# include "element.h"
+#include "ray.h"
 
-struct s_light
+t_point	rayPoint(t_ray r, double distance)
 {
-	struct s_elem		base;
-	t_vector				pos;
-	double					brightness;
-	t_color					color;
-};
-
-#endif
+	return (vecAdd(r.origin,
+			vecMul(r.destination, vecInit(distance, distance, distance))));
+}

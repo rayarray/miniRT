@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 19:56:43 by tsankola          #+#    #+#             */
-/*   Updated: 2023/10/15 19:02:00 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/08 21:24:55 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	skip_whitespace(const char **cptr)
 	return (n);
 }
 
-t_element_type	rt_atoetype(const char *a)
+t_elem_type	rt_atoetype(const char *a)
 {
 	int	i;
 	int	len;
@@ -39,7 +39,7 @@ t_element_type	rt_atoetype(const char *a)
 			&& ft_strchr(" \t", *(a + len)))
 			break ;
 	}
-	return ((t_element_type)i);
+	return ((t_elem_type)i);
 }
 
 double	rt_atof(const char *a)

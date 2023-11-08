@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   elem_light.h                                       :+:      :+:    :+:   */
+/*   tracer.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/14 13:10:48 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/08 21:24:17 by tsankola         ###   ########.fr       */
+/*   Created: 2023/10/26 16:00:55 by rleskine          #+#    #+#             */
+/*   Updated: 2023/10/26 16:56:28 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ELEM_LIGHT_H
-# define ELEM_LIGHT_
-# include "rt_typedef.h"
-# include "element.h"
+#ifndef TRACER_H
+# define TRACER_H
 
-struct s_light
-{
-	struct s_elem		base;
-	t_vector				pos;
-	double					brightness;
-	t_color					color;
-};
+# include "camera.h"
 
-#endif
+uint32_t	rayColor(t_camera c, t_ray ray);
+
+#endif	/* TRACER_H */

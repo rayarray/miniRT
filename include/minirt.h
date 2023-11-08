@@ -1,26 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   elem_light.h                                       :+:      :+:    :+:   */
+/*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/14 13:10:48 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/08 21:24:17 by tsankola         ###   ########.fr       */
+/*   Created: 2023/10/09 13:02:44 by rleskine          #+#    #+#             */
+/*   Updated: 2023/10/10 16:12:57 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ELEM_LIGHT_H
-# define ELEM_LIGHT_
-# include "rt_typedef.h"
-# include "element.h"
+#include <stdlib.h>
 
-struct s_light
-{
-	struct s_elem		base;
-	t_vector				pos;
-	double					brightness;
-	t_color					color;
-};
-
-#endif
+int	emptyFunction(void);

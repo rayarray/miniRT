@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 19:55:32 by tsankola          #+#    #+#             */
-/*   Updated: 2023/10/15 19:02:44 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/08 22:00:40 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include "element.h"
 
 // String conversions
-t_element_type	rt_atoetype(const char *a);
+t_elem_type		rt_atoetype(const char *a);
 double			rt_atof(const char *a);
 t_vector		rt_atovec(const char *a);
 t_color			rt_atocol(const char *a);
