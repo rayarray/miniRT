@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 17:49:28 by tsankola          #+#    #+#             */
-/*   Updated: 2023/10/15 19:07:33 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:42:17 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,13 @@ int	is_int(const char *s);
 int	is_double_triplet_strict(const char *s);
 int	is_int_triplet_strict(const char *s);
 
-// Value checks
-int	is_unitvec(t_vector v);
+// Checks that the components in the given vector are within [-1.0, 1,0] range
+int	is_unitvec(t_vec v);
+
+// Checks that the given value is within [0, 180] range
 int	is_fov(int i);
+
+// Checks that the given value is within [0.0, 1.0] range
 int	is_ratio(double d);
 
 #endif

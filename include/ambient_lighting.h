@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   elem_light.h                                       :+:      :+:    :+:   */
+/*   ambient_lighting.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/14 13:10:48 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/08 21:24:17 by tsankola         ###   ########.fr       */
+/*   Created: 2023/10/14 13:09:16 by tsankola          #+#    #+#             */
+/*   Updated: 2023/11/16 18:09:19 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ELEM_LIGHT_H
-# define ELEM_LIGHT_
+#ifndef AMBIENT_LIGHTING_H
+# define AMBIENT_LIGHTING_H
 # include "rt_typedef.h"
-# include "element.h"
 
-struct s_light
+struct s_ambient_lighting
 {
-	struct s_elem		base;
-	t_vector				pos;
-	double					brightness;
-	t_color					color;
+	double			light_ratio;
+	t_color			color;
 };
+
+int	ambient_lighting_ctor(struct s_ambient_lighting *a_lt, 
+	double lighting_ratio, t_color color);
 
 #endif

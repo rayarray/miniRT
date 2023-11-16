@@ -5,17 +5,24 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/08 18:15:12 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/08 18:16:56 by tsankola         ###   ########.fr       */
+/*   Created: 2023/10/14 13:10:48 by tsankola          #+#    #+#             */
+/*   Updated: 2023/11/16 18:09:43 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIGHT_H
 # define LIGHT_H
+# include "rt_typedef.h"
 
-typedef struct s_light
+struct s_light
 {
+	t_vec			pos;
+	double			brightness;
+	t_color			color;
+};
 
-}	t_light;
+int		light_ctor(struct s_light *l, t_vec pos, double brightness, t_color color);
+
+void	light_dtor(struct s_light *l);
 
 #endif

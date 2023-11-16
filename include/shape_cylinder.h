@@ -1,21 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ambient.h                                          :+:      :+:    :+:   */
+/*   shape_cylinder.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/08 18:15:30 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/08 18:16:37 by tsankola         ###   ########.fr       */
+/*   Created: 2023/11/09 19:40:15 by tsankola          #+#    #+#             */
+/*   Updated: 2023/11/16 18:06:22 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef AMBIENT_H
-# define AMBIENT_H
+#ifndef SHAPE_CYLINDER_H
+# define SHAPE_CYLINDER_H
+# include "rt_typedef.h"
+# include "shape.h"
 
-typedef struct s_ambient
+struct s_cylinder
 {
+	struct s_shape	base;
+	t_vec			pos;
+	t_vec			axis;
+	double			diameter;
+	double			height;
+	t_color			color;
+};
 
-}	t_ambient;
+int	cylinder_ctor(struct s_cylinder *cylinder, t_vec point, t_vec normal, t_color color);
+
 
 #endif

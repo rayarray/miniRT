@@ -6,12 +6,13 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 17:35:34 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/08 22:48:56 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:57:17 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "scene.h"
+#include "camera.h"
 
 static size_t	realloc_bases(struct s_elem_base **bases, size_t *old_size)
 {
@@ -23,17 +24,19 @@ static size_t	realloc_bases(struct s_elem_base **bases, size_t *old_size)
 	return (err_chk);
 }
 
-static int	read_line(int fd, struct s_elem_base **bases, size_t bufsize)
+static t_elem_count	read_line(int fd, struct s_elem_base **bases, size_t bufsize)
 {
 	int				err;
 	unsigned int	i;
 	char			*line;
+	t_elem_count	count;
 
 	i = 0;
 	line = get_next_line(fd);
+	count = (t_elem_count){0, 0, 0, 0, 0};
 	while (line != NULL)
 	{
-		err = parse_line(line, &(*bases)[i]);
+		err = parse_line_and_increment_counter(line, &(*bases)[i], &count);
 		free(line);
 		if (err == 0 && ++i == bufsize - 1)
 			err = realloc_bases(bases, &bufsize);
@@ -41,93 +44,69 @@ static int	read_line(int fd, struct s_elem_base **bases, size_t bufsize)
 		{
 			while (i > 0)
 				free_strarray(&bases[--i]->args);	// TODO sanity check for index logic
-			return (-1);
+			return ((t_elem_count){-1,-1,-1,-1,-1});
 		}
 		line = get_next_line(fd);
 	}
-	return ((int)i);
+	return (count);
 }
 
-static int	read_lines(int fd, struct s_elem_base **elem_bases)
+static struct s_scene_base	*read_lines(int fd)
 {
-	int		i;
-	size_t	bufsize;
+	t_elem_count		count;
+	struct s_elem_base	*elem_bases;
+	struct s_scene_base	*scene_base;
 
-	bufsize = BASES_BUFFER_SIZE;
-	*elem_bases = malloc(sizeof(struct s_elem_base) * bufsize);
-	if (*elem_bases == NULL)
-		return (-1);
-	i = read_line(fd, elem_bases, bufsize);
-	if (i < 0)
+	scene_base = NULL;
+	elem_bases = malloc(sizeof(struct s_elem_base) * BASES_BUFFER_SIZE);
+	if (elem_bases == NULL)
+		return (NULL);
+	count = read_line(fd, &elem_bases, BASES_BUFFER_SIZE);
+	if (count.ambientcount != 1 || count.cameracount != 1
+		|| count.lightcount < 0 || count.shapecount < 0
+		|| (count.ambientcount + count.cameracount 
+			+ count.lightcount + count.shapecount) != count.elemcount)
+		free(elem_bases);
+	else
 	{
-		free(*elem_bases);
-		*elem_bases = NULL;
+		scene_base = malloc(sizeof(struct s_scene_base));
+		if (scene_base == NULL)
+			free(elem_bases);
+		else
+		{
+			scene_base->bases = elem_bases;
+			scene_base->count = count;
+		}
 	}
-	return (i);
+	return (scene_base);
 }
 
-static int	get_elem_bases(const char *filename, struct s_elem_base **bases)
+static t_elem_count	get_elem_bases(const char *filename, struct s_elem_base **bases)
 {
-	int		fd;
-	int		linecount;
+	int					fd;
+	int					linecount;
+	t_elem_count		count;
 
+	count = (t_elem_count){-1,-1,-1,-1,-1};
 	fd = open(filename, R_OK);
 	if (fd < 0)
 	{
 		perror(filename);
-		return (-1);
+		return (count);
 	}
-	linecount = read_lines(fd, bases);
+	count = read_lines(fd, bases);
 	if (close(fd) < 0)
 		perror(filename);
-	return (linecount);
-}
-
-int	camera_ctor(struct s_camera *c, char **args);
-int	light_ctor(struct s_light *lt, char **args);
-
-int	create_an_element(struct s_elem **elem, struct s_elem_base *base)
-{
-	if (base->type == e_SPHERE)
-		;// sphere etc. constructor here
-	return (0);
-}
-
-struct s_scene	*create_a_scene(struct s_elem_base *bases, int basecount)
-{
-	struct s_scene	*scene;
-	int				i;
-	int				j;
-	int				err;
-
-	scene = malloc(sizeof(struct s_scene) * 1);
-	scene->elems = malloc(sizeof(struct s_elem *) * (basecount + 1));	// allocate a few lines more than needed because camera, light and ambient light are their own fields
-	i = -1;
-	j = -1;
-	err = 0;
-	while (err == 0 && ++i < basecount){
-		if (bases[i].type == e_AMBIENT_LIGHTING)
-			err = ambient_lighting_ctor(&scene->ambient, bases[i].args);
-		else if (bases[i].type == e_CAMERA)
-			err = camera_ctor(&scene->camera, bases[i].args);
-		else if (bases[i].type == e_LIGHT)
-			err = light_ctor(&scene->light, bases[i].args);
-		else if (bases[i].type != e_NAE)
-			err = create_an_element(&scene->elems[++j], &bases[i]);
-		// TODO Error here. Maybe unnecessary
-	}
-	if (!err)
-		return (scene);
-	return (NULL);
+	return (count);
 }
 
 struct s_elem_base	*get_scene(const char *filename)
 {
 	struct s_elem_base		*bases;
-	int						linecount;
+	t_elem_count			elem_count;
 	
-	linecount = get_elem_bases(filename, &bases);
-	if (linecount < 0)
+	elem_count = get_elem_bases(filename, &bases);
+	if (1) // TODO verify elem_count here)
 		return (NULL);
 	// TODO create elements here?
 	return (bases);

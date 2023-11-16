@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   camera.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:06:28 by rleskine          #+#    #+#             */
-/*   Updated: 2023/10/26 16:03:23 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/11/16 17:07:47 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CAMERA_H
 # define CAMERA_H
-
 # include "MLX42.h"
-# include "ray.h"
+# include "rt_typedef.h"
 
 typedef struct s_camera {
+	t_vec	loc;
+	t_vec	dir;
 	int		fov;
 	t_ray	center;
 	void	*scene;
@@ -33,6 +34,8 @@ typedef struct s_camera {
 	t_vec	viewport_upper_left;
 	t_vec	pixel00_loc;
 }	t_camera;
+
+int	camera_ctor(struct s_camera *c, t_vec loc, t_vec dir, int fov);
 
 t_camera	initCamera(mlx_image_t *image, int fov, void *scene, t_ray center);
 void		renderCamera(mlx_image_t *image, t_camera c);
