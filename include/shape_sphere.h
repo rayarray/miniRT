@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray.h                                              :+:      :+:    :+:   */
+/*   shape_sphere.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/25 13:32:32 by rleskine          #+#    #+#             */
-/*   Updated: 2023/10/25 16:44:05 by rleskine         ###   ########.fr       */
+/*   Created: 2023/11/09 19:12:00 by tsankola          #+#    #+#             */
+/*   Updated: 2023/11/16 17:03:15 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RAY_H
-# define RAY_H
+#ifndef SHAPE_SPHERE_H
+# define SHAPE_SPHERE_H
+# include "element.h"
 
-# include "vector.h"
+struct s_sphere
+{
+	struct s_shape	base;
+	t_vec			pos;
+	double			diameter;
+	t_color			color;
+};
 
-typedef struct s_ray {
-	t_point	origin;
-	t_vec	destination;
-}	t_ray;
+void	sphere_dtor(struct s_shape *shape);		//??
 
-#endif	/* RAY_H */
+#endif

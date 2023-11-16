@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   elem_camera.h                                      :+:      :+:    :+:   */
+/*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/14 13:09:58 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/08 21:24:17 by tsankola         ###   ########.fr       */
+/*   Created: 2023/11/09 17:56:36 by tsankola          #+#    #+#             */
+/*   Updated: 2023/11/16 17:46:10 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ELEM_CAMERA_H
-# define ELEM_CAMERA_H
-# include "rt_typedef.h"
-# include "element.h"
+#include <errno.h>
+#include "light.h"
+#include "rt_validations.h"
 
-struct s_camera
+int	light_ctor(struct s_light *l, t_vec pos, double brightness, t_color color)
 {
-	struct s_elem		base;
-	t_vector				pos;
-	t_vector				orientation;
-	int						fov;
-};
+	if (!is_ratio(brightness))
+		return (1);
+	l->brightness = brightness;
+	l->pos = pos;
+	l->color = color;
+	return (0);
+}
 
-#endif
+void	light_dtor(struct s_light *l)
+{	// Placeholder code, not sure of usage yet
+	struct s_light	*next;
+
+	if (l == NULL)
+		return ;
+	free(l);
+}

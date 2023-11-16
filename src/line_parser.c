@@ -6,15 +6,21 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:01:09 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/08 21:28:16 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:57:26 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "ambient_lighting.h"
+#include "camera.h"
+#include "light.h"
+#include "shape_sphere.h"
+#include "shape_plane.h"
+#include "shape_cylinder.h"
 
-/* static struct s_elem	*element_factory(t_elem_type etype)
+/* static struct s_shape	*element_factory(t_elem_type etype)
 {
-	struct s_elem	*e;
+	struct s_shape	*e;
 
 	e = NULL;
 	if (etype == e_AMBIENT_LIGHTING)
@@ -34,18 +40,43 @@
 	return (e);
 } */
 
-int	parse_line(const char *line, struct s_elem_base *elem)
+static void	assign_ctor(struct s_elem_base *elem)
 {
-	char	**args;
+	if (elem->type == e_AMBIENT_LIGHTING)
+		elem->ctor = ambient_lighting_evaluator;
+	else if (elem->type == e_CAMERA)
+		elem->ctor = camera_evaluator;
+	else if (elem->type == e_LIGHT)
+		elem->ctor = light_evaluator;
+	else if (elem->type == e_SPHERE)
+		elem->ctor = sphere_evaluator;
+	else if (elem->type == e_PLANE)
+		elem->ctor = plane_evaluator;
+	else if (elem->type == e_CYLINDER)
+		elem->ctor = cylinder_evaluator;
+	else
+		elem->ctor = NULL;
+}
 
+t_elem_type	parse_line_and_increment_counter(const char *line,
+	struct s_elem_base *elem, t_elem_count *counter)
+{	// Arguments could be validated here
 	elem->type = rt_atoetype(line);
-	elem->args = NULL;
 	if (elem->type == e_NAE)
 		return (-1);
-	args = rt_split(line, delims);
-	if (args == NULL)
+	elem->args = rt_split(line, delims);
+	if (elem->args == NULL)
 		return (1);
-	elem->args = args;
+	assign_ctor(elem);
+	if (elem->type == e_CAMERA)
+		counter->cameracount++;
+	else if (elem->type == e_AMBIENT_LIGHTING)
+		counter->ambientcount++;
+	else if (elem->type == e_LIGHT)
+		counter->lightcount++;
+	else if (elem->type != e_NAE)
+		counter->shapecount++;
+	counter->elemcount++;
 	return (0);
 }
 

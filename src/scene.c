@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:23:22 by rleskine          #+#    #+#             */
-/*   Updated: 2023/10/26 19:04:03 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/11/16 18:21:36 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,18 @@ int	hitSphere(const t_vec center, double radius, const t_ray ray)
 		return (1);
 	else
 		return (0);
+}
+
+int	scene_ator(struct s_scene **scene, int lightcount, int shapecount)
+{
+	*scene = malloc(sizeof(struct s_scene) * 1);
+	if (*scene == NULL)
+		return (1);
+	(*scene)->lights = ft_calloc(sizeof(struct s_light *), (lightcount + 1));
+	if ((*scene)->lights == NULL)
+		return (1);
+	(*scene)->shapes = ft_calloc(sizeof(struct s_shape *), (shapecount + 1));
+	if ((*scene)->shapes == NULL)
+		return (1);
+	return (0);
 }

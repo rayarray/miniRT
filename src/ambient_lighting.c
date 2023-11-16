@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   elem_ambient_lighting.h                            :+:      :+:    :+:   */
+/*   ambient_lighting.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/14 13:09:16 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/08 22:47:27 by tsankola         ###   ########.fr       */
+/*   Created: 2023/11/09 16:54:34 by tsankola          #+#    #+#             */
+/*   Updated: 2023/11/16 16:49:43 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ELEM_AMBIENT_LIGHTING_H
-# define ELEM_AMBIENT_LIGHTING_H
-# include "rt_typedef.h"
-# include "element.h"
-
-struct s_ambient_lighting
-{
-	struct s_elem	base;
-	double			lighting_ratio;
-	t_color			color;
-};
+#include "elem_ambient_lighting.h"
+#include "rt_validations.h"
+#include "parser.h"
 
 int	ambient_lighting_ctor(struct s_ambient_lighting *a_lt, 
-	double lighting_ratio, t_color color)
+	double light_ratio, t_color color)
 {
-	a_lt->base.type = e_AMBIENT_LIGHTING;
-	a_lt->lighting_ratio = lighting_ratio;
+	if (!is_ratio(light_ratio))
+		return (1);
+	a_lt->light_ratio = light_ratio;
 	a_lt->color = color;
+	return (0);
 }
-
-#endif

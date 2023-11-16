@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:17:25 by rleskine          #+#    #+#             */
-/*   Updated: 2023/10/26 19:09:29 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/11/16 16:50:07 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "vector.h"
 #include "camera.h"
 #include "tracer.h"
+#include "rt_validations.h"
 
 // t_camera	initCamera(mlx_image_t *image, int fov, void *scene, t_ray center)
 // {
@@ -47,6 +48,23 @@
 // 	return (c);
 // }
 
+//# Camera: type identifier | xyz coordinates | orientation vector | FOV
+//C	-50.0,0,20	0,0,1	70
+
+int	camera_ctor(struct s_camera *c, t_vec loc, t_vec dir, int fov)
+{
+	c->loc = loc;
+	if (!is_unitvec(dir))
+		return (1);
+	c->dir = dir;
+	if (!is_fov(fov))
+		return (1);
+	c->fov = fov;
+	return (0);
+}
+
+
+// TODO Needs rework to work with already constructed (uninitialized) camera
 t_camera	initCamera(mlx_image_t *image, int fov, void *scene, t_ray center)
 {
 	t_camera	c;
@@ -55,7 +73,6 @@ t_camera	initCamera(mlx_image_t *image, int fov, void *scene, t_ray center)
 	c.image_width = image->width;
 	c.aspect_ratio = (double)image->width / image->height;
 	c.focal_length = 1;
-	c.scene = scene;
 	c.viewport_height = 2.0;
 	c.viewport_width = c.viewport_height
 		* ((double)(image->width) / image->height);

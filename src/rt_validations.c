@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 17:02:19 by tsankola          #+#    #+#             */
-/*   Updated: 2023/10/15 19:04:18 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:42:30 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	is_int_triplet_strict(const char *s)
 }
 
 // Value checking:
-int	is_unitvec(t_vector v)
+int	is_unitvec(t_vec v)
 {
 	return (vec_length(v) == 1.0);	// TODO is vec_length accurate enough?
 }

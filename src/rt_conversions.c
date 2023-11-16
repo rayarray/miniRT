@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 19:56:43 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/08 21:24:55 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:10:47 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ t_elem_type	rt_atoetype(const char *a)
 
 	i = -1;
 	skip_whitespace(&a);
-	while (valid_element_ids[++i] != NULL)
+	while (valid_elem_ids[++i] != NULL)
 	{
-		len = ft_strlen(valid_element_ids[i]);
-		if (ft_strncmp(a, valid_element_ids[i], len) == 0
+		len = ft_strlen(valid_elem_ids[i]);
+		if (ft_strncmp(a, valid_elem_ids[i], len) == 0
 			&& ft_strchr(" \t", *(a + len)))
 			break ;
 	}
@@ -84,10 +84,11 @@ t_color	rt_atocol(const char *a)
 {
 	t_color	col;
 
-	col.red = (unsigned char)atoi(a);
+	col.r = (unsigned char)atoi(a);
 	a = ft_strchr(a, ',');
-	col.green = (unsigned char)atoi(++a);
+	col.g = (unsigned char)atoi(++a);
 	a = ft_strchr(a, ',');
-	col.blue = (unsigned char)atoi(++a);
+	col.b = (unsigned char)atoi(++a);
+	col.a = 0xFF;
 	return (col);
 }

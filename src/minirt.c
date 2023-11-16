@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:36:12 by rleskine          #+#    #+#             */
-/*   Updated: 2023/10/26 19:01:50 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/11/16 19:17:25 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,25 @@ void	ft_hook(void *param)
 		image->instances[0].x += 5;
 }
 
+/*
+ * Program flow (My current idea as of 16.11. -Tommi):
+ * 		1.	parse, create scene
+ * 		2.	render scene line by line, calling tracing function on each pixel
+ * 		2.1.	tracing function will iterate through shapes in scene to see if
+ * 				it hits anything and returns the color using lights etc. 
+ * 		3.	draw rendered scene
+ * 
+ * 		(With threads, forbidden in subject but could be interesting:)
+ * 		2. Use threads to render scene line by line
+ * 		2.1. Put lines in an array with an index protected by mutex
+ * 		2.2. Threads will take a line to process and increment index
+ * 		2.2.1.	When processing the line, thread will call raytrace function on
+ * 				each pixel on the line using the scene as data (which should be
+ * 				immutable).
+ * 		2.3. When thread is done with a line, get next line
+ * 		2.4. When no more lines available, kill thread
+ * 		3. When all threads are done, send rendered scene to be drawn
+ */
 int	main(void)
 {
 	mlx_t		*mlx;

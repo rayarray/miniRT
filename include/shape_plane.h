@@ -1,38 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_typedef.h                                       :+:      :+:    :+:   */
+/*   shape_plane.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 16:45:14 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/16 19:10:36 by tsankola         ###   ########.fr       */
+/*   Created: 2023/11/09 19:38:11 by tsankola          #+#    #+#             */
+/*   Updated: 2023/11/16 18:06:20 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RT_TYPEDEF_H
-# define RT_TYPEDEF_H
+#ifndef SHAPE_PLANE_H
+# define SHAPE_PLANE_H
+# include "rt_typedef.h"
+# include "shape.h"
 
-typedef struct s_color
+struct s_plane
 {
-	unsigned char	r;
-	unsigned char	g;
-	unsigned char	b;
-	unsigned char	a;
-}	t_color;
+	struct s_shape	base;
+	t_vec			point;
+	t_vec			normal;
+	t_color			color;
+};
 
-typedef struct s_vec
-{
-	double	x;
-	double	y;
-	double	z;
-}	t_vec;
+int	plane_ctor(struct s_plane *plane, t_vec point, t_vec normal, t_color color);
 
-typedef t_vec	t_point;
-
-typedef struct s_ray {
-	t_point	origin;
-	t_vec	destination;
-}	t_ray;
 
 #endif

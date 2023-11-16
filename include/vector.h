@@ -3,25 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   vector.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:32:32 by rleskine          #+#    #+#             */
-/*   Updated: 2023/10/26 16:52:11 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/11/16 17:07:20 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_H
 # define VECTOR_H
-
 # include <math.h>
-
-typedef struct s_vec {
-	double	x;
-	double	y;
-	double	z;
-}	t_vec;
-
-typedef struct s_vec	t_point;
+# include "rt_typedef.h"
 
 t_vec	vecInit(double x, double y, double z);
 t_vec	vecScalar(double i);

@@ -1,38 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_typedef.h                                       :+:      :+:    :+:   */
+/*   shape_sphere.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 16:45:14 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/16 19:10:36 by tsankola         ###   ########.fr       */
+/*   Created: 2023/11/09 19:16:05 by tsankola          #+#    #+#             */
+/*   Updated: 2023/11/16 17:00:03 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RT_TYPEDEF_H
-# define RT_TYPEDEF_H
+#include "shape_sphere.h"
 
-typedef struct s_color
+int	sphere_ctor(struct s_sphere	*s, char **args)
 {
-	unsigned char	r;
-	unsigned char	g;
-	unsigned char	b;
-	unsigned char	a;
-}	t_color;
-
-typedef struct s_vec
-{
-	double	x;
-	double	y;
-	double	z;
-}	t_vec;
-
-typedef t_vec	t_point;
-
-typedef struct s_ray {
-	t_point	origin;
-	t_vec	destination;
-}	t_ray;
-
-#endif
+	return (0);
+}
