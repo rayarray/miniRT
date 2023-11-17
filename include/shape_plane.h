@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:38:11 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/16 18:06:20 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/18 00:10:11 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ struct s_plane
 	t_color			color;
 };
 
-int	plane_ctor(struct s_plane *plane, t_vec point, t_vec normal, t_color color);
+int		plane_ctor(struct s_plane *plane, t_vec point, t_vec normal, t_color color);
 
+void	plane_dtor(struct s_plane *plane);
+
+t_color	plane_hit_ray(struct s_plane *this, struct s_scene *scene, t_ray ray);
 
 #endif

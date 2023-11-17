@@ -6,17 +6,17 @@
 #    By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 16:29:22 by rleskine          #+#    #+#              #
-#    Updated: 2023/11/17 19:39:01 by tsankola         ###   ########.fr        #
+#    Updated: 2023/11/18 00:39:12 by tsankola         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	miniRT
 
-PARSER		=	ambient_lighting.c camera.c element_parser.c get_next_line.c \
-				get_next_line_utils.c light.c line_parser.c minirt.c \
-				parser_utilities.c rt_conversions.c rt_math.c rt_split.c \
-				rt_validations.c scene.c scene_parsing.c scene_reader.c \
-				shape.c shape_sphere.c vector.c tracer.c
+PARSER		=	ambient_lighting.c camera.c parse_file_reader.c get_next_line.c \
+				get_next_line_utils.c light.c minirt.c parse_conversions.c \
+				parse_scene.c parse_shape.c parse_utilities.c rt_math.c \
+				rt_split.c rt_validations.c scene.c shape.c shape_cylinder.c \
+				shape_plane.c shape_sphere.c tracer.c vector.c
 
 SRC			=	$(PARSER)
 

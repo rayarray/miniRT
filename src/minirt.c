@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:36:12 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/17 19:54:47 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/18 01:18:44 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,16 +87,29 @@ void	ft_hook(void *param)
  * 		2.4. When no more lines available, kill thread
  * 		3. When all threads are done, send rendered scene to be drawn
  */
+
+#include "rt_validations.h"
 int	main(int argc, char **argv)
 {
 	struct s_scene	*scene;
 
+/*	char *s = "255,255,255	";
+	printf("%s %d", s, is_double_triplet_strict(s));
+	return 1;
+ */
 	if (argc != 2){
 		printf("Usage: 'miniRT <filename>'\n");
 		return 1;
 	}
 	scene = get_scene(argv[1]);
 	printf("got scene! %p\n", scene);
+	printf("ambient %f\n", scene->ambient->light_ratio);
+	printf("camera %d\n", scene->camera->fov);
+	for (struct s_light *l = scene->lights; l != NULL; l = l->next)
+		printf("lights %f\n", l->brightness);
+	for (struct s_shape *s = scene->shapes; s != NULL; s = s->next)
+		printf("shapes %d\n", s->type);
+	scene_dtor(&scene);
 	return (0);
 
 	mlx_t		*mlx;

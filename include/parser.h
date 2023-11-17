@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 17:02:32 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/17 20:41:16 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/18 01:01:25 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,18 @@
 # include "shape_sphere.h"
 # include "shape_plane.h"
 
-static const char	delims[3] = " \t";
+typedef enum e_parser_error
+{
+	e_NO_ERROR,
+	e_TOO_MANY_ELEMENTS,
+	e_ELEMENT_ARG_ERROR,
+	e_ENV_ERROR,
+	e_LOGIC_ERROR
+}	t_parser_error;
+
+static const char	input_delims[3] = " \t";
 
 static const char	*valid_elem_ids[7] = {"A", "C", "L", "sp", "pl", "cy", NULL};
-
-// static const struct s_shape *(*element_ators[7])(const char **args);	// dynamic array? No. Just a function pointer array with size 7
 
 struct s_elem_base
 {
@@ -67,18 +74,18 @@ char	**rt_split(char const *s, const char *c);
 
 // Line_parser.c
 //t_elem_type	parse_line(const char *line, struct s_elem_base *elem);
-t_elem_type	parse_line_and_increment_counter(const char *line,
-	struct s_elem_base *elem, t_elem_count *counter);
+t_parser_error	parse_line_and_create_element(const char *line, struct s_scene *scene);
 
 
 // Parse the arguments in args and call the constructor
 //int		validate_args(e_elem_type type, char **args);		// placeholder
-int		ambient_lighting_evaluator(struct s_ambient_lighting *a_lt, char **args);
-int		camera_evaluator(struct s_camera *c, char **args);
-int		light_evaluator(struct s_light **l, const char **args);
-int		cylinder_evaluator(struct s_cylinder **cylinder, char **args);
-int		plane_evaluator(struct s_plane **plane, char **args);
-int		sphere_evaluator(struct s_sphere **sphere, char **args);
+t_parser_error	ambient_lighting_evaluator(struct s_ambient_lighting **a_lt, char **args);
+t_parser_error	camera_evaluator(struct s_camera **c, char **args);
+t_parser_error	light_evaluator(struct s_light **l, char **args);
+t_parser_error	cylinder_evaluator(struct s_cylinder **c, char **args);
+t_parser_error	plane_evaluator(struct s_plane **p, char **args);
+t_parser_error	sphere_evaluator(struct s_sphere **s, char **args);
+t_parser_error	shape_evaluator(struct s_shape **shapes, char **args, t_elem_type type);
 
 // Scene parser
 struct s_scene	*create_scene(struct s_scene_base *scenebase);
