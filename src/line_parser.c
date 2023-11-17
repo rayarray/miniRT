@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:01:09 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/16 19:57:26 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/17 20:37:47 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "shape_sphere.h"
 #include "shape_plane.h"
 #include "shape_cylinder.h"
+#include "rt_conversions.h"
 
 /* static struct s_shape	*element_factory(t_elem_type etype)
 {
@@ -43,19 +44,19 @@
 static void	assign_ctor(struct s_elem_base *elem)
 {
 	if (elem->type == e_AMBIENT_LIGHTING)
-		elem->ctor = ambient_lighting_evaluator;
+		elem->evaluator = (int (*)(void *, char **))ambient_lighting_evaluator;
 	else if (elem->type == e_CAMERA)
-		elem->ctor = camera_evaluator;
+		elem->evaluator = (int (*)(void *, char **))camera_evaluator;
 	else if (elem->type == e_LIGHT)
-		elem->ctor = light_evaluator;
+		elem->evaluator = (int (*)(void *, char **))light_evaluator;
 	else if (elem->type == e_SPHERE)
-		elem->ctor = sphere_evaluator;
+		elem->evaluator = (int (*)(void *, char **))sphere_evaluator;
 	else if (elem->type == e_PLANE)
-		elem->ctor = plane_evaluator;
+		elem->evaluator = (int (*)(void *, char **))plane_evaluator;
 	else if (elem->type == e_CYLINDER)
-		elem->ctor = cylinder_evaluator;
+		elem->evaluator = (int (*)(void *, char **))cylinder_evaluator;
 	else
-		elem->ctor = NULL;
+		elem->evaluator = NULL;
 }
 
 t_elem_type	parse_line_and_increment_counter(const char *line,
@@ -77,16 +78,5 @@ t_elem_type	parse_line_and_increment_counter(const char *line,
 	else if (elem->type != e_NAE)
 		counter->shapecount++;
 	counter->elemcount++;
-	return (0);
-}
-
-
-int main(int argc, char *argv[])
-{
-	struct s_elem_base	*bases;
-	if (argc == 2)
-	{
-		bases = get_scene(argv[1]);
-	}
 	return (0);
 }

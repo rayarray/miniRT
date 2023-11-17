@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 19:56:43 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/16 19:10:47 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/17 18:18:26 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ double	rt_atof(const char *a)
 	return (f);
 }
 
-t_vector	rt_atovec(const char *a)
+t_vec	rt_atovec(const char *a)
 {
-	t_vector	vec;
+	t_vec	vec;
 
 	vec.x = rt_atof(a);
 	a = ft_strchr(a, ',');

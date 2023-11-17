@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:36:12 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/16 19:17:25 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/17 19:54:47 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include "minirt.h"
 #include "vector.h"
 #include "camera.h"
+#include "parser.h"
+#include "scene.h"
 
 #define WIDTH	512
 #define HEIGHT	512
@@ -85,8 +87,18 @@ void	ft_hook(void *param)
  * 		2.4. When no more lines available, kill thread
  * 		3. When all threads are done, send rendered scene to be drawn
  */
-int	main(void)
+int	main(int argc, char **argv)
 {
+	struct s_scene	*scene;
+
+	if (argc != 2){
+		printf("Usage: 'miniRT <filename>'\n");
+		return 1;
+	}
+	scene = get_scene(argv[1]);
+	printf("got scene! %p\n", scene);
+	return (0);
+
 	mlx_t		*mlx;
 	t_vec		v1;
 	t_vec		v2;

@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:23:22 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/16 18:21:36 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/17 20:17:24 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,29 @@ int	scene_ator(struct s_scene **scene, int lightcount, int shapecount)
 	if ((*scene)->shapes == NULL)
 		return (1);
 	return (0);
+}
+
+void	scene_dtor(struct s_scene **scene)
+{
+	struct s_light	*lptr;
+	struct s_shape	*sptr;
+
+	lptr = *(*scene)->lights;
+	while (lptr != NULL)
+	{
+		light_dtor(lptr);
+		free(lptr++);
+	}
+	free((*scene)->lights);
+	(*scene)->lights = NULL;
+	sptr = *(*scene)->shapes;
+	while (sptr != NULL)
+	{
+		shape_dtor(sptr);
+		free(sptr++);
+	}
+	free((*scene)->shapes);
+	(*scene)->shapes = NULL;
+	free(*scene);
+	*scene = NULL;
 }

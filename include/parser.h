@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 17:02:32 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/16 19:05:19 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/17 20:41:16 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include "rt_typedef.h"
 # include "shape.h"
 # include "get_next_line.h"
-# include "rt_conversions.h"
 # include "ambient_lighting.h"
 # include "camera.h"
 # include "light.h"
@@ -32,17 +31,6 @@
 
 static const char	delims[3] = " \t";
 
-typedef enum	e_elem_type
-{
-	e_AMBIENT_LIGHTING = 0,
-	e_CAMERA = 1,
-	e_LIGHT = 2,
-	e_SPHERE = 3,
-	e_PLANE = 4,
-	e_CYLINDER = 5,
-	e_NAE = 6
-}	t_elem_type;
-
 static const char	*valid_elem_ids[7] = {"A", "C", "L", "sp", "pl", "cy", NULL};
 
 // static const struct s_shape *(*element_ators[7])(const char **args);	// dynamic array? No. Just a function pointer array with size 7
@@ -50,7 +38,7 @@ static const char	*valid_elem_ids[7] = {"A", "C", "L", "sp", "pl", "cy", NULL};
 struct s_elem_base
 {
 	t_elem_type	type;
-	int			(*ctor)(void *elem, char **args);	// Some type for elem would be nice? Not sure if compiler will accept this
+	int			(*evaluator)(void *elem, char **args);	// Some type for elem would be nice? Not sure if compiler will accept this
 	char		**args;
 };
 
@@ -70,7 +58,7 @@ struct s_scene_base
 };
 
 // Scene_reader.c
-struct s_elem_base	*get_scene(const char *filename);
+struct s_scene	*get_scene(const char *filename);
 
 // Utility functions
 char	**free_strarray(char ***array);
@@ -78,17 +66,21 @@ int		rt_realloc(unsigned char **buf, size_t *bufsize, int factor);
 char	**rt_split(char const *s, const char *c);
 
 // Line_parser.c
-t_elem_type	parse_line(const char *line, struct s_elem_base *elem);
+//t_elem_type	parse_line(const char *line, struct s_elem_base *elem);
+t_elem_type	parse_line_and_increment_counter(const char *line,
+	struct s_elem_base *elem, t_elem_count *counter);
+
 
 // Parse the arguments in args and call the constructor
+//int		validate_args(e_elem_type type, char **args);		// placeholder
 int		ambient_lighting_evaluator(struct s_ambient_lighting *a_lt, char **args);
 int		camera_evaluator(struct s_camera *c, char **args);
-int		light_evaluator(struct s_light *l, const char **args);
-int		cylinder_evaluator(struct s_cylinder *cylinder, char **args);
-int		plane_evaluator(struct s_plane *plane, char **args);
-int		sphere_evaluator(struct s_sphere *s, char **args);
+int		light_evaluator(struct s_light **l, const char **args);
+int		cylinder_evaluator(struct s_cylinder **cylinder, char **args);
+int		plane_evaluator(struct s_plane **plane, char **args);
+int		sphere_evaluator(struct s_sphere **sphere, char **args);
 
 // Scene parser
-struct s_scene	*create_scene(struct s_elem_base *bases, t_elem_count basecount);
+struct s_scene	*create_scene(struct s_scene_base *scenebase);
 
 #endif

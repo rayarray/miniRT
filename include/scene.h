@@ -6,12 +6,13 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:18:59 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/16 18:20:22 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/17 20:17:42 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SCENE_H
 # define SCENE_H
+# include "libft.h"
 # include "shape.h"
 # include "vector.h"
 # include "camera.h"
@@ -26,8 +27,10 @@ struct s_scene
 	struct s_shape				**shapes;	// Array of shapes
 };
 
-int	hitSphere(const t_vec center, double radius, const t_ray ray);
+int		hitSphere(const t_vec center, double radius, const t_ray ray);
 
-int	scene_ator(struct s_scene **scene, int lightcount, int shapecount);
+int		scene_ator(struct s_scene **scene, int lightcount, int shapecount);
+
+void	scene_dtor(struct s_scene **scene);
 
 #endif	/* SCENE_H */

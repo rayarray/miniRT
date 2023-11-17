@@ -6,15 +6,17 @@
 #    By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 16:29:22 by rleskine          #+#    #+#              #
-#    Updated: 2023/10/15 19:07:47 by tsankola         ###   ########.fr        #
+#    Updated: 2023/11/17 19:39:01 by tsankola         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	miniRT_parser
+NAME		=	miniRT
 
-PARSER		=	get_next_line.c get_next_line_utils.c line_parser.c \
-				parser_utilities.c scene_reader.c rt_split.c rt_conversions.c \
-				rt_math.c rt_validations.c
+PARSER		=	ambient_lighting.c camera.c element_parser.c get_next_line.c \
+				get_next_line_utils.c light.c line_parser.c minirt.c \
+				parser_utilities.c rt_conversions.c rt_math.c rt_split.c \
+				rt_validations.c scene.c scene_parsing.c scene_reader.c \
+				shape.c shape_sphere.c vector.c tracer.c
 
 SRC			=	$(PARSER)
 
@@ -22,7 +24,7 @@ LIBS		=	libft
 
 SRCDIR		=	src
 OBJDIR		=	obj
-INCDIR		=	include libft
+INCDIR		=	include libft MLX42/include/MLX42
 
 OBJ			=	$(foreach o, $(SRC:.c=.o), $(OBJDIR)/$(o))
 LIBINC		=	$(foreach l, $(LIBS), -I $(l) -L $(l) -l$(l:lib%=%))
@@ -34,10 +36,16 @@ SFLAGS		=	-fsanitize:address -g
 
 CC 			=	cc
 
+# =============== MLX42 ==============
+# libmlx42.a: MLX42/build/libmlx42.a
+# MLX42.h	: MLX42/include/MLX42/MLX42.h
+MLX42		=	-framework Cocoa -framework OpenGL -framework IOKit MLX42/build/libmlx42.a -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
+# ====================================
+
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBARC)
-	$(CC) $(CFLAGS) $(INCLUDE) $(LIBINC) -o $@ $(OBJ)
+	$(CC) $(CFLAGS) $(INCLUDE) $(LIBINC) $(MLX42) -o $@ $(OBJ)
 
 $(OBJ): $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@if [ ! -d $(OBJDIR) ]; then mkdir $(OBJDIR); fi

@@ -6,12 +6,24 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:45:14 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/16 19:10:36 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/17 20:23:44 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_TYPEDEF_H
 # define RT_TYPEDEF_H
+
+// Shapes should be between e_LIGHT and e_NAE
+typedef enum	e_elem_type
+{
+	e_AMBIENT_LIGHTING = 0,
+	e_CAMERA = 1,
+	e_LIGHT = 2,
+	e_SPHERE = 3,
+	e_PLANE = 4,
+	e_CYLINDER = 5,
+	e_NAE = 6
+}	t_elem_type;
 
 typedef struct s_color
 {

@@ -6,11 +6,11 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 16:54:34 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/16 16:49:43 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/17 18:11:08 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "elem_ambient_lighting.h"
+#include "ambient_lighting.h"
 #include "rt_validations.h"
 #include "parser.h"
 

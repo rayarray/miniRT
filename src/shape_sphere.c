@@ -6,13 +6,37 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:16:05 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/16 17:00:03 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/17 19:30:32 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shape_sphere.h"
 
-int	sphere_ctor(struct s_sphere	*s, char **args)
+void	sphere_ctor(struct s_sphere *this, t_vec loc, double diameter, t_color color)
 {
-	return (0);
+	static const struct s_shape_vtable	sphere_vtable = {
+			(void (*)(struct s_shape *this))sphere_dtor, 
+			(t_color (*)(struct s_shape *this, struct s_scene *scene, t_ray ray))sphere_hit_ray
+		};
+
+	shape_ctor(&this->base, e_SPHERE, loc);
+	this->base.vtptr = &sphere_vtable;
+	this->color = color;
+	this->diameter = diameter;
+}
+
+void	sphere_dtor(struct s_sphere *this)
+{
+	shape_dtor(&this->base);
+}
+
+t_color	sphere_hit_ray(struct s_sphere *this, struct s_scene *scene, t_ray ray)
+{
+	t_color	color;
+
+	(void)scene;
+	(void)ray;
+	(void)this;
+	color = (t_color){0xFF, 0xFF, 0xFF, 0xFF};	// placeholder
+	return (color);
 }
