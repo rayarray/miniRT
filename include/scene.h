@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:18:59 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/12 11:51:53 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/12 11:52:51 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,15 @@
 
 struct s_scene
 {
-	struct s_camera				camera;
-	struct s_ambient_lighting	ambient;
-	struct s_light				**lights;	// Array of lights to support multiple lights
-	struct s_shape				**shapes;	// Array of shapes
+	struct s_camera				*camera;
+	struct s_ambient_lighting	*ambient;
+	struct s_light				*lights;	// Linked list of lights to support multiple lights
+	struct s_shape				*shapes;	// Linked list of shapes
 };
 
 int		hitSphere(const t_vec center, double radius, const t_ray ray);
 
-int		scene_ator(struct s_scene **scene, int lightcount, int shapecount);
-
-void	scene_dtor(struct s_scene **scene);
+struct s_scene	*new_scene(void);
+void			scene_dtor(struct s_scene **scene);
 
 #endif	/* SCENE_H */

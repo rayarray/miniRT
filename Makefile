@@ -6,21 +6,17 @@
 #    By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 16:29:22 by rleskine          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2023/12/12 11:49:47 by rleskine         ###   ########.fr        #
-=======
-#    Updated: 2023/11/17 19:39:01 by tsankola         ###   ########.fr        #
->>>>>>> fc89113... Thinking about redoing the parser. Current implementation is too overengineered and cumbersome. There's no need to first do the base elements and then do the actual allocating. Arguments can be checked while parsing the input file and elements can be saved in a linked list. Thus it should be easier to create the scene. Iterating through the elements might be a bit tougher but I don't think that there is need to do backwards traversal in the list.
+#    Updated: 2023/12/12 11:53:22 by rleskine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	miniRT
 
-PARSER		=	ambient_lighting.c camera.c element_parser.c get_next_line.c \
-				get_next_line_utils.c light.c line_parser.c minirt.c \
-				parser_utilities.c rt_conversions.c rt_math.c rt_split.c \
-				rt_validations.c scene.c scene_parsing.c scene_reader.c \
-				shape.c shape_sphere.c vector.c tracer.c
+PARSER		=	ambient_lighting.c camera.c parse_file_reader.c get_next_line.c \
+				get_next_line_utils.c light.c minirt.c parse_conversions.c \
+				parse_scene.c parse_shape.c parse_utilities.c rt_math.c \
+				rt_split.c rt_validations.c scene.c shape.c shape_cylinder.c \
+				shape_plane.c shape_sphere.c tracer.c vector.c
 
 SRC			=	$(PARSER)
 

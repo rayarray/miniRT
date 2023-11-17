@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_conversions.c                                   :+:      :+:    :+:   */
+/*   parse_conversions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 19:56:43 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/17 18:18:26 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/18 01:14:01 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ double	rt_atof(const char *a)
 		return (f);
 	while (ft_isdigit(*c))
 	{
-		f = f + sign * ((double)(*c - '0')) / fractions;
+		f = f + sign * ((double)(*c++ - '0')) / fractions;
 		fractions *= 10;
 	}
 	return (f);

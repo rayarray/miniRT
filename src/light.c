@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 17:56:36 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/17 18:15:16 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/17 23:56:14 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,18 @@ int	light_ctor(struct s_light *l, t_vec pos, double brightness, t_color color)
 	l->brightness = brightness;
 	l->pos = pos;
 	l->color = color;
+	l->next = NULL;
 	return (0);
 }
 
-void	light_dtor(struct s_light *l)
-{	// Placeholder code, not sure of usage yet
-	if (l == NULL)
-		return ;
-	free(l);
+void	light_dtor(struct s_light **l)
+{
+	struct s_light	*this;
+
+	while (*l != NULL)
+	{
+		this = *l;
+		*l = this->next;
+		free(this);
+	}
 }
