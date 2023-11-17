@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:17:25 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/16 16:50:07 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/17 18:14:42 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ t_camera	initCamera(mlx_image_t *image, int fov, void *scene, t_ray center)
 {
 	t_camera	c;
 
+	(void)scene;
 	c.fov = fov;
 	c.image_width = image->width;
 	c.aspect_ratio = (double)image->width / image->height;

@@ -6,15 +6,21 @@
 #    By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 16:29:22 by rleskine          #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2023/12/12 11:49:47 by rleskine         ###   ########.fr        #
+=======
+#    Updated: 2023/11/17 19:39:01 by tsankola         ###   ########.fr        #
+>>>>>>> fc89113... Thinking about redoing the parser. Current implementation is too overengineered and cumbersome. There's no need to first do the base elements and then do the actual allocating. Arguments can be checked while parsing the input file and elements can be saved in a linked list. Thus it should be easier to create the scene. Iterating through the elements might be a bit tougher but I don't think that there is need to do backwards traversal in the list.
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	miniRT_parser
+NAME		=	miniRT
 
-PARSER		=	get_next_line.c get_next_line_utils.c line_parser.c \
-				parser_utilities.c scene_reader.c rt_split.c rt_conversions.c \
-				rt_math.c rt_validations.c
+PARSER		=	ambient_lighting.c camera.c element_parser.c get_next_line.c \
+				get_next_line_utils.c light.c line_parser.c minirt.c \
+				parser_utilities.c rt_conversions.c rt_math.c rt_split.c \
+				rt_validations.c scene.c scene_parsing.c scene_reader.c \
+				shape.c shape_sphere.c vector.c tracer.c
 
 SRC			=	$(PARSER)
 
@@ -22,8 +28,7 @@ LIBS		=	libft
 
 SRCDIR		=	src
 OBJDIR		=	obj
-INCDIR		=	include MLX42/include/MLX42
-LIBFLG		=	-lm
+INCDIR		=	include libft MLX42/include/MLX42
 
 OBJ			=	$(foreach o, $(SRC:.c=.o),$(OBJDIR)/$(o))
 LIBINC		=	$(foreach l, $(LIBS),-I $(l) -L $(l) -l$(l:lib%=%))
@@ -35,17 +40,6 @@ SFLAGS		=	-fsanitize:address -g
 
 CC 			=	cc
 
-# == Determine OS and CPU core count =
-OS := $(shell uname)
-
-ifeq ($(OS),Linux)
-  NPROCS:=$(shell grep -c ^processor /proc/cpuinfo)
-endif
-ifeq ($(OS),Darwin) # Assume Mac OS X
-  NPROCS:=$(shell sysctl hw.ncpu | grep -o '[0-9]\+')
-endif
-# ====================================
-
 # =============== MLX42 ==============
 # libmlx42.a: MLX42/build/libmlx42.a
 # MLX42.h	: MLX42/include/MLX42/MLX42.h
@@ -55,7 +49,7 @@ MLX42		=	-framework Cocoa -framework OpenGL -framework IOKit MLX42/build/libmlx4
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBARC)
-	$(CC) $(CFLAGS) $(INCLUDE) $(LIBFLG) $(LIBINC) $(MLX42) -o $@ $(OBJ)
+	$(CC) $(CFLAGS) $(INCLUDE) $(LIBINC) $(MLX42) -o $@ $(OBJ)
 
 $(OBJ): $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@if [ ! -d $(OBJDIR) ]; then mkdir $(OBJDIR); fi

@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:15:02 by tsankola          #+#    #+#             */
-/*   Updated: 2023/10/15 17:13:21 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/17 18:03:26 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,23 @@
 # include <math.h>
 # include "rt_typedef.h"
 
-static const t_vector	g_zero_vector = {0,0,0};
+static const t_vec	g_zero_vector = {0,0,0};
 
-double	vec_distance(t_vector a, t_vector b);
+double	vec_distance(t_vec a, t_vec b);
 
-double	vec_length(t_vector a);
+double	vec_length(t_vec a);
 
 // Causes divide by zero if a is zero vector.
-t_vector	vec_normalize(t_vector a);
+t_vec	vec_normalize(t_vec a);
 
-double	dot_product(t_vector a, t_vector b);
+double	dot_product(t_vec a, t_vec b);
 
-t_vector	cross_product(t_vector a, t_vector b);
+t_vec	cross_product(t_vec a, t_vec b);
 
-t_vector	vec_add(t_vector a, t_vector b);
+t_vec	vec_add(t_vec a, t_vec b);
 
-t_vector	vec_sub(t_vector a, t_vector b);
+t_vec	vec_sub(t_vec a, t_vec b);
 
-t_vector	vec_neg(t_vector a);
+t_vec	vec_neg(t_vec a);
 
 #endif

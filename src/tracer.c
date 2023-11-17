@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tracer.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2023/10/26 19:09:49 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/11/17 19:37:38 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,6 @@
 #include "tracer.h"
 #include "scene.h"
 #include <stdio.h>
-
-typedef struct s_color
-{
-	unsigned char	r;
-	unsigned char	g;
-	unsigned char	b;
-	unsigned char	a;
-}	t_color;
 
 uint32_t	rayColor(t_camera c, t_ray ray)
 {

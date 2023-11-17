@@ -6,13 +6,14 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 19:55:32 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/16 18:09:06 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/17 18:04:10 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_CONVERSIONS_H
 # define RT_CONVERSIONS_H
 # include "libft.h"
+# include "parser.h"
 # include "rt_math.h"
 # include "rt_typedef.h"
 

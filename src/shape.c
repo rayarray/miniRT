@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 21:36:06 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/16 18:07:42 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/17 19:16:18 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,40 @@
 #include "parser.h"
 #include "libft.h"
 
-void	_shape_ctor(struct s_shape *me, char **args)
+/* // Deprecated or whatever. Replaced these with NULL pointers in shape_ctor
+static void	_shape_ctor(struct s_shape *this, char **args)
 {
 	// Not sure what to do here.
-	ft_printf("PANIC @ _shape_ctor\n");
+	(void)this;
+	(void)args;
+	ft_printf("Abstract class constructor _shape_ctor called\n");
 	exit(123);
 }
 
-void	shape_ctor(struct s_shape *me, char **args)
+static t_color	_hit_ray(struct s_shape *this, struct s_scene *scene, t_ray ray)
 {
-	static const struct s_shape_vtable	vtable =
-		{
-			&_shape_ctor,
-			&shape_dtor
-		};
+	(void)this;
+	(void)scene;
+	(void)ray;
+	ft_printf("Abstract class method _hit_ray called\n");
+	exit(123);
+} */
 
-	me->vtptr = &vtable;
-	me->vtptr->shape_ctor(me, args);
+void	shape_ctor(struct s_shape *this, t_elem_type type, t_point loc)
+{
+	static const struct s_shape_vtable	vtable = {NULL, NULL};
+
+	this->vtptr = &vtable;
+	this->type = type;
+	this->loc = loc;
 }
 
-void		shape_dtor(struct s_shape *me)
+void	shape_dtor(struct s_shape *this)
 {
-	me->vtptr->shape_dtor(me);
-//	free(me);	// Should it be deleted here? or by the caller on their own?
+	this->vtptr->shape_dtor(this);
+}
+
+t_color	hit_ray(struct s_shape *this, struct s_scene *scene, t_ray ray)
+{
+	return (this->vtptr->hit_ray(this, scene, ray));
 }

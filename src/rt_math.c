@@ -6,13 +6,13 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:53:18 by tsankola          #+#    #+#             */
-/*   Updated: 2023/10/15 17:13:08 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/17 18:03:08 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt_math.h"
 
-double	vec_distance(t_vector a, t_vector b)
+double	vec_distance(t_vec a, t_vec b)
 {
 	double	distance;
 
@@ -22,15 +22,15 @@ double	vec_distance(t_vector a, t_vector b)
 	return (distance);
 }
 
-double	vec_length(t_vector a)
+double	vec_length(t_vec a)
 {
 	return sqrt(pow(a.x, 2) + pow(a.y, 2) + pow(a.z, 2));
 }
 
-t_vector	vec_normalize(t_vector a)
+t_vec	vec_normalize(t_vec a)
 {
 	double		norm;
-	t_vector	unit_vector;
+	t_vec	unit_vector;
 
 	norm = sqrt(pow(a.x, 2) + pow(a.y, 2) + pow(a.z, 2));
 	unit_vector.x = a.x / norm;
@@ -39,14 +39,14 @@ t_vector	vec_normalize(t_vector a)
 	return (unit_vector);
 }
 
-double	dot_product(t_vector a, t_vector b)
+double	dot_product(t_vec a, t_vec b)
 {
 	return (a.x * b.x + a.y * b.y + a.z * b.z);
 }
 
-t_vector	cross_product(t_vector a, t_vector b)
+t_vec	cross_product(t_vec a, t_vec b)
 {
-	t_vector	normal;
+	t_vec	normal;
 
 	normal.x = a.y * b.z - a.z * b.y;
 	normal.y = a.z * b.x - a.x * b.z;
@@ -54,17 +54,17 @@ t_vector	cross_product(t_vector a, t_vector b)
 	return (normal);
 }
 
-t_vector	vec_add(t_vector a, t_vector b)
+t_vec	vec_add(t_vec a, t_vec b)
 {
-	return (t_vector){a.x + b.x, a.y + b.y, a.z + b.z};
+	return (t_vec){a.x + b.x, a.y + b.y, a.z + b.z};
 }
 
-t_vector	vec_sub(t_vector a, t_vector b)
+t_vec	vec_sub(t_vec a, t_vec b)
 {
-	return (t_vector){a.x - b.x, a.y - b.y, a.z - b.z};
+	return (t_vec){a.x - b.x, a.y - b.y, a.z - b.z};
 }
 
-t_vector	vec_neg(t_vector a)
+t_vec	vec_neg(t_vec a)
 {
-	return (t_vector){-a.x, -a.y, -a.z};
+	return (t_vec){-a.x, -a.y, -a.z};
 }
