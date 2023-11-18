@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 17:02:32 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/18 01:01:25 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/18 15:07:52 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ typedef enum e_parser_error
 	e_TOO_MANY_ELEMENTS,
 	e_ELEMENT_ARG_ERROR,
 	e_ENV_ERROR,
-	e_LOGIC_ERROR
+	e_LOGIC_ERROR,
+	e_ELEMENT_MISSING_ERROR
 }	t_parser_error;
 
 static const char	input_delims[3] = " \t";

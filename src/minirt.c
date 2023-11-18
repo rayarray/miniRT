@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:36:12 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/18 01:18:44 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/18 15:03:16 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int	main(int argc, char **argv)
 		return 1;
 	}
 	scene = get_scene(argv[1]);
+	if (scene != NULL){
 	printf("got scene! %p\n", scene);
 	printf("ambient %f\n", scene->ambient->light_ratio);
 	printf("camera %d\n", scene->camera->fov);
@@ -109,6 +110,7 @@ int	main(int argc, char **argv)
 		printf("lights %f\n", l->brightness);
 	for (struct s_shape *s = scene->shapes; s != NULL; s = s->next)
 		printf("shapes %d\n", s->type);
+	}
 	scene_dtor(&scene);
 	return (0);
 

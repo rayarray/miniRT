@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:01:09 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/18 01:14:42 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/18 15:14:08 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,6 @@ t_parser_error	parse_line_and_create_element(const char *line, struct s_scene *s
 		err = e_TOO_MANY_ELEMENTS;
 	free_strarray(&args);
 	if (err != e_NO_ERROR)
-		ft_printf("Parse error %d, failed to create element, line:\n%s\n", err, line);
+		ft_printf("Parse error %d, failed to create element, line:\n%s", err, line);
 	return (err);
 }
