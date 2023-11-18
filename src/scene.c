@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:23:22 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/18 00:35:22 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/18 15:03:46 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,13 @@ struct s_scene	*new_scene(void)
 
 void	scene_dtor(struct s_scene **scene)
 {
-	free((*scene)->ambient);
-	free((*scene)->camera);
-	light_dtor(&(*scene)->lights);
-	shape_list_clear(&(*scene)->shapes);
-	free(*scene);
-	*scene = NULL;
+	if (scene && *scene)
+	{
+		free((*scene)->ambient);
+		free((*scene)->camera);
+		light_dtor(&(*scene)->lights);
+		shape_list_clear(&(*scene)->shapes);
+		free(*scene);
+		*scene = NULL;
+	}
 }
