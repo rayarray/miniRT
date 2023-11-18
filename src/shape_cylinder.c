@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:43:11 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/18 00:36:27 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/18 22:33:56 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 cy	50.0,0.0,20.6	0.0,0.0,1.0	14.2	21.42	10,0,255
 */
 
-int	cylinder_ctor(struct s_cylinder *this, t_point loc, t_vec axis,
+int	cylinder_ctor(struct s_cylinder *this, t_point3 loc, t_vec axis,
 	double *dimensions, t_color color)
 {
 	static const struct s_shape_vtable	vtable = {

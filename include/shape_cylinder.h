@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:40:15 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/18 00:18:55 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/18 22:33:56 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ struct s_cylinder
 	t_color			color;
 };
 
-int	cylinder_ctor(struct s_cylinder *this, t_point loc, t_vec axis,
+int	cylinder_ctor(struct s_cylinder *this, t_point3 loc, t_vec axis,
 	double *dimensions, t_color color);	// TODO reduce parameters by one. Either combine loc and axis (technically a type error), or just edit the values directly, I dunno.
 
 void	cylinder_dtor(struct s_cylinder *this);

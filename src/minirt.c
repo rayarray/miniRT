@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:36:12 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/18 21:21:24 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/18 23:23:37 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include "camera.h"
 #include "parser.h"
 #include "scene.h"
+#include "tracer.h"
 
 /* 
 int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
@@ -73,7 +74,11 @@ static void	render(struct s_scene *scene, mlx_image_t *image)
 		x = 0 - 1;
 		while (++x < image->width)
 		{
-			col = trace_ray(scene, x, y);
+			// raster space to ndc space to screen space:
+			// x and y are points in raster space
+			// position in ndc space is their relative position in raster space
+			// screen space is 
+			col = trace_ray(scene, image, x, y);
 			mlx_put_pixel(image, x, y, coltouint32_t(col));// Do the tihng
 		}
 	}

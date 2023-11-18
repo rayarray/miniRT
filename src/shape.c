@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 21:36:06 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/18 00:35:38 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/18 23:54:37 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,7 @@
 #include "parser.h"
 #include "libft.h"
 
-/* // Deprecated or whatever. Replaced these with NULL pointers in shape_ctor
-static void	_shape_ctor(struct s_shape *this, char **args)
-{
-	// Not sure what to do here.
-	(void)this;
-	(void)args;
-	ft_printf("Abstract class constructor _shape_ctor called\n");
-	exit(123);
-}
-
-static t_color	_hit_ray(struct s_shape *this, struct s_scene *scene, t_ray ray)
-{
-	(void)this;
-	(void)scene;
-	(void)ray;
-	ft_printf("Abstract class method _hit_ray called\n");
-	exit(123);
-} */
-
-void	shape_ctor(struct s_shape *this, t_elem_type type, t_point loc)
+void	shape_ctor(struct s_shape *this, t_elem_type type, t_point3 loc)
 {
 	static const struct s_shape_vtable	vtable = {_shape_base_dtor, NULL};
 
