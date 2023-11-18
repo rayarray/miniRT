@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 17:35:34 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/18 15:28:38 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/18 17:39:30 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static t_parser_error	populate_scene(int fd, struct s_scene *scene)
 	return (err);
 }
 
-static struct s_scene	*read_file(const char *filename)
+struct s_scene	*parse_file(const char *filename)
 {
 	int				fd;
 	struct s_scene	*scene;
@@ -62,19 +62,5 @@ static struct s_scene	*read_file(const char *filename)
 		ft_printf("%s is a directory.\n", filename);
 	if (close(fd) < 0)
 		perror(filename);
-	return (scene);
-}
-
-struct s_scene	*get_scene(const char *filename)
-{
-	struct s_scene			*scene;
-
-	scene = read_file(filename);
-	if (scene == NULL)
-		ft_printf("Could not create scene\n");
-//	if (!scenebase)
-//		return (NULL);
-//	scene = create_scene(scenebase);
-//	ft_printf("create_scene ok\n");
 	return (scene);
 }

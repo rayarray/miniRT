@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 17:02:32 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/18 15:07:52 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/18 16:48:15 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ struct s_scene_base
 };
 
 // Scene_reader.c
-struct s_scene	*get_scene(const char *filename);
+struct s_scene	*parse_file(const char *filename);
 
 // Utility functions
 char	**free_strarray(char ***array);

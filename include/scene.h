@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:18:59 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/17 22:22:52 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/18 21:17:59 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,5 @@ int		hitSphere(const t_vec center, double radius, const t_ray ray);
 
 struct s_scene	*new_scene(void);
 void			scene_dtor(struct s_scene **scene);
-
+t_color			trace_ray(struct s_scene *scene, int x, int y);
 #endif	/* SCENE_H */
