@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:06:28 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/16 17:07:47 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/18 15:40:56 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "rt_typedef.h"
 
 typedef struct s_camera {
-	t_vec	loc;
+	t_point	loc;
 	t_vec	dir;
 	int		fov;
 	t_ray	center;
@@ -35,7 +35,7 @@ typedef struct s_camera {
 	t_vec	pixel00_loc;
 }	t_camera;
 
-int	camera_ctor(struct s_camera *c, t_vec loc, t_vec dir, int fov);
+int	camera_ctor(struct s_camera *c, t_point loc, t_vec dir, int fov);
 
 t_camera	initCamera(mlx_image_t *image, int fov, void *scene, t_ray center);
 void		renderCamera(mlx_image_t *image, t_camera c);
