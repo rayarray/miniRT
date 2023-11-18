@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:16:05 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/18 00:37:23 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/18 23:29:06 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ t_color	sphere_hit_ray(struct s_sphere *this, struct s_scene *scene, t_ray ray)
 	(void)scene;
 	(void)ray;
 	(void)this;
-	color = (t_color){0xFF, 0xFF, 0xFF, 0xFF};	// placeholder
+	color = this->color;
 	return (color);
 }

@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:17:25 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/18 17:54:42 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/18 22:33:56 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 //# Camera: type identifier | xyz coordinates | orientation vector | FOV
 //C	-50.0,0,20	0,0,1	70
 
-int	camera_ctor(struct s_camera *c, t_point loc, t_vec dir, int fov)
+int	camera_ctor(struct s_camera *c, t_point3 loc, t_vec dir, int fov)
 {
 	c->loc = loc;
 	if (!is_unitvec(dir))
