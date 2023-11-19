@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:06:28 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/18 22:33:56 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/19 15:28:08 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 typedef struct s_camera {
 	t_point3	loc;
 	t_vec	dir;
-	int		fov;
+	int		fov;			// perhaps fov could be saved as radians?
 	t_ray	center;
 	void	*scene;
 	double	focal_length;

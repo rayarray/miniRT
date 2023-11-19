@@ -6,13 +6,14 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/18 23:53:48 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/19 18:34:32 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MLX42.h"
 #include "rt_math.h"
 #include "tracer.h"
+#include "color.h"
 #include <stdio.h>
 #include <math.h>
 
@@ -56,9 +57,10 @@ static t_point3	pixel_to_camera_space(int fov, mlx_image_t *image,
 	half_fov_r = (double)fov * M_PI_2 / 180.0;
 	ndc_point = (t_point2){((double)x + 0.5) / image->width,
 		 ((double)y + 0.5) / image->height};
-	screen_point = (t_point2){2 * ndc_point.x - 1, 2 * ndc_point.y - 1};
-	camera_point = (t_point3){(2 * screen_point.x - 1) * aspect_ratio, 
-		(1 - 2 * screen_point.y), -1};
+	screen_point = (t_point2){2 * ndc_point.x - 1, 1 - 2 * ndc_point.y};	// y is flipped
+	// camera_point = (t_point3){(2 * screen_point.x - 1) * aspect_ratio,
+	// 	(1 - 2 * screen_point.y), 1};
+	camera_point = (t_point3){(screen_point.x) * aspect_ratio, (screen_point.y), 1};
 	camera_point.x = camera_point.x * tan(half_fov_r);
 	camera_point.y = camera_point.y * tan(half_fov_r);
 	return (camera_point);
@@ -68,22 +70,29 @@ t_color	cast_ray(struct s_scene *scene, t_ray ray)
 {
 	struct s_shape	*shape;
 	t_color			col;
-	double			nearest;
+	double			distance_to_nearest;
+	struct s_shape	*closest_shape;
 
+	closest_shape = NULL;
 	col = (t_color){.r = 0x42, .g = 0x42, .b = 0x42, .a = 0xFF};
-	nearest = INFINITY;
+	distance_to_nearest = INFINITY;
 	shape = scene->shapes;
 	while (shape != NULL)
 	{
-		// calculate hit, get distance etc.
-		// hit_ray function should probably return point of impact
-		// then calculate distance, compare it to nearest and save shape
-		// if it is closer.
-		// After looping through all shapes, then get color of the point of
-		// impact.
-		(void)ray;
+		if (intersect_distance(shape, ray) < distance_to_nearest)
+			closest_shape = shape;
 		shape = shape->next;
 	}
+//	printf("ray %f %f %f", ray.destination.x, ray.destination.y, ray.destination.z);
+	if (closest_shape)
+	{
+		col = closest_shape->col;
+//		printf(" hits!\n");
+	}
+	else
+		;//printf(" misses!\n");
+
+	// Problem: How to scale the color accordinly?
 	return (col);
 }
 
@@ -97,6 +106,10 @@ t_color	trace_ray(struct s_scene *scene, mlx_image_t *image,
 	camera_point = pixel_to_camera_space(scene->camera->fov, image, x, y);
 	ray.origin = scene->camera->loc;
 	ray.destination = vec_normalize(vec_add(camera_point, scene->camera->loc));
+
+//	printf("(% 4.2f, % 4.2f)", camera_point.x, camera_point.y);
+//	printf("(%d, %d): camera_point (%f, %f, %f)\n", x, y, camera_point.x, camera_point.y, camera_point.z);
+//	getchar();
 	col = cast_ray(scene, ray);
 	return (col);
 }

@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:36:12 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/18 23:23:37 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/19 18:33:34 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,13 @@ static void	render(struct s_scene *scene, mlx_image_t *image)
 			// position in ndc space is their relative position in raster space
 			// screen space is 
 			col = trace_ray(scene, image, x, y);
+//			printf(" ");
 			mlx_put_pixel(image, x, y, coltouint32_t(col));// Do the tihng
 		}
+//		printf("\n");
 	}
+//	printf("image drawn");
+//	getchar();
 }
 
 static void	minirt_hook(struct s_minirt *minirt)
@@ -118,7 +122,7 @@ static int	window_init(mlx_t **mlx, mlx_image_t **image)
 	(*mlx) = mlx_init(WIDTH, HEIGHT, TITLE, true);
 	if (*mlx)
 	{
-		*image = mlx_new_image(*mlx, WIDTH, HEIGHT);
+		*image = mlx_new_image(*mlx, IMAGE_WIDTH, IMAGE_HEIGHT);
 		if ((*image) && (mlx_image_to_window(*mlx, (*image), 0, 0) >= 0))
 			return (EXIT_SUCCESS);
 	}
