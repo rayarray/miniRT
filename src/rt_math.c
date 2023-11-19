@@ -6,11 +6,21 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:53:18 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/17 18:03:08 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/19 17:28:30 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt_math.h"
+
+t_vec	vec_between_points(t_point3 a, t_point3 b)
+{
+	t_vec	ret;
+
+	ret.x = a.x - b.x;
+	ret.y = a.y - b.y;
+	ret.z = a.z - b.z;
+	return (ret);
+}
 
 double	vec_distance(t_vec a, t_vec b)
 {
@@ -67,4 +77,12 @@ t_vec	vec_sub(t_vec a, t_vec b)
 t_vec	vec_neg(t_vec a)
 {
 	return (t_vec){-a.x, -a.y, -a.z};
+}
+
+t_vec	vec_scal_mul(t_vec a, double s)
+{
+	a.x *= s;
+	a.y *= s;
+	a.z *= s;
+	return (a);
 }

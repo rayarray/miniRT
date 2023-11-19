@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:39:10 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/18 00:36:55 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/19 16:38:48 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,14 @@ int	plane_ctor(struct s_plane *plane, t_vec point, t_vec normal, t_color color)
 {
 	static const struct s_shape_vtable	vtable = {
 			(void (*)(struct s_shape *this))plane_dtor,
-			(t_color (*)(struct s_shape *this, struct s_scene *scene, t_ray ray))plane_hit_ray
+			(double (*)(struct s_shape *this, t_ray ray))plane_intersect_distance
 		};
 
-	shape_ctor(&plane->base, e_PLANE, point);
+	shape_ctor(&plane->base, e_PLANE, point, color);
 	plane->base.vtptr = &vtable;
 	if (!is_unitvec(normal))
 		return (1);
 	plane->normal = normal;
-	plane->color = color;
 	return (0);
 }
 
@@ -41,6 +40,13 @@ t_color	plane_hit_ray(struct s_plane *this, struct s_scene *scene, t_ray ray)
 	(void)scene;
 	(void)ray;
 	(void)this;
-	color = (t_color){0xFF, 0xFF, 0xFF, 0xFF};	// placeholder
+	color = this->base.col;
 	return (color);
+}
+
+double	plane_intersect_distance(struct s_plane *this, t_ray ray)
+{
+	(void)this;
+	(void)ray;
+	return INFINITY;	//placeholder
 }

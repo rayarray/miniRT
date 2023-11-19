@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:30:47 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/18 22:33:56 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/19 17:47:35 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ t_parser_error	sphere_evaluator(struct s_sphere **s, char **args)
 	if (!is_double_triplet_strict(args[1]) || !is_double(args[2])
 		|| !is_int_triplet_strict(args[3]))
 		return (e_ELEMENT_ARG_ERROR);
+
 	*s = malloc(sizeof(struct s_cylinder));
 	if (*s == NULL)
 		return (e_ENV_ERROR);

@@ -6,7 +6,7 @@
 #    By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 16:29:22 by rleskine          #+#    #+#              #
-#    Updated: 2023/11/18 00:39:12 by tsankola         ###   ########.fr        #
+#    Updated: 2023/11/19 17:08:18 by tsankola         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,8 @@ PARSER		=	ambient_lighting.c camera.c parse_file_reader.c get_next_line.c \
 				parse_scene.c parse_shape.c parse_utilities.c rt_math.c \
 				rt_split.c rt_validations.c scene.c shape.c shape_cylinder.c \
 				shape_plane.c shape_sphere.c tracer.c vector.c
+
+# TODO should include headers here so that program recompiles if only header file has changed
 
 SRC			=	$(PARSER)
 

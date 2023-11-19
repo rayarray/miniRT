@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   color.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/09 13:02:44 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/19 18:35:32 by tsankola         ###   ########.fr       */
+/*   Created: 2023/11/19 17:58:40 by tsankola          #+#    #+#             */
+/*   Updated: 2023/11/19 18:04:59 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
-# define TITLE "miniRT"
-# define WIDTH	800
-# define HEIGHT	512
-# define IMAGE_WIDTH WIDTH
-# define IMAGE_HEIGHT HEIGHT
-# include "scene.h"
-# include "MLX42.h"
+#ifndef COLOR_H
+#define COLOR_H
+#include "rt_typedef.h"
 
-struct s_minirt
-{
-	struct s_scene	*scene;
-	mlx_t			*mlx;
-	mlx_image_t		*image;
-};
+t_color	color_amplify(t_color color, double factor);
 
-#endif
+#endif /* COLOR_H */

@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:43:11 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/18 22:33:56 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/19 16:38:36 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,16 @@ int	cylinder_ctor(struct s_cylinder *this, t_point3 loc, t_vec axis,
 {
 	static const struct s_shape_vtable	vtable = {
 			(void (*)(struct s_shape *this))cylinder_dtor,
-			(t_color (*)(struct s_shape *this, struct s_scene *scene, t_ray ray))cylinder_hit_ray
+			(double	(*)(struct s_shape *c, t_ray ray))cylinder_intersect_distance
 		};
 
-	shape_ctor(&this->base, e_CYLINDER, loc);
+	shape_ctor(&this->base, e_CYLINDER, loc, color);
 	this->base.vtptr = &vtable;
 	if (!is_unitvec(axis))
 		return (1);
 	this->diameter = dimensions[e_DIAMETER];
 	this->height = dimensions[e_HEIGHT];
 	this->axis = axis;
-	this->color = color;
 	return (0);
 }
 
@@ -52,4 +51,11 @@ t_color	cylinder_hit_ray(struct s_cylinder *this, struct s_scene *scene, t_ray r
 	(void)this;
 	color = (t_color){0xFF, 0xFF, 0xFF, 0xFF};	// placeholder
 	return (color);
+}
+
+double	cylinder_intersect_distance(struct s_cylinder *c, t_ray ray)
+{
+	(void)c;
+	(void)ray;
+	return INFINITY;	//placeholder
 }

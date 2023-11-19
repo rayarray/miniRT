@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 19:56:43 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/18 20:17:25 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/19 17:57:57 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ double	rt_atof(const char *a)
 	f = 0;
 	sign = 1;
 	skip_whitespace(&c);
-	sign -= ((*c == '-') * -2);
+	sign -= ((*c == '-') * 2);
 	c += (*c == '+' || *c == '-');
 	while (ft_isdigit(*c))
 		f = f * 10 + sign * (*c++ - '0');
