@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:12:00 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/19 16:36:30 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/20 17:56:04 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,7 @@ void		sphere_dtor(struct s_sphere *this);
 t_color		sphere_hit_ray(struct s_sphere *this, struct s_scene *scene, t_ray ray);
 
 double	sphere_intersect_distance(struct s_sphere *s, t_ray ray);
+
+t_color	sphere_intersect_color(struct s_sphere *s, t_ray ray);
 
 #endif

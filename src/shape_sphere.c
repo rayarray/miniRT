@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:16:05 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/19 17:57:35 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/20 18:13:56 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 #include "rt_typedef.h"
 #include "math.h"
 #include "rt_math.h"
+#include "assert.h"
 
 int	sphere_ctor(struct s_sphere *this, t_vec loc, double diameter, t_color color)
 {
 	static const struct s_shape_vtable	sphere_vtable = {
 			(void (*)(struct s_shape *this))sphere_dtor,
-			(double (*)(struct s_shape *this, t_ray ray))sphere_intersect_distance
+			(double (*)(struct s_shape *this, t_ray ray))sphere_intersect_distance,
+			(t_color (*)(struct s_shape *this, t_ray ray))sphere_intersect_color
 		};
 
 	shape_ctor(&this->base, e_SPHERE, loc, color);
@@ -45,28 +47,96 @@ t_color	sphere_hit_ray(struct s_sphere *this, struct s_scene *scene, t_ray ray)
 }
 
 #include <stdio.h>
-double	sphere_intersect_distance(struct s_sphere *s, t_ray ray)
+static double	geometric_intersect_distance(struct s_sphere *s, t_ray ray)
 {
 	t_vec	l;	// vector between origin and sphere
-	double	t;	// distance from origin to a line s that is perpendicular between destination line and l
+	double	tca;	// distance from origin to a line s that is perpendicular between destination line and l
 	double	d;	// distance between s.loc and the line s above
-	double	u;	// distance between line s and impact point
+	double	thc;	// distance between line s and impact point
 	double	impact_dist;
 
 	l = vec_sub(s->base.loc, ray.origin);
-	t = dot_product(l, ray.destination);
-	if (t < 0)							
-		return INFINITY;
-	d = sqrt(pow(vec_length(l), 2) - pow(t, 2));
-	if (d < 0 || d > s->diameter / 2)		// second comparison checks if the intersection is outside the radius
-		return INFINITY;
-	u = sqrt(pow(s->diameter / 2, 2) - pow(d, 2));
-	if (t - u < t + u)
-		impact_dist = t - u;
+	tca = dot_product(l, ray.destination);
+	if (tca < 0)							
+		return (INFINITY);
+	d = sqrt(dot_product(l, l) - pow(tca, 2));
+	if (d < 0 || d > s->diameter / 2)	// d should always be greater than or equal to zero but I guess it's better to be safe than sorry. second comparison checks if the intersection is outside the radius
+		return (INFINITY);
+	thc = sqrt(pow(s->diameter / 2, 2) - pow(d, 2));
+	if (tca - thc < tca + thc)
+		impact_dist = tca - thc;
 	else
-		impact_dist = t + u;
-//	t_vec	impact_point = vec_scal_mul(ray.destination, impact_dist);
-//	printf("sphere at %f %f %f diameter %f\n", s->base.loc.x, s->base.loc.y, s->base.loc.z, s->diameter);
-//	printf("impact %f %f %f!\n", impact_point.x, impact_point.y, impact_point.z);
+		impact_dist = tca + thc;
 	return (impact_dist);
+}
+
+// https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection.html
+static double	analytic_intersect_distance(struct s_sphere *s, t_ray ray)
+{
+	double	a;
+	double	b;
+	double	c;
+	double	discriminant;
+	double	result;
+	double	result1;
+	double	result2;
+
+	result = INFINITY;
+	a = dot_product(ray.destination, ray.destination);		// should be always 1
+	b = 2 * dot_product(ray.destination, vec_sub(ray.origin, s->base.loc));
+	c = pow(vec_length(vec_sub(ray.origin, s->base.loc)), 2) - pow(s->diameter / 2, 2);
+	discriminant = pow(b, 2) - 4 * a * c;
+//	if (a == 0)					// Would result in a divide by zero
+//		result = INFINITY;		// but this shouldn't happen because ray.destination should be normalized.
+//	else
+	if (feq(discriminant, 0))
+		result = -b / (2 * a);
+	else if (discriminant > 0)
+	{ 
+		result1 = (-b + sqrt(discriminant)) / (2 * a);	// Source material says this method might produce errors ("catastrophic cancellation")
+		result2 = (-b - sqrt(discriminant)) / (2 * a);
+		if (result1 > 0 && result2 > 0)
+			result = fmin(result1, result2);
+		else if (result1 < 0 && result2 < 0)
+			result = INFINITY;
+		else
+			result = fmax(result1, result2);
+	}
+	return (result);
+}
+
+// Returns INFINITY if ray does not intersect with s
+double	sphere_intersect_distance(struct s_sphere *s, t_ray ray)
+{
+	double	anal;
+	double	geom;
+
+	anal = analytic_intersect_distance(s, ray);
+	geom = geometric_intersect_distance(s, ray);
+	if (anal != INFINITY && geom != INFINITY && !feq(anal, geom))
+		printf("sphere's geometric and analytic intersect differs by %f!\n", anal - geom);
+	return (anal);
+}
+
+t_color	sphere_intersect_color(struct s_sphere *s, t_ray ray)
+{
+	t_color	color;
+	double	dist;
+	t_vec	normal;
+	double	d;
+
+	dist = sphere_intersect_distance(s, ray);
+	color = s->base.col;
+	if (dist != INFINITY)
+	{
+		normal = vec_normalize(vec_sub(vec_add(ray.origin, vec_scal_mul(ray.destination, dist)), s->base.loc));
+		d = dot_product(normal, ray.destination);
+		if (d < 0)
+		{
+			color.r = (double)color.r * (-d);
+			color.g = (double)color.g * (-d);
+			color.b = (double)color.b * (-d);
+		}
+	}
+	return (color);
 }

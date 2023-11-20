@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/19 18:34:32 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/20 18:13:32 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ t_color	cast_ray(struct s_scene *scene, t_ray ray)
 //	printf("ray %f %f %f", ray.destination.x, ray.destination.y, ray.destination.z);
 	if (closest_shape)
 	{
-		col = closest_shape->col;
+//		col = closest_shape->col;
+		col = intersect_color(closest_shape, ray);
 //		printf(" hits!\n");
 	}
 	else
