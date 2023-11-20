@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 21:36:06 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/19 16:36:02 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/20 17:45:00 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 void	shape_ctor(struct s_shape *this, t_elem_type type, t_point3 loc, t_color col)
 {
-	static const struct s_shape_vtable	vtable = {_shape_base_dtor, NULL};
+	static const struct s_shape_vtable	vtable = {_shape_base_dtor, NULL, NULL};
 
 	this->vtptr = &vtable;
 	this->type = type;
@@ -39,6 +39,11 @@ void	shape_dtor(struct s_shape *this)
 double	intersect_distance(struct s_shape *this, t_ray ray)
 {
 	return (this->vtptr->intersect_distance(this, ray));
+}
+
+t_color	intersect_color(struct s_shape *this, t_ray ray)
+{
+	return (this->vtptr->intersect_color(this, ray));
 }
 
 void	shape_list_clear(struct s_shape **shape)

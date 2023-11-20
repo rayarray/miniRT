@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:38:11 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/19 16:37:30 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/20 17:47:45 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,7 @@ void	plane_dtor(struct s_plane *plane);
 t_color	plane_hit_ray(struct s_plane *this, struct s_scene *scene, t_ray ray);
 
 double	plane_intersect_distance(struct s_plane *this, t_ray ray);
+
+t_color	plane_intersect_color(struct s_plane *this, t_ray ray);
 
 #endif

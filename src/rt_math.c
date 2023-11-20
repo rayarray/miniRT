@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:53:18 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/19 17:28:30 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:26:05 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ t_vec	vec_between_points(t_point3 a, t_point3 b)
 	ret.y = a.y - b.y;
 	ret.z = a.z - b.z;
 	return (ret);
+}
+
+int	feq(double a, double b)
+{
+	if (fabs(a - b) < RT_EPSILON)
+		return (1);
+	return (0);
 }
 
 double	vec_distance(t_vec a, t_vec b)

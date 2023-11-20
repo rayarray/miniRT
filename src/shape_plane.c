@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:39:10 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/19 16:38:48 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/20 18:15:20 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	plane_ctor(struct s_plane *plane, t_vec point, t_vec normal, t_color color)
 {
 	static const struct s_shape_vtable	vtable = {
 			(void (*)(struct s_shape *this))plane_dtor,
-			(double (*)(struct s_shape *this, t_ray ray))plane_intersect_distance
+			(double (*)(struct s_shape *this, t_ray ray))plane_intersect_distance,
+			(t_color (*)(struct s_shape *this, t_ray ray))plane_intersect_color
 		};
 
 	shape_ctor(&plane->base, e_PLANE, point, color);
@@ -49,4 +50,11 @@ double	plane_intersect_distance(struct s_plane *this, t_ray ray)
 	(void)this;
 	(void)ray;
 	return INFINITY;	//placeholder
+}
+
+t_color	plane_intersect_color(struct s_plane *this, t_ray ray)
+{
+	(void)this;
+	(void)ray;
+	return this->base.col;	//placeholder
 }
