@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:17:25 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/18 22:33:56 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/21 18:26:12 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ t_camera	initCamera(mlx_image_t *image, int fov, void *scene, t_ray center)
 			vecMul(vecAdd(c.pixel_delta_u, c.pixel_delta_v), 0.5));
 	return (c);
 }
-
+/* 
 void	renderCamera(mlx_image_t *image, t_camera c)
 {
 	//t_vec		pixel_center;
@@ -116,4 +116,4 @@ void	renderCamera(mlx_image_t *image, t_camera c)
 			mlx_put_pixel(image, x, y, pixel_color);
 		}
 	}
-}
+} */

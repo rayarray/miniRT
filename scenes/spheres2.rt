@@ -1,4 +1,4 @@
-# A scene where the camera is looking directly at a green ball along the z axis.
+# A scene where the camera is looking directly at three balls intersecting along the z axis.
 
 # Ambient lighting: type identifier 'A' | ambient lighting ratio | colors (RGB)
 # Camera: type identifier 'C' | xyz coordinates | orientation vector | FOV
@@ -7,9 +7,9 @@
 # Plane: type identifier | xyz coordinates of a point | normal vector | colors (RGB)
 # Cylinder: type identifer | xyz coordinates | vector of axis of cylinder | diameter | height | colors (RGB)
 
-A	0.5	255,255,255
+A	0.7	42,42,42
 C	0,0,0	0,0,1	90
-L	4,0,10	1	255,255,255
-sp	0,0,10	2.0	0,192,0
-sp	5,0,10	2.0	192,0,0
-sp	-5,0,10	2.0	0,0,192
+L	0,10,10	0.4	192,192,192
+sp	0,0,10	5.0	0,192,0
+sp	5,0,10	5.0	192,0,0
+sp	-5,0,10	5.0	0,0,192

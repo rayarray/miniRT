@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:36:12 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/19 18:33:34 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/21 18:20:43 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static uint32_t	coltouint32_t(t_color col)
 	return (ret);
 }
 
-static void	render(struct s_scene *scene, mlx_image_t *image)
+void	render(struct s_scene *scene, mlx_image_t *image)
 {
 	uint32_t	x;
 	uint32_t	y;
@@ -88,17 +88,6 @@ static void	render(struct s_scene *scene, mlx_image_t *image)
 //	getchar();
 }
 
-static void	minirt_hook(struct s_minirt *minirt)
-{
-	if (mlx_is_key_down(minirt->mlx, MLX_KEY_ENTER)
-		|| mlx_is_key_down(minirt->mlx, MLX_KEY_ESCAPE))
-	{
-		mlx_close_window(minirt->mlx);
-		return ;
-	}
-	render(minirt->scene, minirt->image);
-}
-
 static int	get_scene_from_input(struct s_scene **scene, int argc, char **argv)
 {
 	*scene = NULL;
@@ -118,7 +107,6 @@ static int	get_scene_from_input(struct s_scene **scene, int argc, char **argv)
 
 static int	window_init(mlx_t **mlx, mlx_image_t **image)
 {
-	// mlx_set_setting(MLX_STRETCH_IMAGE, true); // This resizes the image if window is resized
 	(*mlx) = mlx_init(WIDTH, HEIGHT, TITLE, true);
 	if (*mlx)
 	{
@@ -141,8 +129,10 @@ int	main(int argc, char **argv)
 		exit_code = window_init(&minirt.mlx, &minirt.image);
 	if (exit_code == EXIT_SUCCESS)
 	{
-		mlx_loop_hook(minirt.mlx, (void (*)(void *))minirt_hook, &minirt);
-		mlx_loop(minirt.mlx);							// main loop here
+		mlx_resize_hook(minirt.mlx, (void (*)(int32_t, int32_t, void *))minirt_resize_hook, &minirt);
+		mlx_loop_hook(minirt.mlx, (void (*)(void *))minirt_loop_hook, &minirt);
+		mlx_key_hook(minirt.mlx, (void (*)(mlx_key_data_t, void *))minirt_key_hook, &minirt);
+		mlx_loop(minirt.mlx);
 	}
 	if (minirt.mlx)
 		mlx_terminate(minirt.mlx);

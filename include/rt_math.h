@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:15:02 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/20 16:26:05 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/21 20:07:30 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include "rt_typedef.h"
 
 static const t_vec	g_zero_vector = {0,0,0};		// What's this for?
+
+t_vec	vec_between_points(t_point3 a, t_point3 b);
 
 int		feq(double a, double b);
 

@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:01:09 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/18 15:14:08 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/21 20:09:41 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_parser_error	camera_evaluator(struct s_camera **c, char **args)
 
 t_parser_error	light_evaluator(struct s_light **l, char **args)
 {
-	t_vec			pos;
+	t_vec			loc;
 	double			brightness;
 	t_color			color;
 
@@ -79,10 +79,10 @@ t_parser_error	light_evaluator(struct s_light **l, char **args)
 	*l = malloc(sizeof(struct s_light));
 	if (*l == NULL)
 		return (e_ENV_ERROR);
-	pos = rt_atovec(args[1]);
+	loc = rt_atovec(args[1]);
 	brightness = rt_atof(args[2]);
 	color = rt_atocol(args[3]);
-	if (light_ctor(*l, pos, brightness, color))
+	if (light_ctor(*l, loc, brightness, color))
 		return (e_ELEMENT_ARG_ERROR);
 	return (e_NO_ERROR);
 }
