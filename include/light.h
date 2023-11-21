@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 13:10:48 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/17 23:56:21 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/21 20:09:41 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 struct s_light
 {
 	struct s_light	*next;
-	t_vec			pos;
+	t_vec			loc;
 	double			brightness;
 	t_color			color;
 };

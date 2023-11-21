@@ -5,6 +5,20 @@ https://www.youtube.com/watch?v=2v_qM5SJDlY
 Whole course:
 https://www.state-machine.com/video-course
 
+Sources:
+Camera:
+https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-generating-camera-rays/generating-camera-rays.html
+
+Rendering basic shapes:
+https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/parametric-and-implicit-surfaces.html
+
+Lighting:
+https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/what-is-shading-light-matter-interaction.html
+https://www.youtube.com/watch?v=8uNIR9hJF60&list=PLbyTU_tFIkcN2s0rMr0tl5utneA0B-9ok&index=1
+
+Multiple lights:
+https://computergraphics.stackexchange.com/questions/4792/path-tracing-with-multiple-lights
+
 Allowed functions:
 
 fcntl

@@ -6,22 +6,24 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:16:05 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/20 18:13:56 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/21 22:52:22 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "shape_sphere.h"
 #include "rt_typedef.h"
 #include "math.h"
 #include "rt_math.h"
-#include "assert.h"
+#include "color.h"
+#include "shading.h"
 
 int	sphere_ctor(struct s_sphere *this, t_vec loc, double diameter, t_color color)
 {
 	static const struct s_shape_vtable	sphere_vtable = {
 			(void (*)(struct s_shape *this))sphere_dtor,
 			(double (*)(struct s_shape *this, t_ray ray))sphere_intersect_distance,
-			(t_color (*)(struct s_shape *this, t_ray ray))sphere_intersect_color
+			(t_color (*)(struct s_shape *this, struct s_scene *scene, t_ray ray))sphere_intersect_color
 		};
 
 	shape_ctor(&this->base, e_SPHERE, loc, color);
@@ -46,7 +48,6 @@ t_color	sphere_hit_ray(struct s_sphere *this, struct s_scene *scene, t_ray ray)
 	return (color);
 }
 
-#include <stdio.h>
 static double	geometric_intersect_distance(struct s_sphere *s, t_ray ray)
 {
 	t_vec	l;	// vector between origin and sphere
@@ -88,7 +89,6 @@ static double	analytic_intersect_distance(struct s_sphere *s, t_ray ray)
 	discriminant = pow(b, 2) - 4 * a * c;
 //	if (a == 0)					// Would result in a divide by zero
 //		result = INFINITY;		// but this shouldn't happen because ray.destination should be normalized.
-//	else
 	if (feq(discriminant, 0))
 		result = -b / (2 * a);
 	else if (discriminant > 0)
@@ -114,29 +114,26 @@ double	sphere_intersect_distance(struct s_sphere *s, t_ray ray)
 	anal = analytic_intersect_distance(s, ray);
 	geom = geometric_intersect_distance(s, ray);
 	if (anal != INFINITY && geom != INFINITY && !feq(anal, geom))
-		printf("sphere's geometric and analytic intersect differs by %f!\n", anal - geom);
+		printf("sphere's geometric and analytic intersect differs by %f: anal %f geom %f!\n", anal - geom, anal, geom);
 	return (anal);
 }
 
-t_color	sphere_intersect_color(struct s_sphere *s, t_ray ray)
+t_color	sphere_intersect_color(struct s_sphere *s, struct s_scene *scene, t_ray ray)
 {
 	t_color	color;
 	double	dist;
-	t_vec	normal;
-	double	d;
+	t_point3	impact;
+	t_vec	surface_normal;
 
 	dist = sphere_intersect_distance(s, ray);
 	color = s->base.col;
 	if (dist != INFINITY)
 	{
-		normal = vec_normalize(vec_sub(vec_add(ray.origin, vec_scal_mul(ray.destination, dist)), s->base.loc));
-		d = dot_product(normal, ray.destination);
-		if (d < 0)
-		{
-			color.r = (double)color.r * (-d);
-			color.g = (double)color.g * (-d);
-			color.b = (double)color.b * (-d);
-		}
+		impact = vec_add(ray.origin, vec_scal_mul(ray.destination, dist));
+		surface_normal = vec_normalize(vec_sub(impact, s->base.loc));
+		color = apply_ambient(color, scene->ambient);
+//		color = facing_ratio(surface_normal, ray.destination, color, color_fade(scene->ambient->color, scene->ambient->light_ratio));
+		color = diffuse_shading(scene->lights, surface_normal, impact, color);
 	}
 	return (color);
 }

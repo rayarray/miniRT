@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:43:11 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/20 18:15:48 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/21 19:57:38 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	cylinder_ctor(struct s_cylinder *this, t_point3 loc, t_vec axis,
 	double *dimensions, t_color color)
 {
 	static const struct s_shape_vtable	vtable = {
-			(void (*)(struct s_shape *this))cylinder_dtor,
-			(double (*)(struct s_shape *c, t_ray ray))cylinder_intersect_distance,
-			(t_color (*)(struct s_shape *c, t_ray ray))cylinder_intersect_color
+			(void (*)(struct s_shape *))cylinder_dtor,
+			(double (*)(struct s_shape *, t_ray))cylinder_intersect_distance,
+			(t_color (*)(struct s_shape *, struct s_scene *, t_ray))cylinder_intersect_color
 		};
 
 	shape_ctor(&this->base, e_CYLINDER, loc, color);
@@ -43,7 +43,7 @@ void	cylinder_dtor(struct s_cylinder *this)
 	_shape_base_dtor(&this->base);
 }
 
-t_color	cylinder_hit_ray(struct s_cylinder *this, struct s_scene *scene, t_ray ray)
+/* t_color	cylinder_hit_ray(struct s_cylinder *this, struct s_scene *scene, t_ray ray)
 {
 	t_color	color;
 
@@ -53,7 +53,7 @@ t_color	cylinder_hit_ray(struct s_cylinder *this, struct s_scene *scene, t_ray r
 	color = (t_color){0xFF, 0xFF, 0xFF, 0xFF};	// placeholder
 	return (color);
 }
-
+ */
 double	cylinder_intersect_distance(struct s_cylinder *c, t_ray ray)
 {
 	(void)c;
@@ -61,9 +61,10 @@ double	cylinder_intersect_distance(struct s_cylinder *c, t_ray ray)
 	return INFINITY;	//placeholder
 }
 
-t_color	cylinder_intersect_color(struct s_cylinder *this, t_ray ray)
+t_color	cylinder_intersect_color(struct s_cylinder *this, struct s_scene *scene, t_ray ray)
 {
 	(void)this;
 	(void)ray;
+	(void)scene;
 	return this->base.col;	//placeholder
 }

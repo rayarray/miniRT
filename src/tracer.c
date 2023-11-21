@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/20 18:13:32 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/21 20:50:24 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "color.h"
 #include <stdio.h>
 #include <math.h>
-
+/* // DEPRECATED
 uint32_t	rayColor(t_camera c, t_ray ray)
 {
 	t_vec		unit_direction;
@@ -40,6 +40,7 @@ uint32_t	rayColor(t_camera c, t_ray ray)
 	color.a = 0xFF;
 	return (color.r << 24 | color.g << 16 | color.b << 8 | color.a);
 }
+ */
 
 // Done using 
 // https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-generating-camera-rays/generating-camera-rays.html
@@ -57,16 +58,29 @@ static t_point3	pixel_to_camera_space(int fov, mlx_image_t *image,
 	half_fov_r = (double)fov * M_PI_2 / 180.0;
 	ndc_point = (t_point2){((double)x + 0.5) / image->width,
 		 ((double)y + 0.5) / image->height};
-	screen_point = (t_point2){2 * ndc_point.x - 1, 1 - 2 * ndc_point.y};	// y is flipped
-	// camera_point = (t_point3){(2 * screen_point.x - 1) * aspect_ratio,
-	// 	(1 - 2 * screen_point.y), 1};
+	screen_point = (t_point2){2 * ndc_point.x - 1, 1 - 2 * ndc_point.y};	// y is flipped here
 	camera_point = (t_point3){(screen_point.x) * aspect_ratio, (screen_point.y), 1};
 	camera_point.x = camera_point.x * tan(half_fov_r);
 	camera_point.y = camera_point.y * tan(half_fov_r);
 	return (camera_point);
 }
 
-t_color	cast_ray(struct s_scene *scene, t_ray ray)
+// Tests if a given ray intersects with any shape along the ray
+int	collision_test(struct s_scene *scene, t_ray ray)
+{
+	double	length;
+	struct	s_shape *shape;
+
+	length = vec_length(vec_add(ray.origin, ray.destination));
+	ray = (t_ray){ray.origin, vec_normalize(ray.destination)};
+	shape = scene->shapes;
+	while (shape != NULL)
+		if (intersect_distance(shape, ray) <= length)
+			return (1);
+	return (0);
+}
+
+static t_color	cast_ray(struct s_scene *scene, t_ray ray)
 {
 	struct s_shape	*shape;
 	t_color			col;
@@ -74,7 +88,7 @@ t_color	cast_ray(struct s_scene *scene, t_ray ray)
 	struct s_shape	*closest_shape;
 
 	closest_shape = NULL;
-	col = (t_color){.r = 0x42, .g = 0x42, .b = 0x42, .a = 0xFF};
+	col = color_fade(scene->ambient->color, scene->ambient->light_ratio);
 	distance_to_nearest = INFINITY;
 	shape = scene->shapes;
 	while (shape != NULL)
@@ -83,17 +97,8 @@ t_color	cast_ray(struct s_scene *scene, t_ray ray)
 			closest_shape = shape;
 		shape = shape->next;
 	}
-//	printf("ray %f %f %f", ray.destination.x, ray.destination.y, ray.destination.z);
 	if (closest_shape)
-	{
-//		col = closest_shape->col;
-		col = intersect_color(closest_shape, ray);
-//		printf(" hits!\n");
-	}
-	else
-		;//printf(" misses!\n");
-
-	// Problem: How to scale the color accordinly?
+		col = intersect_color(closest_shape, scene, ray);
 	return (col);
 }
 
@@ -106,11 +111,7 @@ t_color	trace_ray(struct s_scene *scene, mlx_image_t *image,
 
 	camera_point = pixel_to_camera_space(scene->camera->fov, image, x, y);
 	ray.origin = scene->camera->loc;
-	ray.destination = vec_normalize(vec_add(camera_point, scene->camera->loc));
-
-//	printf("(% 4.2f, % 4.2f)", camera_point.x, camera_point.y);
-//	printf("(%d, %d): camera_point (%f, %f, %f)\n", x, y, camera_point.x, camera_point.y, camera_point.z);
-//	getchar();
+	ray.destination = vec_normalize(vec_add(ray.origin, camera_point));
 	col = cast_ray(scene, ray);
 	return (col);
 }
