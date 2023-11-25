@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rleskine <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 17:17:42 by rleskine          #+#    #+#             */
-/*   Updated: 2022/11/23 11:32:45 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/11/18 02:34:46 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,7 @@ char	*ft_itoa(int n)
 	char	*str[2];
 
 	num[0] = ft_itoaabs(n);
-	num[1] = ft_intsize(num[0]);
-	if (n < 0)
-		num[1]++;
+	num[1] = ft_intsize(num[0]) + (n < 0);
 	str[0] = (char *)malloc((num[1] + 1) * sizeof(char));
 	if (str[0] == NULL)
 		return (NULL);
@@ -83,7 +81,8 @@ char	*ft_itoa(int n)
 	while (num[1] > 0)
 	{
 		*str[0] = 48 + ft_firstnbr(num[0], num[1]);
-		num[0] -= (ft_firstnbr(num[0], num[1]) * ft_powerten(--num[1]));
+		num[0] -= (ft_firstnbr(num[0], num[1]) * ft_powerten(num[1] - 1));
+		num[1]--;
 		str[0]++;
 	}
 	*str[0] = 0;

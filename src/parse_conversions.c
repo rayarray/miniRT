@@ -6,10 +6,11 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 19:56:43 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/19 17:57:57 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/25 04:08:16 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "parser.h"
 #include "rt_conversions.h"
 
 static int	skip_whitespace(const char **cptr)
@@ -31,11 +32,13 @@ t_elem_type	rt_atoetype(const char *a)
 	int	len;
 
 	i = -1;
+//	static const char	*valid_elem_ids[7] = {"A", "C", "L", "sp", "pl", "cy", NULL};
+
 	skip_whitespace(&a);
-	while (valid_elem_ids[++i] != NULL)
+	while (VALID_ELEM_IDS[++i] != NULL)
 	{
-		len = ft_strlen(valid_elem_ids[i]);
-		if (ft_strncmp(a, valid_elem_ids[i], len) == 0
+		len = ft_strlen(VALID_ELEM_IDS[i]);
+		if (ft_strncmp(a, VALID_ELEM_IDS[i], len) == 0
 			&& ft_strchr(" \t", *(a + len)))
 			break ;
 	}

@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:36:12 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/21 18:20:43 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/22 17:53:21 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,9 @@ void	render(struct s_scene *scene, mlx_image_t *image)
 {
 	uint32_t	x;
 	uint32_t	y;
-	double		aspect_ratio;
 	t_color		col;
 
 	y = 0 - 1;
-	aspect_ratio = (double)image->width / image->height;
 	while (++y < image->height)
 	{
 		x = 0 - 1;
