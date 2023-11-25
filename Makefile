@@ -6,31 +6,46 @@
 #    By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 16:29:22 by rleskine          #+#    #+#              #
-#    Updated: 2023/11/21 22:14:44 by tsankola         ###   ########.fr        #
+#    Updated: 2023/11/25 04:14:37 by tsankola         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	miniRT
 
-PARSER		=	ambient_lighting.c camera.c parse_file_reader.c get_next_line.c \
+# include headers here so that program recompiles if a header file changes
+_HDR			=	ambient_lighting.h camera.h color.h get_next_line.h light.h \
+				minirt.h parser.h rt_conversions.h rt_math.h rt_typedef.h \
+				rt_validations.h scene.h shading.h shape_cylinder.h shape.h \
+				shape_plane.h shape_sphere.h tracer.h vector.h
+
+
+
+SRC			=	ambient_lighting.c camera.c parse_file_reader.c get_next_line.c \
 				get_next_line_utils.c light.c minirt.c parse_conversions.c \
 				parse_scene.c parse_shape.c parse_utilities.c rt_math.c \
 				rt_split.c rt_validations.c scene.c shape.c shape_cylinder.c \
 				shape_plane.c shape_sphere.c tracer.c vector.c hooks.c color.c \
 				shading.c
-# TODO should include headers here so that program recompiles if only header file has changed
 
-SRC			=	$(PARSER)
+LIBS		=	libft.a libftprintf.a
+LIBDIRS		=	libft libft/libftprintf
 
-LIBS		=	libft
+LIB		=
+
+LIBFTINC	=	libft
+LIBFTARC	=	$(LIBFTINC)/libft.a
+
+PRINTFINC	=	libft/libftprintf
+PRINTFARC	=	libft/libftprintf/libftprintf.a
 
 SRCDIR		=	src
 OBJDIR		=	obj
-INCDIR		=	include libft MLX42/include/MLX42
+INCDIR		=	include libft libft/libftprintf
 
+HDR			=	$(foreach h, $(_HDR), include/$(h))
 OBJ			=	$(foreach o, $(SRC:.c=.o), $(OBJDIR)/$(o))
-LIBINC		=	$(foreach l, $(LIBS), -I $(l) -L $(l) -l$(l:lib%=%))
-LIBARC		=	$(foreach l, $(LIBS), $(l)/$(l).a)
+LIBINC		=	$(foreach l, $(LIBDIRS), -L$(l))
+LIBARC		=	$(foreach l, $(LIBS), -l$(l:lib%.a=%))
 INCLUDE		=	$(foreach i, $(INCDIR),-I $(i))
 
 CFLAGS		=	-Wall -Wextra -Werror
@@ -38,31 +53,41 @@ SFLAGS		=	-fsanitize:address -g
 
 CC 			=	cc
 
+OS := $(shell uname)
+
 # =============== MLX42 ==============
 # libmlx42.a: MLX42/build/libmlx42.a
 # MLX42.h	: MLX42/include/MLX42/MLX42.h
-MLX42		=	-framework Cocoa -framework OpenGL -framework IOKit MLX42/build/libmlx42.a -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
+ifeq ($(OS),Darwin) # Assume Mac OS X
+	MLX42		=	-framework Cocoa -framework OpenGL -framework IOKit MLX42/build/libmlx42.a -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
+endif
+ifeq ($(OS),Linux)	# Assume WSL and prebuilt MLX42. Haven't tested with pure Linux yet
+	MLX42		=	-LMLX42/build -IMLX42/include/MLX42 -lmlx42 -ldl -lglfw -pthread -lm
+endif
 # ====================================
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBARC)
-	$(CC) $(CFLAGS) $(INCLUDE) $(LIBINC) $(MLX42) -o $@ $(OBJ)
+$(NAME): $(OBJ) $(LIBFTARC) $(PRINTFARC) $(HDR)
+	$(CC) $(CFLAGS) $(INCLUDE) -o $@ $(OBJ) $(LIBINC) $(LIBARC) $(MLX42)
 
-$(OBJ): $(OBJDIR)/%.o: $(SRCDIR)/%.c
+$(OBJ): $(OBJDIR)/%.o: $(SRCDIR)/%.c $(INC) $(HDR)
 	@if [ ! -d $(OBJDIR) ]; then mkdir $(OBJDIR); fi
-	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $(SRCDIR)/$(notdir $(@:.o=.c))
+	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $(SRCDIR)/$(notdir $(@:.o=.c)) $(MLX42)
 
-$(LIBARC): %:
-	$(MAKE) -j4 -C $(basename $(notdir $@))
+$(LIBFTARC): %:
+	$(MAKE) -j4 -C $(LIBFTINC)
+
+$(PRINTFARC): %:
+	$(MAKE) -j4 -C $(PRINTFINC)
 
 clean:
-	$(foreach l, $(LIBS),$(MAKE) -C $(l) clean;)
-	$(foreach o, $(OBJ),rm $(o);)
-	rmdir $(OBJDIR)
+	$(foreach l, $(LIBDIRS),$(MAKE) -C $(l) clean;)
+	$(foreach o, $(OBJ),rm -f $(o);)
+	rmdir $(OBJDIR) || true
 
 fclean: clean
-	$(foreach l, $(LIBS),$(MAKE) -C $(l) fclean;)
+	$(foreach l, $(LIBDIRS),$(MAKE) -C $(l) fclean;)
 	/bin/rm -f $(NAME)
 
 re: fclean all

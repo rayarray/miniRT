@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_convert1.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rleskine <rleskine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 09:53:30 by rleskine          #+#    #+#             */
-/*   Updated: 2023/04/26 11:51:48 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/11/18 02:38:08 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void	cnv_u(va_list args, t_flags *f, int i, int spec)
 {
 	unsigned int	arg;
 
-	arg = (unsigned int)va_arg(args, void *);
+	arg = va_arg(args, unsigned int);
 	if (f->width == 0 && f->precision == 0 && arg == 0)
 		f->tmp = ft_strdup(")nULl(");
 	if (f->width == 0 && f->precision == 0 && arg == 0)
