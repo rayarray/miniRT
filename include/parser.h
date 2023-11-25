@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 17:02:32 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/25 04:07:54 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/25 04:36:14 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PARSER_H
 # define BASES_BUFFER_SIZE 128
 # define REALLOC_FACTOR 2
+# define INPUT_DELIMS " \t"
 # define VALID_ELEM_IDS (char*[7]){"A", "C", "L", "sp", "pl", "cy", NULL}
 # include <fcntl.h>
 # include <unistd.h>
@@ -40,7 +41,7 @@ typedef enum e_parser_error
 	e_ELEMENT_MISSING_ERROR
 }	t_parser_error;
 
-static const char	input_delims[3] = " \t";
+//static const char	INPUT_DELIMS[3] = " \t";
 
 //static const char	*valid_elem_ids[7] = {"A", "C", "L", "sp", "pl", "cy", NULL};
 
@@ -66,21 +67,18 @@ struct s_scene_base
 	struct s_elem_base	*bases;
 };
 
-// Scene_reader.c
+// parse_file_reader.c
 struct s_scene	*parse_file(const char *filename);
 
 // Utility functions
 char	**free_strarray(char ***array);
-int		rt_realloc(unsigned char **buf, size_t *bufsize, int factor);
+int		rt_realloc(unsigned char **buf, size_t *bufsize, int factor);	// DEPRECATED
 char	**rt_split(char const *s, const char *c);
 
-// Line_parser.c
-//t_elem_type	parse_line(const char *line, struct s_elem_base *elem);
+// parse_scene.c
 t_parser_error	parse_line_and_create_element(const char *line, struct s_scene *scene);
 
-
 // Parse the arguments in args and call the constructor
-//int		validate_args(e_elem_type type, char **args);		// placeholder
 t_parser_error	ambient_lighting_evaluator(struct s_ambient_lighting **a_lt, char **args);
 t_parser_error	camera_evaluator(struct s_camera **c, char **args);
 t_parser_error	light_evaluator(struct s_light **l, char **args);
@@ -88,8 +86,5 @@ t_parser_error	cylinder_evaluator(struct s_cylinder **c, char **args);
 t_parser_error	plane_evaluator(struct s_plane **p, char **args);
 t_parser_error	sphere_evaluator(struct s_sphere **s, char **args);
 t_parser_error	shape_evaluator(struct s_shape **shapes, char **args, t_elem_type type);
-
-// Scene parser
-struct s_scene	*create_scene(struct s_scene_base *scenebase);
 
 #endif

@@ -6,18 +6,17 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 17:49:28 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/18 01:02:03 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/25 04:32:20 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_VALIDATIONS_H
 # define RT_VALIDATIONS_H
 # define TRIPLET_DELIM ','
+# define VALID_TERMINATORS " \t\n"
 # include "rt_typedef.h"
 # include "rt_math.h"
 # include "libft.h"
-
-static const char	valid_terminators[4] = " \t\n";
 
 // Form checks. Return number of characters traversed or 0 if not a valid input.
 // Strict functions check that the string is null terminated after the value.

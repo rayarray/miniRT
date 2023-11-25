@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:45:14 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/18 23:40:47 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/25 04:26:25 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef enum	e_elem_type
 	e_NAE = 6
 }	t_elem_type;
 
-typedef struct s_color	// Perhaps this should be uint32_t
+typedef struct s_color
 {
 	unsigned char	r;
 	unsigned char	g;

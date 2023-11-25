@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:16:05 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/21 22:52:22 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/25 04:22:18 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static double	analytic_intersect_distance(struct s_sphere *s, t_ray ray)
 	else if (discriminant > 0)
 	{ 
 		result1 = (-b + sqrt(discriminant)) / (2 * a);	// Source material says this method might produce errors ("catastrophic cancellation")
-		result2 = (-b - sqrt(discriminant)) / (2 * a);
+		result2 = (-b - sqrt(discriminant)) / (2 * a);	// TODO replace with a better method
 		if (result1 > 0 && result2 > 0)
 			result = fmin(result1, result2);
 		else if (result1 < 0 && result2 < 0)
@@ -111,7 +111,7 @@ double	sphere_intersect_distance(struct s_sphere *s, t_ray ray)
 	double	anal;
 	double	geom;
 
-	anal = analytic_intersect_distance(s, ray);
+	anal = analytic_intersect_distance(s, ray);		// calculating distance using two methods for error checking. 
 	geom = geometric_intersect_distance(s, ray);
 	if (anal != INFINITY && geom != INFINITY && !feq(anal, geom))
 		printf("sphere's geometric and analytic intersect differs by %f: anal %f geom %f!\n", anal - geom, anal, geom);
