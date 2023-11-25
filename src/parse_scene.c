@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:01:09 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/21 20:09:41 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/25 04:33:37 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ t_parser_error	parse_line_and_create_element(const char *line, struct s_scene *s
 	type = rt_atoetype(line);
 	if (type == e_NAE)
 		return (e_NO_ERROR);
-	args = rt_split(line, input_delims);
+	args = rt_split(line, INPUT_DELIMS);
 	if (args == NULL)
 		err = e_ENV_ERROR;
 	else if (type == e_AMBIENT_LIGHTING && scene->ambient == NULL)

@@ -6,14 +6,14 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:23:22 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/18 22:23:38 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/25 04:38:40 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scene.h"
 
-int	hitSphere(const t_vec center, double radius, const t_ray ray)
-{
+/* int	hitSphere(const t_vec center, double radius, const t_ray ray)
+{	// DEPRECATED
 	t_vec	oc;
 	double	a;
 	double	b;
@@ -36,7 +36,7 @@ int	hitSphere(const t_vec center, double radius, const t_ray ray)
 	else
 		return (0);
 }
-
+ */
 struct s_scene	*new_scene(void)
 {
 	struct s_scene	*scene;

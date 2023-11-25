@@ -6,13 +6,16 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:15:02 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/21 20:07:30 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/25 04:20:36 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_MATH_H
 # define RT_MATH_H
 # define RT_EPSILON 0.0000001
+# ifndef M_PI
+#  define M_PI (3.14159265358979323846)
+# endif
 # include <math.h>
 # include "rt_typedef.h"
 

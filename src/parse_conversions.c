@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 19:56:43 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/25 04:08:16 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/25 04:38:07 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,9 @@ t_elem_type	rt_atoetype(const char *a)
 	int	i;
 	int	len;
 
-	i = -1;
 //	static const char	*valid_elem_ids[7] = {"A", "C", "L", "sp", "pl", "cy", NULL};
-
 	skip_whitespace(&a);
+	i = -1;
 	while (VALID_ELEM_IDS[++i] != NULL)
 	{
 		len = ft_strlen(VALID_ELEM_IDS[i]);

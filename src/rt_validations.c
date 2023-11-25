@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 17:02:19 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/21 17:33:00 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/25 04:31:16 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	is_double_triplet_strict(const char *s)
 			break ;
 	}
 	if (values_found == 3 && (s[total_length] == '\0'
-		|| ft_strchr(valid_terminators, s[total_length])))
+		|| ft_strchr(VALID_TERMINATORS, s[total_length])))
 		return (total_length);
 	return (0);
 }
@@ -110,7 +110,7 @@ int	is_int_triplet_strict(const char *s)
 			break ;
 	}
 	if (values_found == 3 && (s[total_length] == '\0'
-		|| ft_strchr(valid_terminators, s[total_length])))
+		|| ft_strchr(VALID_TERMINATORS, s[total_length])))
 		return (total_length);
 	return (0);
 }

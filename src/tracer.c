@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/21 20:50:24 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/25 04:44:48 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ uint32_t	rayColor(t_camera c, t_ray ray)
 static t_point3	pixel_to_camera_space(int fov, mlx_image_t *image,
 	uint32_t x, uint32_t y)
 {
-	t_point2	ndc_point;		// Probably could do with just one t_point2 variable
+	t_point2	ndc_point;		// Probably could do with just one t_point2 variable but perhaps this makes the process easier to follow
 	t_point2	screen_point;
 	t_point3	camera_point;
 	double		half_fov_r;
 	double		aspect_ratio;
 
 	aspect_ratio = (double)image->width / image->height;
-	half_fov_r = (double)fov * M_PI_2 / 180.0;
+	half_fov_r = (double)fov * M_PI / 2 / 180.0;
 	ndc_point = (t_point2){((double)x + 0.5) / image->width,
 		 ((double)y + 0.5) / image->height};
 	screen_point = (t_point2){2 * ndc_point.x - 1, 1 - 2 * ndc_point.y};	// y is flipped here
@@ -88,7 +88,7 @@ static t_color	cast_ray(struct s_scene *scene, t_ray ray)
 	struct s_shape	*closest_shape;
 
 	closest_shape = NULL;
-	col = color_fade(scene->ambient->color, scene->ambient->light_ratio);
+	col = COL_BACKGROUND;
 	distance_to_nearest = INFINITY;
 	shape = scene->shapes;
 	while (shape != NULL)

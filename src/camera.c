@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:17:25 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/21 18:26:12 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/25 04:28:50 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,6 @@
 // 	return (c);
 // }
 
-//# Camera: type identifier | xyz coordinates | orientation vector | FOV
-//C	-50.0,0,20	0,0,1	70
-
 int	camera_ctor(struct s_camera *c, t_point3 loc, t_vec dir, int fov)
 {
 	c->loc = loc;
@@ -60,14 +57,13 @@ int	camera_ctor(struct s_camera *c, t_point3 loc, t_vec dir, int fov)
 	if (!is_fov(fov))
 		return (1);
 	c->fov = fov;
-	// initCamera here ?
 	return (0);
 }
 
-
-// TODO Needs rework to work with already constructed (uninitialized) camera
+/* 
+// DEPRECATED TODO Needs rework to work with already constructed (uninitialized) camera
 t_camera	initCamera(mlx_image_t *image, int fov, void *scene, t_ray center)
-{
+{	// DEPRECATED
 	t_camera	c;
 
 	(void)scene;
@@ -89,10 +85,10 @@ t_camera	initCamera(mlx_image_t *image, int fov, void *scene, t_ray center)
 	c.pixel00_loc = vecAdd(c.viewport_upper_left,
 			vecMul(vecAdd(c.pixel_delta_u, c.pixel_delta_v), 0.5));
 	return (c);
-}
+} */
 /* 
 void	renderCamera(mlx_image_t *image, t_camera c)
-{
+{	// DEPRECATED
 	//t_vec		pixel_center;
 	//t_vec		ray_direction;
 	t_ray		pixel_ray;
