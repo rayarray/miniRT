@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:53:18 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/20 16:26:05 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/01 02:20:25 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,27 @@ t_vec	vec_between_points(t_point3 a, t_point3 b)
 
 int	feq(double a, double b)
 {
-	if (fabs(a - b) < RT_EPSILON)
-		return (1);
-	return (0);
+	return (fabs(a - b) <= RT_EPSILON);
+}
+
+int	flessthan(double a, double b)
+{
+	return (a < b + RT_EPSILON);
+}
+
+int	fgreaterthan(double a, double b)
+{
+	return (a > b - RT_EPSILON);
+}
+
+int	fleq(double a, double b)
+{
+	return (feq(a,b) || flessthan(a,b));
+}
+
+int	fgeq(double a, double b)
+{
+	return (feq(a,b) || fgreaterthan(a,b));
 }
 
 double	vec_distance(t_vec a, t_vec b)
@@ -46,7 +64,7 @@ double	vec_length(t_vec a)
 
 t_vec	vec_normalize(t_vec a)
 {
-	double		norm;
+	double	norm;
 	t_vec	unit_vector;
 
 	norm = sqrt(pow(a.x, 2) + pow(a.y, 2) + pow(a.z, 2));

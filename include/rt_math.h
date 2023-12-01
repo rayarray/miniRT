@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:15:02 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/25 04:20:36 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/01 02:20:25 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,14 @@
 # include <math.h>
 # include "rt_typedef.h"
 
-static const t_vec	g_zero_vector = {0,0,0};		// What's this for?
-
 t_vec	vec_between_points(t_point3 a, t_point3 b);
 
+// Floating point comparisons
 int		feq(double a, double b);
+int		flessthan(double a, double b);
+int		fgreaterthan(double a, double b);
+int		fleq(double a, double b);
+int		fgeq(double a, double b);
 
 double	vec_distance(t_vec a, t_vec b);
 

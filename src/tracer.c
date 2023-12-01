@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/25 04:44:48 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/01 05:01:26 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,47 +45,49 @@ uint32_t	rayColor(t_camera c, t_ray ray)
 // Done using 
 // https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-generating-camera-rays/generating-camera-rays.html
 // as a guide
-static t_point3	pixel_to_camera_space(int fov, mlx_image_t *image,
+static t_vec	pixel_to_camera_ray(int fov, mlx_image_t *image,
 	uint32_t x, uint32_t y)
 {
-	t_point2	ndc_point;		// Probably could do with just one t_point2 variable but perhaps this makes the process easier to follow
+	t_point2	ndc_point;		// 
 	t_point2	screen_point;
-	t_point3	camera_point;
+	t_vec		camera_point;
 	double		half_fov_r;
 	double		aspect_ratio;
 
-	aspect_ratio = (double)image->width / image->height;
-	half_fov_r = (double)fov * M_PI / 2 / 180.0;
 	ndc_point = (t_point2){((double)x + 0.5) / image->width,
 		 ((double)y + 0.5) / image->height};
 	screen_point = (t_point2){2 * ndc_point.x - 1, 1 - 2 * ndc_point.y};	// y is flipped here
-	camera_point = (t_point3){(screen_point.x) * aspect_ratio, (screen_point.y), 1};
+	aspect_ratio = (double)image->width / image->height;
+	camera_point = (t_vec){(screen_point.x) * aspect_ratio, (screen_point.y), 1};
+	half_fov_r = (double)fov / 2.0 * M_PI / 180.0;
 	camera_point.x = camera_point.x * tan(half_fov_r);
 	camera_point.y = camera_point.y * tan(half_fov_r);
-	return (camera_point);
+	return (vec_normalize(camera_point));
 }
 
-// Tests if a given ray intersects with any shape along the ray
-int	collision_test(struct s_scene *scene, t_ray ray)
+// Tests if a given ray intersects with any shape along the ray within length.
+int	collision_test(struct s_scene *scene, t_ray ray, double length)
 {
-	double	length;
 	struct	s_shape *shape;
 
-	length = vec_length(vec_add(ray.origin, ray.destination));
-	ray = (t_ray){ray.origin, vec_normalize(ray.destination)};
+//	printf("light ray length %f\n", length);
+//	getchar();
 	shape = scene->shapes;
 	while (shape != NULL)
-		if (intersect_distance(shape, ray) <= length)
+	{
+		if (flessthan(intersect_distance(shape, ray), length))
 			return (1);
+		shape = shape->next;
+	}
 	return (0);
 }
 
 static t_color	cast_ray(struct s_scene *scene, t_ray ray)
 {
 	struct s_shape	*shape;
-	t_color			col;
-	double			distance_to_nearest;
 	struct s_shape	*closest_shape;
+	double			distance_to_nearest;
+	t_color			col;
 
 	closest_shape = NULL;
 	col = COL_BACKGROUND;
@@ -93,7 +95,7 @@ static t_color	cast_ray(struct s_scene *scene, t_ray ray)
 	shape = scene->shapes;
 	while (shape != NULL)
 	{
-		if (intersect_distance(shape, ray) < distance_to_nearest)
+		if (flessthan(intersect_distance(shape, ray), distance_to_nearest))
 			closest_shape = shape;
 		shape = shape->next;
 	}
@@ -105,13 +107,14 @@ static t_color	cast_ray(struct s_scene *scene, t_ray ray)
 t_color	trace_ray(struct s_scene *scene, mlx_image_t *image,
 	uint32_t x, uint32_t y)
 {
-	t_point3	camera_point;		// point in camera space
+	t_vec	camera_point;		// point in camera space
 	t_ray		ray;
 	t_color		col;
 
-	camera_point = pixel_to_camera_space(scene->camera->fov, image, x, y);
+	camera_point = pixel_to_camera_ray(scene->camera->fov, image, x, y);
+	// TODO rotate camera point to camera direction using rotation matrix
 	ray.origin = scene->camera->loc;
-	ray.destination = vec_normalize(vec_add(ray.origin, camera_point));
+	ray.destination = camera_point;
 	col = cast_ray(scene, ray);
 	return (col);
 }

@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 18:06:19 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/21 18:16:00 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/26 08:13:52 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ void	minirt_loop_hook(struct s_minirt *minirt)
 void	minirt_key_hook(mlx_key_data_t keydata, struct s_minirt *minirt)
 {
 	if (keydata.action == MLX_RELEASE && keydata.key == MLX_KEY_ESCAPE)
-	{
 		mlx_close_window(minirt->mlx);
-	}
+}
+
+void	minirt_close_hook(struct s_minirt *minirt)
+{
+	mlx_close_window(minirt->mlx);
 }
