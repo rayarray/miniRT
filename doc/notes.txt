@@ -19,6 +19,10 @@ https://www.youtube.com/watch?v=8uNIR9hJF60&list=PLbyTU_tFIkcN2s0rMr0tl5utneA0B-
 Multiple lights:
 https://computergraphics.stackexchange.com/questions/4792/path-tracing-with-multiple-lights
 
+Floating point comparisons:
+https://stackoverflow.com/questions/4915462/how-should-i-do-floating-point-comparison
+https://www.learncpp.com/cpp-tutorial/relational-operators-and-floating-point-comparisons/
+
 Allowed functions:
 
 fcntl

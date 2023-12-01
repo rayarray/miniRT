@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:36:12 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/22 17:53:21 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/11/26 08:12:14 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ int	main(int argc, char **argv)
 		mlx_resize_hook(minirt.mlx, (void (*)(int32_t, int32_t, void *))minirt_resize_hook, &minirt);
 		mlx_loop_hook(minirt.mlx, (void (*)(void *))minirt_loop_hook, &minirt);
 		mlx_key_hook(minirt.mlx, (void (*)(mlx_key_data_t, void *))minirt_key_hook, &minirt);
+		mlx_close_hook(minirt.mlx, (void (*)(void *))minirt_close_hook, &minirt);
 		mlx_loop(minirt.mlx);
 	}
 	if (minirt.mlx)

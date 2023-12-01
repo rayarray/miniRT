@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:16:05 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/25 04:22:18 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/01 02:23:34 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,24 @@ static double	geometric_intersect_distance(struct s_sphere *s, t_ray ray)
 	double	tca;	// distance from origin to a line s that is perpendicular between destination line and l
 	double	d;	// distance between s.loc and the line s above
 	double	thc;	// distance between line s and impact point
-	double	impact_dist;
+	double result;
 
+	// TODO consider double value inaccuracies
 	l = vec_sub(s->base.loc, ray.origin);
 	tca = dot_product(l, ray.destination);
-	if (tca < 0)							
+	if (flessthan(tca, 0))
 		return (INFINITY);
-	d = sqrt(dot_product(l, l) - pow(tca, 2));
-	if (d < 0 || d > s->diameter / 2)	// d should always be greater than or equal to zero but I guess it's better to be safe than sorry. second comparison checks if the intersection is outside the radius
+	d = sqrt(dot_product(l, l) - pow(tca, 2));		// This sqrt could be optimized away if we let d be squared
+	if (flessthan(d, 0) || fgreaterthan(d, s->diameter / 2))	// d should always be greater than or equal to zero but I guess it's better to be safe than sorry. second comparison checks if the intersection is outside the radius
 		return (INFINITY);
 	thc = sqrt(pow(s->diameter / 2, 2) - pow(d, 2));
-	if (tca - thc < tca + thc)
-		impact_dist = tca - thc;
+	if (flessthan(tca - thc, 0) && flessthan(tca + thc, 0))
+		return (INFINITY);
+	if (fgreaterthan(tca - thc, 0) && fgreaterthan(tca + thc, 0))
+		result = fmin(tca - thc, tca + thc);
 	else
-		impact_dist = tca + thc;
-	return (impact_dist);
+		result = fmax(tca - thc, tca + thc);
+	return (result);
 }
 
 // https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection.html
@@ -87,18 +90,18 @@ static double	analytic_intersect_distance(struct s_sphere *s, t_ray ray)
 	b = 2 * dot_product(ray.destination, vec_sub(ray.origin, s->base.loc));
 	c = pow(vec_length(vec_sub(ray.origin, s->base.loc)), 2) - pow(s->diameter / 2, 2);
 	discriminant = pow(b, 2) - 4 * a * c;
-//	if (a == 0)					// Would result in a divide by zero
-//		result = INFINITY;		// but this shouldn't happen because ray.destination should be normalized.
+	if (a == 0)					// Would result in a divide by zero
+		result = INFINITY;		// but this shouldn't happen because ray.destination should be normalized.
 	if (feq(discriminant, 0))
 		result = -b / (2 * a);
-	else if (discriminant > 0)
+	else if (fgreaterthan(discriminant, 0))
 	{ 
 		result1 = (-b + sqrt(discriminant)) / (2 * a);	// Source material says this method might produce errors ("catastrophic cancellation")
 		result2 = (-b - sqrt(discriminant)) / (2 * a);	// TODO replace with a better method
-		if (result1 > 0 && result2 > 0)
-			result = fmin(result1, result2);
-		else if (result1 < 0 && result2 < 0)
+		if (flessthan(result1, 0) && flessthan(result2, 0))
 			result = INFINITY;
+		else if (fgreaterthan(result1, 0) && fgreaterthan(result2, 0))
+			result = fmin(result1, result2);
 		else
 			result = fmax(result1, result2);
 	}
@@ -133,7 +136,7 @@ t_color	sphere_intersect_color(struct s_sphere *s, struct s_scene *scene, t_ray 
 		surface_normal = vec_normalize(vec_sub(impact, s->base.loc));
 		color = apply_ambient(color, scene->ambient);
 //		color = facing_ratio(surface_normal, ray.destination, color, color_fade(scene->ambient->color, scene->ambient->light_ratio));
-		color = diffuse_shading(scene->lights, surface_normal, impact, color);
+		color = diffuse_shading(scene, surface_normal, impact, color);
 	}
 	return (color);
 }

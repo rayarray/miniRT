@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:17:25 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/25 04:28:50 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/01 03:44:50 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 int	camera_ctor(struct s_camera *c, t_point3 loc, t_vec dir, int fov)
 {
 	c->loc = loc;
-	if (!is_unitvec(dir))
+	if (!is_unitvec(dir))		// This may not be what's desired here. It's hard to come up with vectors that satisfy this requirement other than the cardinal directions
 		return (1);
 	c->dir = dir;
 	if (!is_fov(fov))
