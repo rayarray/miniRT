@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 21:00:37 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/18 01:14:47 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/02 10:23:38 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,8 @@ char	**free_strarray(char ***array)
 }
 
 // Reallocates an array of data. New size is old size * factor
-// DEPRECATED (it's a good function but probably not needed in this project)
 int	rt_realloc(unsigned char **buf, size_t *bufsize, int factor)
-{	// DEPRECATED
+{	// DEPRECATED (it's a good function but probably not needed in this project)
 	unsigned char	*newbuf;
 	size_t			newsize;
 

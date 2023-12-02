@@ -6,14 +6,14 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:53:18 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/01 02:20:25 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/02 10:24:35 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt_math.h"
 
 t_vec	vec_between_points(t_point3 a, t_point3 b)
-{
+{	// This is just a vec_sub with different name. Probably deprecated
 	t_vec	ret;
 
 	ret.x = a.x - b.x;

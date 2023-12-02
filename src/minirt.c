@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:36:12 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/26 08:12:14 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/02 10:21:24 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,9 @@ void	render(struct s_scene *scene, mlx_image_t *image)
 		x = 0 - 1;
 		while (++x < image->width)
 		{
-			// raster space to ndc space to screen space:
-			// x and y are points in raster space
-			// position in ndc space is their relative position in raster space
-			// screen space is 
 			col = trace_ray(scene, image, x, y);
 //			printf(" ");
-			mlx_put_pixel(image, x, y, coltouint32_t(col));// Do the tihng
+			mlx_put_pixel(image, x, y, coltouint32_t(col));
 		}
 //		printf("\n");
 	}

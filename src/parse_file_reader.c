@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 17:35:34 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/18 17:39:30 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/02 10:22:49 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static t_parser_error	populate_scene(int fd, struct s_scene *scene)
 		ft_printf("Vital element missing\n");
 		return (e_ELEMENT_MISSING_ERROR);
 	}
+	// TODO Should add check for multiple lights for mandatory part here
 	return (err);
 }
 
