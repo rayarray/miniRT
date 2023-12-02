@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 17:02:19 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/25 04:31:16 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/02 10:27:18 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,5 +128,5 @@ int	is_fov(int i)
 
 int	is_ratio(double d)
 {
-	return (0.0 <= d && d <= 1.0);	// Should epsilon be applied here?
+	return (fleq(0.0, d) && fleq(d, 1.0));
 }
