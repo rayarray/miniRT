@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 21:28:54 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/04 14:09:29 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/04 15:59:58 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ t_color	facing_ratio(t_vec surface_normal, t_vec facing,
 }
 
 #include <stdio.h>
-t_color	diffuse_shading(struct s_scene *scene, t_vec surface_normal,
-	t_point3 impact, t_color surface_color)	// surface_normal and impact could be combined into t_ray?
+t_color	diffuse_shading(struct s_scene *scene, t_ray impact_normal,
+	t_color surface_color)	// surface_normal and impact could be combined into t_ray?
 {
 	t_color			color;
 	t_vec			vL;
@@ -49,13 +49,13 @@ t_color	diffuse_shading(struct s_scene *scene, t_vec surface_normal,
 
 	color = surface_color;
 	light = scene->lights;
-	while (light != NULL)	// Multiple lights, bonus stuff
+	while (light != NULL)
 	{
-		vL = vec_normalize(vec_sub(light->loc, impact));
+		vL = vec_normalize(vec_sub(light->loc, impact_normal.origin));
 		if (/* fgreaterthan(dot_product(surface_normal, vL), 0)	// Optimization
-			&& */ (!collision_test(scene, (t_ray){impact, vL}, vec_length(vec_sub(impact, light->loc)))))	// Does this distinguish between the required shape and the others?
+			&& */ (!collision_test(scene, (t_ray){impact_normal.origin, vL}, vec_length(vec_sub(impact_normal.origin, light->loc)))))	// Does this distinguish between the required shape and the others?
 		{
-			diffusely_reflected_light = light->brightness * fmax(0, dot_product(surface_normal, vL));	// use distance to factor brightness here?
+			diffusely_reflected_light = DIFFUSE_COEFFICIENT * light->brightness * fmax(0, dot_product(impact_normal.destination, vL));	// use distance to factor brightness here?
 /*  			if (fgreaterthan(diffusely_reflected_light, highest_light))	// debug
 			{
 				highest_light = diffusely_reflected_light;
@@ -69,5 +69,37 @@ t_color	diffuse_shading(struct s_scene *scene, t_vec surface_normal,
 		}
 		light = light->next;
 	}
-	return color;
+	return (color);
+}
+
+t_color	specular_lighting(struct s_scene *scene, t_ray impact_normal,
+	t_ray spectator_ray, t_color surface_color)
+{
+	t_color			color;
+	t_vec			vL;
+	t_vec			vR;
+	t_vec			vE;
+	struct s_light	*light;
+	double			 specular_reflected_light;
+	double			intensity;
+
+	color = surface_color;
+	light = scene->lights;
+	while (light != NULL)
+	{
+		vL = vec_normalize(vec_sub(light->loc, impact_normal.origin));
+		if (/* fgreaterthan(dot_product(surface_normal, vL), 0)	// Optimization
+			&& */ (!collision_test(scene, (t_ray){impact_normal.origin, vL}, vec_length(vec_sub(impact_normal.origin, light->loc)))))
+		{
+			vR = vec_sub(vec_scal_mul(impact_normal.destination, (2 * dot_product(impact_normal.destination, vL))), vL);
+			vE = vec_normalize(vec_sub(spectator_ray.origin, impact_normal.origin));
+			intensity = 1.0 / (4 * M_PI * vec_length(vec_sub(light->loc, impact_normal.origin)));
+			specular_reflected_light = SPECULAR_COEFFICIENT * intensity * light->brightness * pow(fmax(0, dot_product(vR, vE)), 16);
+			color = color_fade_to(surface_color, light->color, specular_reflected_light);	// Factor distance here?
+		}
+//		else
+//			color = color_fade_to(surface_color, COL_BLACK, SHADOW_COEFFICIENT * light->brightness);
+		light = light->next;
+	}
+	return (color);
 }
