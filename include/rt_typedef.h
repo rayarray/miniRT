@@ -6,12 +6,13 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:45:14 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/25 04:26:25 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/04 12:35:06 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_TYPEDEF_H
 # define RT_TYPEDEF_H
+# include <stdint.h>
 
 // Shapes should be between e_LIGHT and e_NAE
 typedef enum	e_elem_type
@@ -48,9 +49,16 @@ typedef struct	s_point2
 	double	y;
 }	t_point2;
 
-typedef struct s_ray {
+typedef struct s_ray
+{
 	t_point3	origin;
 	t_vec	destination;
 }	t_ray;
+
+typedef struct s_pixel
+{
+	uint32_t	x;
+	uint32_t	y;
+}	t_pixel;
 
 #endif
