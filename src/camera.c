@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:17:25 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/01 03:44:50 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/04 13:14:34 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,23 @@
 // 	return (c);
 // }
 
-int	camera_ctor(struct s_camera *c, t_point3 loc, t_vec dir, int fov)
+// Takes camera direction vector and calculates what is vector for 
+// camera up direction
+t_vec camera_up(t_vec camera_dir)
+{
+	t_vec	world_up;
+
+	world_up = vecInit(0, 1, 0);
+	if (camera_dir.x == 0 && camera_dir.z == 0)
+		world_up = vecInit(0, 0, 1);
+	return (vecCross(camera_dir, world_up));
+}
+
+
+int camera_ctor(struct s_camera *c, t_point3 loc, t_vec dir, int fov)
 {
 	c->loc = loc;
-	if (!is_unitvec(dir))		// This may not be what's desired here. It's hard to come up with vectors that satisfy this requirement other than the cardinal directions
+	if (!is_unitvec(dir)) // This may not be what's desired here. It's hard to come up with vectors that satisfy this requirement other than the cardinal directions
 		return (1);
 	c->dir = dir;
 	if (!is_fov(fov))
@@ -60,7 +73,7 @@ int	camera_ctor(struct s_camera *c, t_point3 loc, t_vec dir, int fov)
 	return (0);
 }
 
-/* 
+/*
 // DEPRECATED TODO Needs rework to work with already constructed (uninitialized) camera
 t_camera	initCamera(mlx_image_t *image, int fov, void *scene, t_ray center)
 {	// DEPRECATED
@@ -86,7 +99,7 @@ t_camera	initCamera(mlx_image_t *image, int fov, void *scene, t_ray center)
 			vecMul(vecAdd(c.pixel_delta_u, c.pixel_delta_v), 0.5));
 	return (c);
 } */
-/* 
+/*
 void	renderCamera(mlx_image_t *image, t_camera c)
 {	// DEPRECATED
 	//t_vec		pixel_center;
@@ -97,14 +110,14 @@ void	renderCamera(mlx_image_t *image, t_camera c)
 	int			y;
 
 	//auto pixel_center = pixel00_loc + (i * pixel_delta_u) + (j * pixel_delta_v);
-    //auto ray_direction = pixel_center - camera_center;
+	//auto ray_direction = pixel_center - camera_center;
 	y = -1;
 	while (++y < (int)image->height)
 	{
 		x = -1;
 		while (++x < (int)image->width)
 		{
-			pixel_ray.origin = vecAdd(c.pixel00_loc, 
+			pixel_ray.origin = vecAdd(c.pixel00_loc,
 					vecAdd(vecMul(c.pixel_delta_u, x),
 						vecMul(c.pixel_delta_v, y)));
 			pixel_ray.destination = vecSub(pixel_ray.origin, c.center.origin);
