@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:06:28 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/01 03:49:41 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/04 13:31:29 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ typedef struct s_camera {
 	int			fov;			// perhaps fov could be saved as radians?
 }	t_camera;
 
-int	camera_ctor(struct s_camera *c, t_point3 loc, t_vec dir, int fov);
+t_vec	camera_up(t_vec camera_dir);
+int		camera_ctor(struct s_camera *c, t_point3 loc, t_vec dir, int fov);
 
 t_camera	initCamera(mlx_image_t *image, int fov, void *scene, t_ray center);	// deprecated
 void		renderCamera(mlx_image_t *image, t_camera c);	// deprecated

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:36:12 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/04 12:38:36 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/04 13:58:30 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,22 @@ void	ft_randomize(void *param)
 	for (int32_t i = 0; i < (int)image->width; i++)
 		mlx_put_pixel(image, 256, i, ft_pixel(0xFF, 0xFF, 0xFF, 0xFF));
 } */
+
+void	tests(void)
+{
+	t_vec	c_vec;
+	t_vec	upvec;
+
+	c_vec = vecInit(0, 0, 1);
+	upvec = camera_up(c_vec);
+	printf("camdir:(%f, %f, %f) camup:(%f, %f, %f)\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z);
+	c_vec = vecInit(0, 1, 0);
+	upvec = camera_up(c_vec);
+	printf("camdir:(%f, %f, %f) camup:(%f, %f, %f)\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z);
+	c_vec = vecInit(0, 1, 1);
+	upvec = camera_up(c_vec);
+	printf("camdir:(%f, %f, %f) camup:(%f, %f, %f)\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z);
+}
 
 static uint32_t	coltouint32_t(t_color col)
 {

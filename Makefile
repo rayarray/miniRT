@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+         #
+#    By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 16:29:22 by rleskine          #+#    #+#              #
-#    Updated: 2023/11/25 04:14:37 by tsankola         ###   ########.fr        #
+#    Updated: 2023/12/04 10:28:35 by rleskine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	miniRT
 
 # include headers here so that program recompiles if a header file changes
-_HDR			=	ambient_lighting.h camera.h color.h get_next_line.h light.h \
+_HDR		=	ambient_lighting.h camera.h color.h get_next_line.h light.h \
 				minirt.h parser.h rt_conversions.h rt_math.h rt_typedef.h \
 				rt_validations.h scene.h shading.h shape_cylinder.h shape.h \
 				shape_plane.h shape_sphere.h tracer.h vector.h
@@ -40,7 +40,7 @@ PRINTFARC	=	libft/libftprintf/libftprintf.a
 
 SRCDIR		=	src
 OBJDIR		=	obj
-INCDIR		=	include libft libft/libftprintf
+INCDIR		=	include libft libft/libftprintf MLX42/include/MLX42
 
 HDR			=	$(foreach h, $(_HDR), include/$(h))
 OBJ			=	$(foreach o, $(SRC:.c=.o), $(OBJDIR)/$(o))
@@ -73,7 +73,8 @@ $(NAME): $(OBJ) $(LIBFTARC) $(PRINTFARC) $(HDR)
 
 $(OBJ): $(OBJDIR)/%.o: $(SRCDIR)/%.c $(INC) $(HDR)
 	@if [ ! -d $(OBJDIR) ]; then mkdir $(OBJDIR); fi
-	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $(SRCDIR)/$(notdir $(@:.o=.c)) $(MLX42)
+	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $(SRCDIR)/$(notdir $(@:.o=.c)) 
+# $(MLX42)
 
 $(LIBFTARC): %:
 	$(MAKE) -j4 -C $(LIBFTINC)

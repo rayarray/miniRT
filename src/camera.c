@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:17:25 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/04 13:14:34 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/04 13:42:33 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ t_vec camera_up(t_vec camera_dir)
 {
 	t_vec	world_up;
 
-	world_up = vecInit(0, 1, 0);
+	world_up = vecInit(1, 0, 0);
 	if (camera_dir.x == 0 && camera_dir.z == 0)
-		world_up = vecInit(0, 0, 1);
-	return (vecCross(camera_dir, world_up));
+		world_up = vecInit(1, 0, 0);
+	return (cross_product(camera_dir, world_up));
 }
 
 
