@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/04 12:38:45 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/04 13:23:13 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ static t_color	cast_ray(struct s_scene *scene, t_ray ray)
 	struct s_shape	*closest_shape;
 	double			distance_to_nearest;
 	t_color			col;
+	double			dist;
 
 	closest_shape = NULL;
 	col = COL_BACKGROUND;
@@ -94,8 +95,12 @@ static t_color	cast_ray(struct s_scene *scene, t_ray ray)
 	shape = scene->shapes;
 	while (shape != NULL)
 	{
-		if (flessthan(intersect_distance(shape, ray), distance_to_nearest))
+		dist = intersect_distance(shape, ray);
+		if (flessthan(dist, distance_to_nearest))
+		{
+			distance_to_nearest = dist;
 			closest_shape = shape;
+		}
 		shape = shape->next;
 	}
 	if (closest_shape)
