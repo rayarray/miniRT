@@ -6,11 +6,10 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/01 05:01:26 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/04 12:38:45 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42.h"
 #include "rt_math.h"
 #include "tracer.h"
 #include "color.h"
@@ -45,19 +44,19 @@ uint32_t	rayColor(t_camera c, t_ray ray)
 // Done using 
 // https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-generating-camera-rays/generating-camera-rays.html
 // as a guide
-static t_vec	pixel_to_camera_ray(int fov, mlx_image_t *image,
-	uint32_t x, uint32_t y)
+static t_vec	pixel_to_camera_ray(int fov, uint32_t width, uint32_t height,
+	t_pixel	pixel_point)
 {
-	t_point2	ndc_point;		// 
+	t_point2	ndc_point;
 	t_point2	screen_point;
 	t_vec		camera_point;
 	double		half_fov_r;
 	double		aspect_ratio;
 
-	ndc_point = (t_point2){((double)x + 0.5) / image->width,
-		 ((double)y + 0.5) / image->height};
+	ndc_point = (t_point2){((double)pixel_point.x + 0.5) / width,
+		 ((double)pixel_point.y + 0.5) / height};
 	screen_point = (t_point2){2 * ndc_point.x - 1, 1 - 2 * ndc_point.y};	// y is flipped here
-	aspect_ratio = (double)image->width / image->height;
+	aspect_ratio = (double)width / height;
 	camera_point = (t_vec){(screen_point.x) * aspect_ratio, (screen_point.y), 1};
 	half_fov_r = (double)fov / 2.0 * M_PI / 180.0;
 	camera_point.x = camera_point.x * tan(half_fov_r);
@@ -104,14 +103,14 @@ static t_color	cast_ray(struct s_scene *scene, t_ray ray)
 	return (col);
 }
 
-t_color	trace_ray(struct s_scene *scene, mlx_image_t *image,
-	uint32_t x, uint32_t y)
+t_color	trace_ray(struct s_scene *scene, uint32_t width, uint32_t height,
+	t_pixel	pixel_point)
 {
 	t_vec	camera_point;		// point in camera space
 	t_ray		ray;
 	t_color		col;
 
-	camera_point = pixel_to_camera_ray(scene->camera->fov, image, x, y);
+	camera_point = pixel_to_camera_ray(scene->camera->fov, width, height, pixel_point);
 	// TODO rotate camera point to camera direction using rotation matrix
 	ray.origin = scene->camera->loc;
 	ray.destination = camera_point;
