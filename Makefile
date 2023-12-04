@@ -6,7 +6,7 @@
 #    By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 16:29:22 by rleskine          #+#    #+#              #
-#    Updated: 2023/12/12 11:55:21 by rleskine         ###   ########.fr        #
+#    Updated: 2023/12/12 11:55:48 by rleskine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,6 @@ _HDR			=	ambient_lighting.h camera.h color.h get_next_line.h light.h \
 				minirt.h parser.h rt_conversions.h rt_math.h rt_typedef.h \
 				rt_validations.h scene.h shading.h shape_cylinder.h shape.h \
 				shape_plane.h shape_sphere.h tracer.h vector.h
-
-
 
 SRC			=	ambient_lighting.c camera.c parse_file_reader.c get_next_line.c \
 				get_next_line_utils.c light.c minirt.c parse_conversions.c \
@@ -40,7 +38,7 @@ PRINTFARC	=	libft/libftprintf/libftprintf.a
 
 SRCDIR		=	src
 OBJDIR		=	obj
-INCDIR		=	include libft libft/libftprintf
+INCDIR		=	include libft libft/libftprintf MLX42/include/MLX42
 
 HDR			=	$(foreach h, $(_HDR), include/$(h))
 OBJ			=	$(foreach o, $(SRC:.c=.o), $(OBJDIR)/$(o))
@@ -62,7 +60,7 @@ ifeq ($(OS),Darwin) # Assume Mac OS X
 	MLX42		=	-framework Cocoa -framework OpenGL -framework IOKit MLX42/build/libmlx42.a -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
 endif
 ifeq ($(OS),Linux)	# Assume WSL and prebuilt MLX42. Haven't tested with pure Linux yet
-	MLX42		=	-LMLX42/build -IMLX42/include/MLX42 -lmlx42 -ldl -lglfw -pthread -lm
+	MLX42		=	-LMLX42/build -lmlx42 -ldl -lglfw -pthread -lm
 endif
 # ====================================
 
@@ -73,7 +71,7 @@ $(NAME): $(OBJ) $(LIBFTARC) $(PRINTFARC) $(HDR)
 
 $(OBJ): $(OBJDIR)/%.o: $(SRCDIR)/%.c $(INC) $(HDR)
 	@if [ ! -d $(OBJDIR) ]; then mkdir $(OBJDIR); fi
-	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $(SRCDIR)/$(notdir $(@:.o=.c)) $(MLX42)
+	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $(SRCDIR)/$(notdir $(@:.o=.c)) #$(MLX42)
 
 $(LIBFTARC): %:
 	$(MAKE) -j4 -C $(LIBFTINC)
