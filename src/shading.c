@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 21:28:54 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/04 15:59:58 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/04 17:44:15 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,6 @@ t_color	diffuse_shading(struct s_scene *scene, t_ray impact_normal,
 	double			 diffusely_reflected_light;
 	struct s_light	*light;
 
-	static double	highest_light = 0;	//debug
-	(void)highest_light;
-
 	color = surface_color;
 	light = scene->lights;
 	while (light != NULL)
@@ -56,16 +53,7 @@ t_color	diffuse_shading(struct s_scene *scene, t_ray impact_normal,
 			&& */ (!collision_test(scene, (t_ray){impact_normal.origin, vL}, vec_length(vec_sub(impact_normal.origin, light->loc)))))	// Does this distinguish between the required shape and the others?
 		{
 			diffusely_reflected_light = DIFFUSE_COEFFICIENT * light->brightness * fmax(0, dot_product(impact_normal.destination, vL));	// use distance to factor brightness here?
-/*  			if (fgreaterthan(diffusely_reflected_light, highest_light))	// debug
-			{
-				highest_light = diffusely_reflected_light;
-				printf("impact %f,%f,%f vL %f,%f,%f\n", impact.x, impact.y, impact.z, vL.x, vL.y, vL.z);
-				printf("L length %f\n", vec_length(vec_sub(impact, light->loc)));
-		//			printf("impact %f,%f,%f light %f,%f,%f\n", impact.x, impact.y, impact.z, light->loc.x, light->loc.y, light->loc.z);
-				printf("Normal %f,%f,%f\n", surface_normal.x, surface_normal.y, surface_normal.z);
-				printf("dot_prod %f\n", dot_product(surface_normal, vL));
-			}
- */			color = color_fade_to(surface_color, light->color, diffusely_reflected_light);
+			color = color_fade_to(surface_color, light->color, diffusely_reflected_light);
 		}
 		light = light->next;
 	}
@@ -94,9 +82,11 @@ t_color	specular_lighting(struct s_scene *scene, t_ray impact_normal,
 			vR = vec_sub(vec_scal_mul(impact_normal.destination, (2 * dot_product(impact_normal.destination, vL))), vL);
 			vE = vec_normalize(vec_sub(spectator_ray.origin, impact_normal.origin));
 			intensity = 1.0 / (4 * M_PI * vec_length(vec_sub(light->loc, impact_normal.origin)));
+			intensity = 1.0;	// The formula above doesn't seem to provide nice results
 			specular_reflected_light = SPECULAR_COEFFICIENT * intensity * light->brightness * pow(fmax(0, dot_product(vR, vE)), 16);
 			color = color_fade_to(surface_color, light->color, specular_reflected_light);	// Factor distance here?
 		}
+//	TODO Shadows?
 //		else
 //			color = color_fade_to(surface_color, COL_BLACK, SHADOW_COEFFICIENT * light->brightness);
 		light = light->next;
