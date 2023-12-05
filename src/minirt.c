@@ -6,13 +6,14 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:36:12 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/04 13:58:30 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/05 17:19:03 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <assert.h> // testing purposes
 #include "MLX42.h"
 #include "libft.h"
 #include "minirt.h"
@@ -52,16 +53,41 @@ void	tests(void)
 {
 	t_vec	c_vec;
 	t_vec	upvec;
+	t_vec	leftvec;
 
+	c_vec = vecInit(-1, 0, 0);
+	//upvec = cameraUp(c_vec);
+	upvec = vecZRotate(c_vec, M_PI / 2);
+	//printf("z:%f\n", upvec.y);
+	if (upvec.y < c_vec.y) 
+		upvec = vecZRotate(c_vec, -M_PI / 2);
+	leftvec = vecXRotate(c_vec, M_PI / 2);
+	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamleft:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, leftvec.x, leftvec.y, leftvec.z);
+	c_vec = vecInit(1, 0, 0);
+	upvec = vecZRotate(c_vec, M_PI / 2);
+	if (upvec.y < c_vec.y) 
+		upvec = vecZRotate(c_vec, -M_PI / 2);
+	leftvec = vecXRotate(c_vec, M_PI / 2);
+	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamleft:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, leftvec.x, leftvec.y, leftvec.z);
+	//assert(vecEq(upvec, vecInit(0, 1, 0)) && vecEq(leftvec, vecInit(0, 0, 1)));
 	c_vec = vecInit(0, 0, 1);
-	upvec = camera_up(c_vec);
-	printf("camdir:(%f, %f, %f) camup:(%f, %f, %f)\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z);
+	upvec = vecZRotate(c_vec, M_PI / 2);
+	if (upvec.y < c_vec.y) 
+		upvec = vecZRotate(c_vec, -M_PI / 2);
+	leftvec = vecXRotate(c_vec, M_PI / 2);
+	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamleft:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, leftvec.x, leftvec.y, leftvec.z);
 	c_vec = vecInit(0, 1, 0);
-	upvec = camera_up(c_vec);
-	printf("camdir:(%f, %f, %f) camup:(%f, %f, %f)\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z);
+	upvec = vecZRotate(c_vec, M_PI / 2);
+	if (upvec.y < c_vec.y) 
+		upvec = vecZRotate(c_vec, -M_PI / 2);
+	leftvec = vecXRotate(c_vec, M_PI / 2);
+	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamleft:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, leftvec.x, leftvec.y, leftvec.z);
 	c_vec = vecInit(0, 1, 1);
-	upvec = camera_up(c_vec);
-	printf("camdir:(%f, %f, %f) camup:(%f, %f, %f)\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z);
+	upvec = vecZRotate(c_vec, M_PI / 2);
+	//if (upvec.y < c_vec.y) 
+	//	upvec = vecZRotate(c_vec, -M_PI / 2);
+	leftvec = vecXRotate(c_vec, M_PI / 2);
+	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamleft:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, leftvec.x, leftvec.y, leftvec.z);
 }
 
 static uint32_t	coltouint32_t(t_color col)
@@ -133,6 +159,7 @@ int	main(int argc, char **argv)
 	struct s_minirt	minirt;	
 	int				exit_code;
 
+	tests();
 	minirt.mlx = NULL;
 	exit_code = get_scene_from_input(&minirt.scene, argc, argv);
 	if (exit_code == EXIT_SUCCESS)

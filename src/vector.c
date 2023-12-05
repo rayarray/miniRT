@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:32:10 by rleskine          #+#    #+#             */
-/*   Updated: 2023/10/26 16:50:52 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/05 14:36:45 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,8 @@ t_vec	unitVector(t_vec v1)
 	v1.y /= len;
 	v1.z /= len;
 	return (v1);
+}
+
+int	vecEq(t_vec v1, t_vec v2) {
+	return (v1.x == v2.x && v1.y == v2.y && v1.z == v2.z);
 }

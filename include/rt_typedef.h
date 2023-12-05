@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_typedef.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:45:14 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/04 12:35:06 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/05 15:57:06 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include <stdint.h>
 
 // Shapes should be between e_LIGHT and e_NAE
-typedef enum	e_elem_type
+typedef enum e_elem_type
 {
 	e_AMBIENT_LIGHTING = 0,
 	e_CAMERA = 1,
@@ -43,7 +43,7 @@ typedef struct s_vec
 
 typedef t_vec	t_point3;
 
-typedef struct	s_point2
+typedef struct s_point2
 {
 	double	x;
 	double	y;
@@ -52,7 +52,7 @@ typedef struct	s_point2
 typedef struct s_ray
 {
 	t_point3	origin;
-	t_vec	destination;
+	t_vec		destination;
 }	t_ray;
 
 typedef struct s_pixel

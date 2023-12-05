@@ -6,10 +6,11 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:17:25 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/04 13:42:33 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/05 16:44:14 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "MLX42.h"
 #include "libft.h"
 #include "vector.h"
@@ -20,7 +21,6 @@
 // t_camera	initCamera(mlx_image_t *image, int fov, void *scene, t_ray center)
 // {
 // 	t_camera	c;
-
 // 	c.fov = fov;
 // 	c.image_width = image->width;
 // 	c.aspect_ratio = image->height / image->width;
@@ -50,16 +50,27 @@
 
 // Takes camera direction vector and calculates what is vector for 
 // camera up direction
-t_vec camera_up(t_vec camera_dir)
+t_vec cameraUp(t_vec camera_dir)
 {
 	t_vec	world_up;
 
 	world_up = vecInit(1, 0, 0);
+	if (camera_dir.y == 0 && camera_dir.z == 0)
+		world_up = vecInit(0, 0, -1);
 	if (camera_dir.x == 0 && camera_dir.z == 0)
 		world_up = vecInit(1, 0, 0);
 	return (cross_product(camera_dir, world_up));
 }
 
+t_vec cameraLeft(t_vec camera_dir)
+{
+	t_vec	world_left;
+
+	world_left = vecInit(0, 1, 0);
+	//if (camera_dir.y == 0 && camera_dir.z == 0)
+	//	world_left = vecInit(1, 0, 0);
+	return (cross_product(camera_dir, world_left));
+}
 
 int camera_ctor(struct s_camera *c, t_point3 loc, t_vec dir, int fov)
 {
@@ -71,6 +82,39 @@ int camera_ctor(struct s_camera *c, t_point3 loc, t_vec dir, int fov)
 		return (1);
 	c->fov = fov;
 	return (0);
+}
+
+t_vec vecRotMatrixMul(double *matrix[3], t_vec vector) 
+{
+	t_vec	result;
+
+	result.x = matrix[0][0] * vector.x + matrix[0][1] * vector.y
+		+ matrix[0][2] * vector.z;
+	result.y = matrix[1][0] * vector.x + matrix[1][1] * vector.y
+		+ matrix[1][2] * vector.z;
+	result.z = matrix[2][0] * vector.x + matrix[2][1] * vector.y
+		+ matrix[2][2] * vector.z;
+	return (result);
+}
+
+t_vec	vecZRotate(t_vec vector, double angle)
+{
+	double	*rotation_matrix[3];
+
+	rotation_matrix[0] = (double []){cos(angle), -sin(angle), 0.0};
+	rotation_matrix[1] = (double []){sin(angle), cos(angle), 0.0};
+	rotation_matrix[2] = (double []){0.0, 0.0, 1.0};
+	return (vecRotMatrixMul(rotation_matrix, vector));
+}
+
+t_vec	vecXRotate(t_vec vector, double angle)
+{
+	double	*rotation_matrix[3];
+
+	rotation_matrix[0] = (double []){cos(angle), 0.0, sin(angle)};
+	rotation_matrix[1] = (double []){0.0, 1.0, 0.0};
+	rotation_matrix[2] = (double []){-sin(angle), 0, cos(angle)};
+	return (vecRotMatrixMul(rotation_matrix, vector));
 }
 
 /*
