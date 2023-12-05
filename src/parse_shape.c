@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:30:47 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/19 17:47:35 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/05 15:55:46 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ t_parser_error	cylinder_evaluator(struct s_cylinder **c, char **args)
 t_parser_error	plane_evaluator(struct s_plane **p, char **args)
 {
 	t_point3	point;
-	t_vec	normal;
-	t_color	color;
+	t_vec		normal;
+	t_color		color;
 
 	if (args[0] == NULL || args[1] == NULL || args[2] == NULL
 		|| args[3] == NULL)
