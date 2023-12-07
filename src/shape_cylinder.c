@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:43:11 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/07 19:03:53 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/07 19:23:39 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,9 @@ double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray)
 {
 	double	distance;
 
-	distance = -1;
-	double denom = dot_product(this->normal, ray.destination);
-	if (!feq(denom, 0))
-		distance = dot_product(vec_sub(this->point, ray.origin), this->normal) / denom;
-	if (flessthan(distance, 0))
-		distance = INFINITY;
+	distance = INFINITY;
+	(void)this;
+	(void)ray;
 	return distance;
 
 }
