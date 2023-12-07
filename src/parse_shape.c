@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:30:47 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/05 15:55:46 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:56:30 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_parser_error	plane_evaluator(struct s_plane **p, char **args)
 	if (!is_double_triplet_strict(args[1]) || !is_double_triplet_strict(args[2])
 		|| !is_int_triplet_strict(args[3]))
 		return (e_ELEMENT_ARG_ERROR);
-	*p = malloc(sizeof(struct s_cylinder));
+	*p = malloc(sizeof(struct s_plane));
 	if (*p == NULL)
 		return (e_ENV_ERROR);
 	point = rt_atovec(args[1]);
@@ -79,7 +79,7 @@ t_parser_error	sphere_evaluator(struct s_sphere **s, char **args)
 		|| !is_int_triplet_strict(args[3]))
 		return (e_ELEMENT_ARG_ERROR);
 
-	*s = malloc(sizeof(struct s_cylinder));
+	*s = malloc(sizeof(struct s_sphere));
 	if (*s == NULL)
 		return (e_ENV_ERROR);
 	loc = rt_atovec(args[1]);
