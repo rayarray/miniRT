@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 21:28:54 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/07 19:47:28 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/07 19:56:22 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ t_color	diffuse_shading(struct s_scene *scene, t_ray impact_normal,
 		vL = vec_normalize(vec_sub(light->loc, impact_normal.origin));
 		if (!collision_test(scene, (t_ray){impact_normal.origin, vL}, vec_length(vec_sub(impact_normal.origin, light->loc))))	// Does this distinguish between the required shape and the others?
 		{
-//			diffusely_reflected_light = DIFFUSE_COEFFICIENT * light->brightness * fmax(0, dot_product(impact_normal.destination, vL));	// use distance to factor brightness here?
-			diffusely_reflected_light = DIFFUSE_COEFFICIENT * light->brightness * fabs(dot_product(impact_normal.destination, vL));		// TODO test this. This was changed to incorporate plane, not sure if it works well with every shape
+			diffusely_reflected_light = DIFFUSE_COEFFICIENT * light->brightness * fmax(0, dot_product(impact_normal.destination, vL));	// use distance to factor brightness here?
+//			diffusely_reflected_light = DIFFUSE_COEFFICIENT * light->brightness * fabs(dot_product(impact_normal.destination, vL));		// TODO test this. This was changed to incorporate plane, not sure if it works well with every shape
 			// printf("%f\n", diffusely_reflected_light);
 			// getchar();
 			color = color_fade_to(surface_color, light->color, diffusely_reflected_light);

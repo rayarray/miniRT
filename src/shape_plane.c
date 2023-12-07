@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:39:10 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/07 19:43:09 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/07 19:56:11 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_color	plane_intersect_color(struct s_plane *this, struct s_scene *scene, t_ray
 		col = apply_ambient(col, scene->ambient);
 		impact = vec_add(ray.origin, vec_scal_mul(ray.destination, dist));
 		col = diffuse_shading(scene, (t_ray){impact, this->normal}, col);
-//		col = specular_lighting(scene, (t_ray){impact, this->normal}, ray, col);
+		col = specular_lighting(scene, (t_ray){impact, this->normal}, ray, col);
 	}
 	return (col);
 }
