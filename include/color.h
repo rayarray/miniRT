@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 17:58:40 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/25 04:30:11 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/07 18:58:16 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@
 # define COL_BACKGROUND COL_BLACK
 # include "rt_typedef.h"
 
-// Fades color by the extent of the factor. 1 == no change, 0 fades to black
-t_color	color_fade(t_color color, double factor);
+// Fades color by the extent of the intensity. 1 == no change, 0 fades to black
+t_color	color_fade(t_color color, double intensity);
 
-// Fades color to anothercolor by the extent of the factor. 1 == no change, 0 == fade completely to anothercolor
-t_color	color_fade_to(t_color color, t_color anothercolor, double factor);
+// Fades color to anothercolor by the extent of the intensity. 1 == no change, 0 == fade completely to anothercolor
+t_color	color_fade_to(t_color color, t_color anothercolor, double intensity);
 
 #endif /* COLOR_H */

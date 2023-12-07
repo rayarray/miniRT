@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/04 13:23:13 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/07 17:29:58 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,10 @@ t_color	trace_ray(struct s_scene *scene, uint32_t width, uint32_t height,
 	t_pixel	pixel_point)
 {
 	t_vec	camera_point;		// point in camera space
-	t_ray		ray;
-	t_color		col;
+	t_ray	ray;
+	t_color	col;
 
+//	printf("pixel x %d y %d\n", pixel_point.x, pixel_point.y);
 	camera_point = pixel_to_camera_ray(scene->camera->fov, width, height, pixel_point);
 	// TODO rotate camera point to camera direction using rotation matrix
 	ray.origin = scene->camera->loc;
