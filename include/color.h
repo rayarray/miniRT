@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 17:58:40 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/07 18:58:16 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/07 19:46:26 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 
 // Fades color by the extent of the intensity. 1 == no change, 0 fades to black
 t_color	color_fade(t_color color, double intensity);
+
+t_color	color_apply_ambient(t_color color, t_color ambient, double brightness);
 
 // Fades color to anothercolor by the extent of the intensity. 1 == no change, 0 == fade completely to anothercolor
 t_color	color_fade_to(t_color color, t_color anothercolor, double intensity);

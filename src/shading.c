@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 21:28:54 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/07 18:32:14 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/07 19:47:28 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 
 t_color	apply_ambient(t_color color, struct s_ambient_lighting *ambience)
 {
-	return (color_fade_to(color, ambience->color, ambience->light_ratio));
+//	return (color_fade_to(color, ambience->color, ambience->light_ratio));
+	return (color_apply_ambient(color, ambience->color, ambience->light_ratio));
 }
 
 t_color	facing_ratio(t_vec surface_normal, t_vec facing,
@@ -54,8 +55,8 @@ t_color	diffuse_shading(struct s_scene *scene, t_ray impact_normal,
 		{
 //			diffusely_reflected_light = DIFFUSE_COEFFICIENT * light->brightness * fmax(0, dot_product(impact_normal.destination, vL));	// use distance to factor brightness here?
 			diffusely_reflected_light = DIFFUSE_COEFFICIENT * light->brightness * fabs(dot_product(impact_normal.destination, vL));		// TODO test this. This was changed to incorporate plane, not sure if it works well with every shape
-//			printf("%f\n", diffusely_reflected_light);
-//			getchar();
+			// printf("%f\n", diffusely_reflected_light);
+			// getchar();
 			color = color_fade_to(surface_color, light->color, diffusely_reflected_light);
 		}
 		light = light->next;
