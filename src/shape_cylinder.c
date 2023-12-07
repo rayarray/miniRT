@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:43:11 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/21 19:57:38 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/07 19:03:53 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,18 @@ void	cylinder_dtor(struct s_cylinder *this)
 	_shape_base_dtor(&this->base);
 }
 
-/* t_color	cylinder_hit_ray(struct s_cylinder *this, struct s_scene *scene, t_ray ray)
+double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray)
 {
-	t_color	color;
+	double	distance;
 
-	(void)scene;
-	(void)ray;
-	(void)this;
-	color = (t_color){0xFF, 0xFF, 0xFF, 0xFF};	// placeholder
-	return (color);
-}
- */
-double	cylinder_intersect_distance(struct s_cylinder *c, t_ray ray)
-{
-	(void)c;
-	(void)ray;
-	return INFINITY;	//placeholder
+	distance = -1;
+	double denom = dot_product(this->normal, ray.destination);
+	if (!feq(denom, 0))
+		distance = dot_product(vec_sub(this->point, ray.origin), this->normal) / denom;
+	if (flessthan(distance, 0))
+		distance = INFINITY;
+	return distance;
+
 }
 
 t_color	cylinder_intersect_color(struct s_cylinder *this, struct s_scene *scene, t_ray ray)

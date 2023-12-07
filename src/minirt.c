@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:36:12 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/04 12:38:36 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/07 17:19:33 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,11 @@ void	render(struct s_scene *scene, mlx_image_t *image)
 		while (++x < image->width)
 		{
 			col = trace_ray(scene, image->width, image->height, (t_pixel){x, y});
-//			printf(" ");
 			mlx_put_pixel(image, x, y, coltouint32_t(col));
 		}
-//		printf("\n");
 	}
-//	printf("image drawn");
-//	getchar();
+	// printf("image drawn");
+	// getchar();
 }
 
 static int	get_scene_from_input(struct s_scene **scene, int argc, char **argv)
@@ -121,6 +119,16 @@ int	main(int argc, char **argv)
 	exit_code = get_scene_from_input(&minirt.scene, argc, argv);
 	if (exit_code == EXIT_SUCCESS)
 		exit_code = window_init(&minirt.mlx, &minirt.image);
+	
+	//struct s_shape *shp = minirt.scene->shapes;
+	// while (shp != NULL)
+	// {
+	// 	if (shp->type == e_PLANE) {
+	// 		printf("normal @ main %f %f %f\n", ((struct s_plane *)shp)->normal.x, ((struct s_plane *)shp)->normal.y, ((struct s_plane *)shp)->normal.z);
+	// 		getchar();
+	// 	}
+	// }
+
 	if (exit_code == EXIT_SUCCESS)
 	{
 		mlx_resize_hook(minirt.mlx, (void (*)(int32_t, int32_t, void *))minirt_resize_hook, &minirt);
