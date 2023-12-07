@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:36:12 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/05 17:19:03 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/07 12:19:43 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,41 +53,58 @@ void	tests(void)
 {
 	t_vec	c_vec;
 	t_vec	upvec;
-	t_vec	leftvec;
+	t_vec	ltvec;
+	t_vec	rtvec;
 
 	c_vec = vecInit(-1, 0, 0);
-	//upvec = cameraUp(c_vec);
-	upvec = vecZRotate(c_vec, M_PI / 2);
-	//printf("z:%f\n", upvec.y);
-	if (upvec.y < c_vec.y) 
-		upvec = vecZRotate(c_vec, -M_PI / 2);
-	leftvec = vecXRotate(c_vec, M_PI / 2);
-	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamleft:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, leftvec.x, leftvec.y, leftvec.z);
-	c_vec = vecInit(1, 0, 0);
-	upvec = vecZRotate(c_vec, M_PI / 2);
-	if (upvec.y < c_vec.y) 
-		upvec = vecZRotate(c_vec, -M_PI / 2);
-	leftvec = vecXRotate(c_vec, M_PI / 2);
-	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamleft:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, leftvec.x, leftvec.y, leftvec.z);
-	//assert(vecEq(upvec, vecInit(0, 1, 0)) && vecEq(leftvec, vecInit(0, 0, 1)));
+	upvec = vecInit(0, 1, 0);
+	ltvec = vecCross(c_vec, upvec);
+	upvec = vecCross(ltvec, c_vec);
+ 	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamlt:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, ltvec.x, ltvec.y, ltvec.z);
 	c_vec = vecInit(0, 0, 1);
-	upvec = vecZRotate(c_vec, M_PI / 2);
-	if (upvec.y < c_vec.y) 
-		upvec = vecZRotate(c_vec, -M_PI / 2);
-	leftvec = vecXRotate(c_vec, M_PI / 2);
-	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamleft:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, leftvec.x, leftvec.y, leftvec.z);
-	c_vec = vecInit(0, 1, 0);
-	upvec = vecZRotate(c_vec, M_PI / 2);
-	if (upvec.y < c_vec.y) 
-		upvec = vecZRotate(c_vec, -M_PI / 2);
-	leftvec = vecXRotate(c_vec, M_PI / 2);
-	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamleft:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, leftvec.x, leftvec.y, leftvec.z);
-	c_vec = vecInit(0, 1, 1);
-	upvec = vecZRotate(c_vec, M_PI / 2);
-	//if (upvec.y < c_vec.y) 
-	//	upvec = vecZRotate(c_vec, -M_PI / 2);
-	leftvec = vecXRotate(c_vec, M_PI / 2);
-	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamleft:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, leftvec.x, leftvec.y, leftvec.z);
+	upvec = vecInit(0, 1, 0);
+	ltvec = vecCross(c_vec, upvec);
+	upvec = vecCross(ltvec, c_vec);
+	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamlt:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, ltvec.x, ltvec.y, ltvec.z);
+	c_vec = unitVector(vecInit(1, 1, 1));
+	rtvec = vecCross(c_vec, vecInit(0, 1, 0));
+	upvec = vecCross(rtvec, c_vec);
+	ltvec = vecSub(vecInit(0, 0, 0), rtvec);
+	//ltvec = vecCross(c_vec, upvec);
+	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamlt:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, ltvec.x, ltvec.y, ltvec.z);
+// 	c_vec = vecInit(-1, 0, 0);
+// 	//upvec = cameraUp(c_vec);
+// 	upvec = vecZRotate(c_vec, M_PI / 2);
+// 	//printf("z:%f\n", upvec.y);
+// 	if (upvec.y < c_vec.y) 
+// 		upvec = vecZRotate(c_vec, -M_PI / 2);
+// 	ltvec = vecXRotate(c_vec, M_PI / 2);
+// 	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamleft:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, ltvec.x, ltvec.y, ltvec.z);
+// 	c_vec = vecInit(1, 0, 0);
+// 	upvec = vecZRotate(c_vec, M_PI / 2);
+// 	if (upvec.y < c_vec.y) 
+// 		upvec = vecZRotate(c_vec, -M_PI / 2);
+// 	ltvec = vecXRotate(c_vec, M_PI / 2);
+// 	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamleft:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, ltvec.x, ltvec.y, ltvec.z);
+// 	//assert(vecEq(upvec, vecInit(0, 1, 0)) && vecEq(ltvec, vecInit(0, 0, 1)));
+// 	c_vec = vecInit(0, 0, 1);
+// 	upvec = vecZRotate(c_vec, M_PI / 2);
+// 	if (upvec.y < c_vec.y) 
+// 		upvec = vecZRotate(c_vec, -M_PI / 2);
+// 	ltvec = vecXRotate(c_vec, M_PI / 2);
+// 	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamleft:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, ltvec.x, ltvec.y, ltvec.z);
+// 	c_vec = vecInit(0, 1, 0);
+// 	upvec = vecZRotate(c_vec, M_PI / 2);
+// 	if (upvec.y < c_vec.y) 
+// 		upvec = vecZRotate(c_vec, -M_PI / 2);
+// 	ltvec = vecXRotate(c_vec, M_PI / 2);
+// 	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamleft:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, ltvec.x, ltvec.y, ltvec.z);
+// 	c_vec = vecInit(0, 1, 1);
+// 	upvec = vecZRotate(c_vec, M_PI / 2);
+// 	//if (upvec.y < c_vec.y) 
+// 	//	upvec = vecZRotate(c_vec, -M_PI / 2);
+// 	ltvec = vecXRotate(c_vec, M_PI / 2);
+// 	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamleft:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, ltvec.x, ltvec.y, ltvec.z);
 }
 
 static uint32_t	coltouint32_t(t_color col)
