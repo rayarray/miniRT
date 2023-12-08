@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:16:05 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/04 14:47:20 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:03:46 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@
 int	sphere_ctor(struct s_sphere *this, t_vec loc, double diameter, t_color color)
 {
 	static const struct s_shape_vtable	sphere_vtable = {
-			(void (*)(struct s_shape *this))sphere_dtor,
-			(double (*)(struct s_shape *this, t_ray ray))sphere_intersect_distance,
-			(t_color (*)(struct s_shape *this, struct s_scene *scene, t_ray ray))sphere_intersect_color
-		};
+		(void (*)(struct s_shape *))sphere_dtor,
+		(double (*)(struct s_shape *, t_ray))sphere_intersect_distance,
+		(t_color (*)(struct s_shape *, struct s_scene *, t_ray))
+		sphere_intersect_color
+	};
 
 	shape_ctor(&this->base, e_SPHERE, loc, color);
 	this->base.vtptr = &sphere_vtable;
@@ -37,17 +38,6 @@ void	sphere_dtor(struct s_sphere *this)
 	_shape_base_dtor(&this->base);
 }
 
-t_color	sphere_hit_ray(struct s_sphere *this, struct s_scene *scene, t_ray ray)
-{
-	t_color	color;
-
-	(void)scene;
-	(void)ray;
-	(void)this;
-	color = this->base.col;
-	return (color);
-}
-
 static double	geometric_intersect_distance(struct s_sphere *s, t_ray ray)
 {
 	t_vec	l;	// vector between origin and sphere
@@ -56,7 +46,6 @@ static double	geometric_intersect_distance(struct s_sphere *s, t_ray ray)
 	double	thc;	// distance between line s and impact point
 	double result;
 
-	// TODO consider double value inaccuracies
 	l = vec_sub(s->base.loc, ray.origin);
 	tca = dot_product(l, ray.destination);
 	if (flessthan(tca, 0))
@@ -81,34 +70,31 @@ static double	analytic_intersect_distance(struct s_sphere *s, t_ray ray)
 	double	b;
 	double	c;
 	double	discriminant;
-	double	result;
-	double	result1;
-	double	result2;
+	double	results[3];
 
-	result = INFINITY;
-	a = dot_product(ray.destination, ray.destination);		// should be always 1
+	results[0] = INFINITY;
+	a = dot_product(ray.destination, ray.destination);
 	b = 2 * dot_product(ray.destination, vec_sub(ray.origin, s->base.loc));
 	c = pow(vec_length(vec_sub(ray.origin, s->base.loc)), 2) - pow(s->diameter / 2, 2);
 	discriminant = pow(b, 2) - 4 * a * c;
-	if (a == 0)					// Would result in a divide by zero
-		result = INFINITY;		// but this shouldn't happen because ray.destination should be normalized.
+//	if (a == 0)					// Would result in a divide by zero
+//		result = INFINITY;		// but this shouldn't happen because ray.destination should be normalized.
 	if (feq(discriminant, 0))
-		result = -b / (2 * a);
+		results[0] = -b / (2 * a);
 	else if (fgreaterthan(discriminant, 0))
 	{ 
-		result1 = (-b + sqrt(discriminant)) / (2 * a);	// Source material says this method might produce errors ("catastrophic cancellation")
-		result2 = (-b - sqrt(discriminant)) / (2 * a);	// TODO replace with a better method
-		if (flessthan(result1, 0) && flessthan(result2, 0))
-			result = INFINITY;
-		else if (fgreaterthan(result1, 0) && fgreaterthan(result2, 0))
-			result = fmin(result1, result2);
-		else
-			result = fmax(result1, result2);
+		results[1] = (-b + sqrt(discriminant)) / (2 * a);	// Source material says this method might produce errors ("catastrophic cancellation")
+		results[2] = (-b - sqrt(discriminant)) / (2 * a);	// TODO replace with a better method
+/* 		if (flessthan(results[1], 0) && flessthan(results[2], 0))
+			results[0] = INFINITY;
+		else  */if (fgreaterthan(results[1], 0) && fgreaterthan(results[2], 0))
+			results[0] = fmin(results[1], results[2]);
+		else if (!(flessthan(results[1], 0) && flessthan(results[2], 0)))
+			results[0] = fmax(results[1], results[2]);
 	}
-	return (result);
+	return (results[0]);
 }
 
-// Returns INFINITY if ray does not intersect with s
 double	sphere_intersect_distance(struct s_sphere *s, t_ray ray)
 {
 	double	anal;
@@ -121,13 +107,14 @@ double	sphere_intersect_distance(struct s_sphere *s, t_ray ray)
 	return (anal);
 }
 
-t_color	sphere_intersect_color(struct s_sphere *s, struct s_scene *scene, t_ray ray)
+t_color	sphere_intersect_color(struct s_sphere *s, struct s_scene *scene,
+	t_ray ray)
 {
-	t_color	color;
-	double	dist;
+	t_color		color;
+	double		dist;
 	t_point3	impact;
-	t_vec	surface_normal;
-	t_ray	impact_normal;
+	t_vec		surface_normal;
+	t_ray		impact_normal;
 
 	dist = sphere_intersect_distance(s, ray);
 	color = s->base.col;
@@ -137,7 +124,6 @@ t_color	sphere_intersect_color(struct s_sphere *s, struct s_scene *scene, t_ray 
 		surface_normal = vec_normalize(vec_sub(impact, s->base.loc));
 		impact_normal = (t_ray){impact, surface_normal};
 		color = apply_ambient(color, scene->ambient);
-//		color = facing_ratio(surface_normal, ray.destination, color, color_fade(scene->ambient->color, scene->ambient->light_ratio));
 		color = diffuse_shading(scene, impact_normal, color);
 		color = specular_lighting(scene, impact_normal, ray, color);
 	}

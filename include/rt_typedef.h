@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:45:14 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/04 13:21:27 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:00:34 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include <stdint.h>
 
 // Shapes should be between e_LIGHT and e_NAE
-typedef enum	e_elem_type
+typedef enum e_elem_type
 {
 	e_AMBIENT_LIGHTING = 0,
 	e_CAMERA = 1,
@@ -43,7 +43,7 @@ typedef struct s_vec
 
 typedef t_vec	t_point3;
 
-typedef struct	s_point2
+typedef struct s_point2
 {
 	double	x;
 	double	y;

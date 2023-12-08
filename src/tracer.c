@@ -6,40 +6,15 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/07 17:29:58 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:52:55 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
+#include <math.h>
 #include "rt_math.h"
 #include "tracer.h"
 #include "color.h"
-#include <stdio.h>
-#include <math.h>
-/* // DEPRECATED
-uint32_t	rayColor(t_camera c, t_ray ray)
-{
-	t_vec		unit_direction;
-	double		a;
-	t_color 	color;
-
-	(void)c;
-	if (hitSphere(vecInit(0, 0, -3), 1, ray) > 0)
-	{
-		//printf("origin x%f y%f z%f\n", ray.origin.x, ray.origin.y, ray.origin.z);
-		return (0xFF << 24 | 0x00 << 16 | 0x00 << 8 | 0xFF);
-	}
-	unit_direction = vecDiv(ray.destination, vecLength(ray.destination));
-	a = 0.5 * (unit_direction.y + 1.0);
-	//return (1.0-a)*color(1.0, 1.0, 1.0) + a*color(0.5, 0.7, 1.0);
-	//gradient_color = (1.0 - a) * 0xFFFFFFFF + a * 
-	//return (x % 0xFF << 24 | x % 0xFF << 16 | y % 0xFF << 8 | y % 0xFF);
-	color.r = ((1.0 - a) + a * 0.5) * 255;
-	color.g = ((1.0 - a) + a * 0.7) * 255;
-	color.b = ((1.0 - a) + a * 1.0) * 255;
-	color.a = 0xFF;
-	return (color.r << 24 | color.g << 16 | color.b << 8 | color.a);
-}
- */
 
 // Done using 
 // https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-generating-camera-rays/generating-camera-rays.html
@@ -69,8 +44,6 @@ int	collision_test(struct s_scene *scene, t_ray ray, double length)
 {
 	struct	s_shape *shape;
 
-//	printf("light ray length %f\n", length);
-//	getchar();
 	shape = scene->shapes;
 	while (shape != NULL)
 	{
@@ -90,7 +63,7 @@ static t_color	cast_ray(struct s_scene *scene, t_ray ray)
 	double			dist;
 
 	closest_shape = NULL;
-	col = COL_BACKGROUND;
+	col = (t_color){.r = 0x00, .g = 0x00, .b = 0x00, .a = 0xFF};
 	distance_to_nearest = INFINITY;
 	shape = scene->shapes;
 	while (shape != NULL)
@@ -115,7 +88,6 @@ t_color	trace_ray(struct s_scene *scene, uint32_t width, uint32_t height,
 	t_ray	ray;
 	t_color	col;
 
-//	printf("pixel x %d y %d\n", pixel_point.x, pixel_point.y);
 	camera_point = pixel_to_camera_ray(scene->camera->fov, width, height, pixel_point);
 	// TODO rotate camera point to camera direction using rotation matrix
 	ray.origin = scene->camera->loc;

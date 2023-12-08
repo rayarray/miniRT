@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 21:31:29 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/04 15:57:08 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:02:18 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@
 
 t_color	apply_ambient(t_color color, struct s_ambient_lighting *ambience);
 t_color	facing_ratio(t_vec surface_normal, t_vec facing,
-	t_color color, t_color ambient);	// Simple facing ratio shading but this isn't required by the subject.
+			t_color color, t_color ambient);	// Simple facing ratio shading but this isn't required by the subject.
 t_color	diffuse_shading(struct s_scene *scene, t_ray impact_normal,
-	t_color surface_color);
+			t_color surface_color);
 t_color	specular_lighting(struct s_scene *scene, t_ray impact_normal,
-	t_ray spectator_ray, t_color surface_color);
+			t_ray spectator_ray, t_color surface_color);
 
 #endif /* SHADING_H */

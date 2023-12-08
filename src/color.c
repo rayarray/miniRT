@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 17:58:30 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/07 19:47:14 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:50:38 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_color	color_apply_ambient(t_color color, t_color ambient, double brightness)
 }
 
 t_color	color_fade_to(t_color c1, t_color c2, double intensity)
-{	// TODO better/more natural function for this
+{
 	// TODO colorful lights are only for bonus part
 	if (fgreaterthan(intensity, 1.0))
 		intensity = 1.0;

@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 21:36:06 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/21 19:54:12 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:30:37 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 #include "parser.h"
 #include "libft.h"
 
-void	shape_ctor(struct s_shape *this, t_elem_type type, t_point3 loc, t_color col)
+void	shape_ctor(struct s_shape *this, t_elem_type type, t_vec loc,
+	t_color col)
 {
 	static const struct s_shape_vtable	vtable = {_shape_base_dtor, NULL, NULL};
 

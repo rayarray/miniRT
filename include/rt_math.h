@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:15:02 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/01 02:20:25 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:00:06 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 # define RT_MATH_H
 # define RT_EPSILON 0.0000001
 # ifndef M_PI
-#  define M_PI (3.14159265358979323846)
+#  define M_PI 3.14159265358979323846
 # endif
 # include <math.h>
 # include "rt_typedef.h"
-
-t_vec	vec_between_points(t_point3 a, t_point3 b);
 
 // Floating point comparisons
 int		feq(double a, double b);

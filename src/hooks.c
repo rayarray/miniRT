@@ -6,14 +6,15 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 18:06:19 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/26 08:13:52 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/08 14:49:29 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "MLX42.h"
 
-void	minirt_resize_hook(int32_t width, int32_t height, struct s_minirt *minirt)
+void	minirt_resize_hook(int32_t width, int32_t height,
+	struct s_minirt *minirt)
 {
 	mlx_resize_image(minirt->image, width, height);
 }

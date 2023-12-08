@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:01:39 by tsankola          #+#    #+#             */
-/*   Updated: 2023/10/14 12:58:57 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/08 14:49:05 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,20 +98,20 @@ char	*get_next_line(int fd)
 	static t_list		*readers;
 	unsigned int		i;
 	char				*line;
-	size_t				size;
+	size_t				sz;
 	t_reader			*reader;
 
 	if (BUFFER_SIZE <= 0 || BUFFER_SIZE > INT32_MAX || LINE_SIZE <= 0
 		|| LINE_SIZE > INT32_MAX || fd < 0 || fd > 4096)
 		return (NULL);
-	size = LINE_SIZE + 1;
-	line = (char *)malloc(sizeof(char) * size);
+	sz = LINE_SIZE + 1;
+	line = (char *)malloc(sizeof(char) * sz);
 	i = 0;
 	reader = get_reader(fd, &readers);
-	while (size && line && get_next_char(&line[i], reader) && line[i++] != '\n')
-		if (i == size - 1)
-			size = reallocate_string(&line, size - 1, (size - 1) * 2 + 1);
-	if (i == 0 || size <= 0 || line == NULL || reader == NULL)
+	while (sz && line && get_next_char(&line[i], reader) && line[i++] != '\n')
+		if (i == sz - 1)
+			sz = reallocate_string(&line, sz - 1, (sz - 1) * 2 + 1);
+	if (i == 0 || sz <= 0 || line == NULL || reader == NULL)
 	{
 		ft_lstdelone(&readers, &fd, (int (*)(void *, void *))(*reader_match),
 			(void (*)(void *))(*del_reader));

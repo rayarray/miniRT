@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 13:10:48 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/25 04:56:45 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:54:07 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ struct s_light
 	t_color			color;
 };
 
-int		light_ctor(struct s_light *l, t_vec pos, double brightness, t_color color);
+int		light_ctor(struct s_light *l, t_vec pos, double brightness, t_color c);
 
 void	light_dtor(struct s_light **l);
 
