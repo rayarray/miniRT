@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shape_sphere.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:16:05 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/01 02:23:34 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:24:10 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ static double	geometric_intersect_distance(struct s_sphere *s, t_ray ray)
 	double result;
 
 	// TODO consider double value inaccuracies
-	l = vec_sub(s->base.loc, ray.origin);
-	tca = dot_product(l, ray.destination);
+	l = vec_sub(s->base.loc, ray.point);
+	tca = dot_product(l, ray.dir);
 	if (flessthan(tca, 0))
 		return (INFINITY);
 	d = sqrt(dot_product(l, l) - pow(tca, 2));		// This sqrt could be optimized away if we let d be squared
@@ -86,12 +86,12 @@ static double	analytic_intersect_distance(struct s_sphere *s, t_ray ray)
 	double	result2;
 
 	result = INFINITY;
-	a = dot_product(ray.destination, ray.destination);		// should be always 1
-	b = 2 * dot_product(ray.destination, vec_sub(ray.origin, s->base.loc));
-	c = pow(vec_length(vec_sub(ray.origin, s->base.loc)), 2) - pow(s->diameter / 2, 2);
+	a = dot_product(ray.dir, ray.dir);		// should be always 1
+	b = 2 * dot_product(ray.dir, vec_sub(ray.point, s->base.loc));
+	c = pow(vec_length(vec_sub(ray.point, s->base.loc)), 2) - pow(s->diameter / 2, 2);
 	discriminant = pow(b, 2) - 4 * a * c;
 	if (a == 0)					// Would result in a divide by zero
-		result = INFINITY;		// but this shouldn't happen because ray.destination should be normalized.
+		result = INFINITY;		// but this shouldn't happen because ray.dir should be normalized.
 	if (feq(discriminant, 0))
 		result = -b / (2 * a);
 	else if (fgreaterthan(discriminant, 0))
@@ -132,10 +132,10 @@ t_color	sphere_intersect_color(struct s_sphere *s, struct s_scene *scene, t_ray 
 	color = s->base.col;
 	if (dist != INFINITY)
 	{
-		impact = vec_add(ray.origin, vec_scal_mul(ray.destination, dist));
+		impact = vec_add(ray.point, vec_scal_mul(ray.dir, dist));
 		surface_normal = vec_normalize(vec_sub(impact, s->base.loc));
 		color = apply_ambient(color, scene->ambient);
-//		color = facing_ratio(surface_normal, ray.destination, color, color_fade(scene->ambient->color, scene->ambient->light_ratio));
+//		color = facing_ratio(surface_normal, ray.dir, color, color_fade(scene->ambient->color, scene->ambient->light_ratio));
 		color = diffuse_shading(scene, surface_normal, impact, color);
 	}
 	return (color);

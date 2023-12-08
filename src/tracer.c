@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tracer.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/04 12:38:45 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:24:44 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ uint32_t	rayColor(t_camera c, t_ray ray)
 	(void)c;
 	if (hitSphere(vecInit(0, 0, -3), 1, ray) > 0)
 	{
-		//printf("origin x%f y%f z%f\n", ray.origin.x, ray.origin.y, ray.origin.z);
+		//printf("origin x%f y%f z%f\n", ray.point.x, ray.point.y, ray.point.z);
 		return (0xFF << 24 | 0x00 << 16 | 0x00 << 8 | 0xFF);
 	}
-	unit_direction = vecDiv(ray.destination, vecLength(ray.destination));
+	unit_direction = vecDiv(ray.dir, vecLength(ray.dir));
 	a = 0.5 * (unit_direction.y + 1.0);
 	//return (1.0-a)*color(1.0, 1.0, 1.0) + a*color(0.5, 0.7, 1.0);
 	//gradient_color = (1.0 - a) * 0xFFFFFFFF + a * 
@@ -112,8 +112,8 @@ t_color	trace_ray(struct s_scene *scene, uint32_t width, uint32_t height,
 
 	camera_point = pixel_to_camera_ray(scene->camera->fov, width, height, pixel_point);
 	// TODO rotate camera point to camera direction using rotation matrix
-	ray.origin = scene->camera->loc;
-	ray.destination = camera_point;
+	ray.point = scene->camera->loc;
+	ray.dir = camera_point;
 	col = cast_ray(scene, ray);
 	return (col);
 }

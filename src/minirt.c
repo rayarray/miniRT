@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:36:12 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/07 12:19:43 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:30:02 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,60 +51,16 @@ void	ft_randomize(void *param)
 
 void	tests(void)
 {
-	t_vec	c_vec;
-	t_vec	upvec;
-	t_vec	ltvec;
-	t_vec	rtvec;
+	t_camera2	c;
+	t_ray		r;
 
-	c_vec = vecInit(-1, 0, 0);
-	upvec = vecInit(0, 1, 0);
-	ltvec = vecCross(c_vec, upvec);
-	upvec = vecCross(ltvec, c_vec);
- 	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamlt:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, ltvec.x, ltvec.y, ltvec.z);
-	c_vec = vecInit(0, 0, 1);
-	upvec = vecInit(0, 1, 0);
-	ltvec = vecCross(c_vec, upvec);
-	upvec = vecCross(ltvec, c_vec);
-	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamlt:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, ltvec.x, ltvec.y, ltvec.z);
-	c_vec = unitVector(vecInit(1, 1, 1));
-	rtvec = vecCross(c_vec, vecInit(0, 1, 0));
-	upvec = vecCross(rtvec, c_vec);
-	ltvec = vecSub(vecInit(0, 0, 0), rtvec);
-	//ltvec = vecCross(c_vec, upvec);
-	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamlt:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, ltvec.x, ltvec.y, ltvec.z);
-// 	c_vec = vecInit(-1, 0, 0);
-// 	//upvec = cameraUp(c_vec);
-// 	upvec = vecZRotate(c_vec, M_PI / 2);
-// 	//printf("z:%f\n", upvec.y);
-// 	if (upvec.y < c_vec.y) 
-// 		upvec = vecZRotate(c_vec, -M_PI / 2);
-// 	ltvec = vecXRotate(c_vec, M_PI / 2);
-// 	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamleft:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, ltvec.x, ltvec.y, ltvec.z);
-// 	c_vec = vecInit(1, 0, 0);
-// 	upvec = vecZRotate(c_vec, M_PI / 2);
-// 	if (upvec.y < c_vec.y) 
-// 		upvec = vecZRotate(c_vec, -M_PI / 2);
-// 	ltvec = vecXRotate(c_vec, M_PI / 2);
-// 	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamleft:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, ltvec.x, ltvec.y, ltvec.z);
-// 	//assert(vecEq(upvec, vecInit(0, 1, 0)) && vecEq(ltvec, vecInit(0, 0, 1)));
-// 	c_vec = vecInit(0, 0, 1);
-// 	upvec = vecZRotate(c_vec, M_PI / 2);
-// 	if (upvec.y < c_vec.y) 
-// 		upvec = vecZRotate(c_vec, -M_PI / 2);
-// 	ltvec = vecXRotate(c_vec, M_PI / 2);
-// 	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamleft:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, ltvec.x, ltvec.y, ltvec.z);
-// 	c_vec = vecInit(0, 1, 0);
-// 	upvec = vecZRotate(c_vec, M_PI / 2);
-// 	if (upvec.y < c_vec.y) 
-// 		upvec = vecZRotate(c_vec, -M_PI / 2);
-// 	ltvec = vecXRotate(c_vec, M_PI / 2);
-// 	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamleft:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, ltvec.x, ltvec.y, ltvec.z);
-// 	c_vec = vecInit(0, 1, 1);
-// 	upvec = vecZRotate(c_vec, M_PI / 2);
-// 	//if (upvec.y < c_vec.y) 
-// 	//	upvec = vecZRotate(c_vec, -M_PI / 2);
-// 	ltvec = vecXRotate(c_vec, M_PI / 2);
-// 	printf("camdir:(%f, %f, %f)\ncamup:(%f, %f, %f)\ncamleft:(%f, %f, %f)\n\n", c_vec.x, c_vec.y, c_vec.z, upvec.x, upvec.y, upvec.z, ltvec.x, ltvec.y, ltvec.z);
+	r.point = vecInit(0, 0, 0);
+	r.dir = vecInit(1, 0, 0);
+	c = initCamera(r, 800, 600, (90 * M_PI) / 2);
+	r = getRay(c, 1, 1);
+	printf("ray at 0, 0: (x%f, y%f, z%f)\n", r.dir.x, r.dir.y, r.dir.z);
+	r = getRay(c, 800, 600);
+	printf("ray at 800, 600: (x%f, y%f, z%f)\n", r.dir.x, r.dir.y, r.dir.z);
 }
 
 static uint32_t	coltouint32_t(t_color col)

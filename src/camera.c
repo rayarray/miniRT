@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:17:25 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/05 16:44:14 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:22:26 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,3 +170,45 @@ void	renderCamera(mlx_image_t *image, t_camera c)
 		}
 	}
 } */
+
+// NEW CAMERA CODE
+
+// center: ray containing camera origin and direction, x: pixel width, y: pixel height
+t_camera2	initCamera(t_ray center, int width, int height, double fov)
+{
+	t_camera2	c;
+
+	c.h_fov = fov;
+	c.center = center;
+	c.img_width = width;
+	c.img_height = height;
+	c.aspect_ratio = (double)width / (double)height;
+	c.up = vecInit(0, 1, 0);
+	c.h = tan(c.h_fov / 2);
+	c.viewport_height = 2 * c.h * c.focus_dist;
+	c.viewport_width = c.viewport_height * (double)width / (double)height;
+	// calc uvw unit basis vectors for cam coord frame
+	c.w = unitVector(c.center.dir);
+	c.u = unitVector(vecCross(c.up, c.w));
+	c.v = vecCross(c.w, c.u);
+	c.viewport_u = vecMul(c.u, c.viewport_width);
+	c.viewport_v = vecMul(vecSub(vecInit(0, 0, 0), c.v), c.viewport_height);
+	c.px_delta_u = vecDiv(c.viewport_u, c.img_width);
+	c.px_delta_v = vecDiv(c.viewport_v, c.img_height);
+	c.viewport_upleft = vecSub(c.center.dir, vecMul(c.w, c.focus_dist));
+	c.viewport_upleft = vecSub(c.viewport_upleft, vecDiv(c.viewport_u, 2.0));
+	c.viewport_upleft = vecSub(c.viewport_upleft, vecDiv(c.viewport_v, 2.0));
+	c.pixel00_loc = vecAdd(c.viewport_upleft,
+			vecMul(vecAdd(c.px_delta_u, c.px_delta_v), 0.5));
+	return (c);
+}
+
+t_ray	getRay(t_camera2 c, int i, int j)
+{
+	t_ray	ray;
+
+	ray.dir = vecAdd(c.pixel00_loc, vecAdd(vecMul(c.px_delta_u, i), vecMul(c.px_delta_v, j)));
+	ray.point = c.center.point;
+	return (ray);
+}
+
