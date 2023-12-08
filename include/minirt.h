@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:02:44 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/27 04:00:59 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:54:42 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ struct s_minirt
 void	render(struct s_scene *scene, mlx_image_t *image);
 
 // hooks.c
-void	minirt_resize_hook(int32_t width, int32_t height, struct s_minirt *minirt);
+void	minirt_resize_hook(int32_t width, int32_t height,
+			struct s_minirt *minirt);
 void	minirt_loop_hook(struct s_minirt *minirt);
 void	minirt_key_hook(mlx_key_data_t keydata, struct s_minirt *minirt);
 void	minirt_close_hook(struct s_minirt *minirt);

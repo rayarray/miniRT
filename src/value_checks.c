@@ -1,25 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ambient_lighting.c                                 :+:      :+:    :+:   */
+/*   value_checks.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/09 16:54:34 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/08 14:47:03 by tsankola         ###   ########.fr       */
+/*   Created: 2023/12/08 14:58:59 by tsankola          #+#    #+#             */
+/*   Updated: 2023/12/08 15:19:51 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ambient_lighting.h"
 #include "rt_validations.h"
-#include "parser.h"
 
-int	ambient_lighting_ctor(struct s_ambient_lighting *a_lt,
-	double light_ratio, t_color color)
+// Value checks. These check that the given value is within required range
+int	is_unitvec(t_vec v)
 {
-	if (!is_ratio(light_ratio))
-		return (1);
-	a_lt->light_ratio = light_ratio;
-	a_lt->color = color;
-	return (0);
+	return (feq(vec_length(v), 1.0));
+}
+
+int	is_fov(int i)
+{
+	return (0 <= i && i <= 180);
+}
+
+int	is_ratio(double d)
+{
+	return (fleq(0.0, d) && fleq(d, 1.0));
+}
+
+int	is_direction_vector(t_vec vec)
+{
+	return (!(fleq(fabs(vec.x), 1.0) && fleq(fabs(vec.y), 1.0)
+			&& fleq(fabs(vec.z), 1.0)));
 }

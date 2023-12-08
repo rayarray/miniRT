@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:01:09 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/25 04:33:37 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/08 14:52:33 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 #include "rt_conversions.h"
 #include "rt_validations.h"
 
-t_parser_error	ambient_lighting_evaluator(struct s_ambient_lighting **a_lt, char **args)
+t_parser_error	ambient_lighting_evaluator(struct s_ambient_lighting **a_lt,
+	char **args)
 {
 	double	light_ratio;
 	t_color	color;
@@ -87,7 +88,8 @@ t_parser_error	light_evaluator(struct s_light **l, char **args)
 	return (e_NO_ERROR);
 }
 
-t_parser_error	parse_line_and_create_element(const char *line, struct s_scene *scene)
+t_parser_error	parse_line_and_create_element(const char *line,
+	struct s_scene *scene)
 {
 	char			**args;
 	t_elem_type		type;
@@ -111,6 +113,7 @@ t_parser_error	parse_line_and_create_element(const char *line, struct s_scene *s
 		err = e_TOO_MANY_ELEMENTS;
 	free_strarray(&args);
 	if (err != e_NO_ERROR)
-		ft_printf("Parse error %d, failed to create element, line:\n%s", err, line);
+		ft_printf("Parse error %d, failed to create element, line:\n%s",
+			err, line);
 	return (err);
 }

@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:40:15 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/07 19:04:04 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:02:42 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ typedef enum e_cylinder_dimension_index
 	e_HEIGHT
 }	t_cylinder_dimension_index;
 
+typedef enum e_cylinder_orientation_index
+{
+	e_LOCATION,
+	e_AXIS
+}	t_cylinder_orientation_index;
+
 struct s_cylinder
 {
 	struct s_shape	base;
@@ -29,15 +35,14 @@ struct s_cylinder
 	double			height;
 };
 
-int	cylinder_ctor(struct s_cylinder *this, t_point3 loc, t_vec axis,
-	double *dimensions, t_color color);	// TODO reduce parameters by one. Either combine loc and axis (technically a type error), or just edit the values directly, I dunno.
+int		cylinder_ctor(struct s_cylinder *this, t_vec orientation[2],
+			double dimensions[2], t_color color);
 
 void	cylinder_dtor(struct s_cylinder *this);
 
-t_color	cylinder_hit_ray(struct s_cylinder *this, struct s_scene *scene, t_ray ray);
-
 double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray);
 
-t_color	cylinder_intersect_color(struct s_cylinder *this, struct s_scene *scene, t_ray ray);
+t_color	cylinder_intersect_color(struct s_cylinder *this,
+			struct s_scene *scene, t_ray ray);
 
 #endif

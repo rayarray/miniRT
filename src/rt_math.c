@@ -6,21 +6,11 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:53:18 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/02 10:24:35 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/08 14:57:00 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt_math.h"
-
-t_vec	vec_between_points(t_point3 a, t_point3 b)
-{	// This is just a vec_sub with different name. Probably deprecated
-	t_vec	ret;
-
-	ret.x = a.x - b.x;
-	ret.y = a.y - b.y;
-	ret.z = a.z - b.z;
-	return (ret);
-}
 
 int	feq(double a, double b)
 {
@@ -39,12 +29,12 @@ int	fgreaterthan(double a, double b)
 
 int	fleq(double a, double b)
 {
-	return (feq(a,b) || flessthan(a,b));
+	return (feq(a, b) || flessthan(a, b));
 }
 
 int	fgeq(double a, double b)
 {
-	return (feq(a,b) || fgreaterthan(a,b));
+	return (feq(a, b) || fgreaterthan(a, b));
 }
 
 double	vec_distance(t_vec a, t_vec b)
@@ -59,7 +49,7 @@ double	vec_distance(t_vec a, t_vec b)
 
 double	vec_length(t_vec a)
 {
-	return sqrt(pow(a.x, 2) + pow(a.y, 2) + pow(a.z, 2));
+	return (sqrt(pow(a.x, 2) + pow(a.y, 2) + pow(a.z, 2)));
 }
 
 t_vec	vec_normalize(t_vec a)
@@ -91,17 +81,17 @@ t_vec	cross_product(t_vec a, t_vec b)
 
 t_vec	vec_add(t_vec a, t_vec b)
 {
-	return (t_vec){a.x + b.x, a.y + b.y, a.z + b.z};
+	return ((t_vec){a.x + b.x, a.y + b.y, a.z + b.z});
 }
 
 t_vec	vec_sub(t_vec a, t_vec b)
 {
-	return (t_vec){a.x - b.x, a.y - b.y, a.z - b.z};
+	return ((t_vec){a.x - b.x, a.y - b.y, a.z - b.z});
 }
 
 t_vec	vec_neg(t_vec a)
 {
-	return (t_vec){-a.x, -a.y, -a.z};
+	return ((t_vec){-a.x, -a.y, -a.z});
 }
 
 t_vec	vec_scal_mul(t_vec a, double s)

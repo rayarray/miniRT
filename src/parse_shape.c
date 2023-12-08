@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:30:47 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/07 16:56:30 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:34:29 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 t_parser_error	cylinder_evaluator(struct s_cylinder **c, char **args)
 {
-	t_point3	loc;
+	t_vec	loc;
 	t_vec	axis;
 	double	diameter;
 	double	height;
@@ -38,7 +38,8 @@ t_parser_error	cylinder_evaluator(struct s_cylinder **c, char **args)
 	diameter = rt_atof(args[3]);
 	height = rt_atof(args[4]);
 	color = rt_atocol(args[5]);
-	if (cylinder_ctor(*c, loc, axis, (double[2]){diameter, height}, color))
+	if (cylinder_ctor(*c, (t_vec [2]){loc, axis},
+		(double [2]){diameter, height}, color))
 		return (e_ELEMENT_ARG_ERROR);
 	return (e_NO_ERROR);
 }
@@ -78,7 +79,6 @@ t_parser_error	sphere_evaluator(struct s_sphere **s, char **args)
 	if (!is_double_triplet_strict(args[1]) || !is_double(args[2])
 		|| !is_int_triplet_strict(args[3]))
 		return (e_ELEMENT_ARG_ERROR);
-
 	*s = malloc(sizeof(struct s_sphere));
 	if (*s == NULL)
 		return (e_ENV_ERROR);
@@ -90,7 +90,8 @@ t_parser_error	sphere_evaluator(struct s_sphere **s, char **args)
 	return (e_NO_ERROR);
 }
 
-t_parser_error	shape_evaluator(struct s_shape **shapes, char **args, t_elem_type type)
+t_parser_error	shape_evaluator(struct s_shape **shapes, char **args,
+	t_elem_type type)
 {
 	while (*shapes != NULL)
 		shapes = &(*shapes)->next;

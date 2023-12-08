@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 17:49:28 by tsankola          #+#    #+#             */
-/*   Updated: 2023/11/25 04:32:20 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:01:13 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,17 @@
 # include "libft.h"
 
 // Form checks. Return number of characters traversed or 0 if not a valid input.
-// Strict functions check that the string is null terminated after the value.
-// (might be prudent to also accept values that end with whitespace and newlines)
+// Strict functions check that the string is null terminated after the value. It
+// might be prudent to also accept values that end with whitespace and newlines.
 int	is_double(const char *s);
 int	is_int(const char *s);
 int	is_double_triplet_strict(const char *s);
 int	is_int_triplet_strict(const char *s);
 
 // Checks that the components in the given vector are within [-1.0, 1,0] range
+int	is_direction_vector(t_vec vec);
+
+// Checks that the length of the vector is 1
 int	is_unitvec(t_vec v);
 
 // Checks that the given value is within [0, 180] range

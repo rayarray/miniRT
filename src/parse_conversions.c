@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 19:56:43 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/02 10:21:44 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/08 15:57:51 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	skip_whitespace(const char **cptr)
 	int	n;
 
 	n = 0;
-	while(1 <= **cptr && **cptr <= ' ')
+	while (1 <= **cptr && **cptr <= ' ')
 	{
 		(*cptr)++;
 		n++;
@@ -33,10 +33,10 @@ t_elem_type	rt_atoetype(const char *a)
 
 	skip_whitespace(&a);
 	i = -1;
-	while (VALID_ELEM_IDS[++i] != NULL)
+	while (g_elem_ids[++i] != NULL)
 	{
-		len = ft_strlen(VALID_ELEM_IDS[i]);
-		if (ft_strncmp(a, VALID_ELEM_IDS[i], len) == 0
+		len = ft_strlen(g_elem_ids[i]);
+		if (ft_strncmp(a, g_elem_ids[i], len) == 0
 			&& ft_strchr(" \t", *(a + len)))
 			break ;
 	}
