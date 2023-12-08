@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:39:10 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/08 15:23:07 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:29:06 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ t_color	plane_intersect_color(struct s_plane *this, struct s_scene *scene,
 
 	col = this->base.col;
 	dist = plane_intersect_distance(this, ray);	// assume ray.destination is unit vector
+	col = apply_ambient(col, scene->ambient);
 	if (dist != INFINITY)
 	{
-		col = apply_ambient(col, scene->ambient);
 		impact = vec_add(ray.origin, vec_scal_mul(ray.destination, dist));
 		if (fgreaterthan(dot_product(ray.destination, this->normal), 0))
 			normal_to_ray = vec_neg(this->normal);
