@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:39:10 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/07 19:56:11 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/08 14:45:27 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ t_color	plane_intersect_color(struct s_plane *this, struct s_scene *scene, t_ray
 	t_color		col;
 	double		dist;
 	t_point3	impact;
+	t_vec		normal_to_ray;
 
 	col = this->base.col;
 	dist = plane_intersect_distance(this, ray);	// assume ray.destination is unit vector
@@ -63,8 +64,12 @@ t_color	plane_intersect_color(struct s_plane *this, struct s_scene *scene, t_ray
 	{
 		col = apply_ambient(col, scene->ambient);
 		impact = vec_add(ray.origin, vec_scal_mul(ray.destination, dist));
-		col = diffuse_shading(scene, (t_ray){impact, this->normal}, col);
-		col = specular_lighting(scene, (t_ray){impact, this->normal}, ray, col);
+		if (fgreaterthan(dot_product(ray.destination, this->normal),0))
+			normal_to_ray = vec_neg(this->normal);
+		else
+			normal_to_ray = this->normal;
+		col = diffuse_shading(scene, (t_ray){impact, normal_to_ray}, col);
+		col = specular_lighting(scene, (t_ray){impact, normal_to_ray}, ray, col);
 	}
 	return (col);
 }
