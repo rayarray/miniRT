@@ -6,18 +6,17 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 21:31:29 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/09 19:45:24 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/09 21:06:16 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHADING_H
 # define SHADING_H
-# define SPECULAR_COEFFICIENT 1.5
-# define DIFFUSE_COEFFICIENT 1.0
-# define SHADOW_COEFFICIENT 0.3
+# define DIFFUSE_COEFFICIENT 16.0
+# define SPECULAR_COEFFICIENT 16.0
+# define SPECULAR_POWER 16.0
 # include "rt_typedef.h"
 # include "ambient_lighting.h"
-# include "light.h"
 # include "scene.h"
 
 t_color	apply_ambient(t_color color, struct s_ambient_lighting *ambience);
@@ -27,5 +26,7 @@ t_color	diffuse_shading(struct s_scene *scene, t_ray impact_normal,
 			t_color color);
 t_color	specular_lighting(struct s_scene *scene, t_ray impact_normal,
 			t_ray spectator_ray, t_color color);
+t_color	specular_reflection(struct s_scene *scene, t_ray impact_norm,
+			t_ray eye_ray, t_color color, int bounces);
 
 #endif /* SHADING_H */

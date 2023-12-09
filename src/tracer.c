@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/08 16:18:34 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/09 20:50:40 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	collision_test(struct s_scene *scene, t_ray ray, double length)
 	return (0);
 }
 
-static t_color	cast_ray(struct s_scene *scene, t_ray ray)
+t_color	cast_ray(struct s_scene *scene, t_ray ray, int bounces)
 {
 	struct s_shape	*shape;
 	struct s_shape	*closest_shape;
@@ -64,6 +64,8 @@ static t_color	cast_ray(struct s_scene *scene, t_ray ray)
 
 	closest_shape = NULL;
 	col = (t_color){.r = 0x00, .g = 0x00, .b = 0x00, .a = 0xFF};
+	if (bounces <= 0)
+		return (col);
 	distance_to_nearest = INFINITY;
 	shape = scene->shapes;
 	while (shape != NULL)
@@ -77,7 +79,7 @@ static t_color	cast_ray(struct s_scene *scene, t_ray ray)
 		shape = shape->next;
 	}
 	if (closest_shape)
-		col = intersect_color(closest_shape, scene, ray);
+		col = intersect_color(closest_shape, scene, ray, bounces);
 	return (col);
 }
 
@@ -92,6 +94,6 @@ t_color	trace_ray(struct s_scene *scene, uint32_t width, uint32_t height,
 	// TODO rotate camera point to camera direction using rotation matrix
 	ray.origin = scene->camera->loc;
 	ray.destination = camera_point;
-	col = cast_ray(scene, ray);
+	col = cast_ray(scene, ray, BOUNCE_LIMIT);
 	return (col);
 }
