@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 21:28:54 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/08 15:09:43 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/09 19:45:43 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,12 @@ t_color	facing_ratio(t_vec surface_normal, t_vec facing,
 }
 
 t_color	diffuse_shading(struct s_scene *scene, t_ray impact_normal,
-	t_color surface_color)
+	t_color color)
 {
-	t_color			color;
 	t_vec			v_l;
 	double			diffusely_reflected_light;
 	struct s_light	*light;
 
-	color = surface_color;
 	light = scene->lights;
 	while (light != NULL)
 	{
@@ -54,7 +52,7 @@ t_color	diffuse_shading(struct s_scene *scene, t_ray impact_normal,
 			// TODO use distance to factor brightness?
 			diffusely_reflected_light = DIFFUSE_COEFFICIENT * light->brightness
 				* fmax(0, dot_product(impact_normal.destination, v_l));
-			color = color_fade_to(surface_color, light->color,
+			color = color_fade_to(color, light->color,
 					diffusely_reflected_light);
 		}
 		light = light->next;
