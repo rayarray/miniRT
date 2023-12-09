@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/09 20:50:40 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/09 21:26:39 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ t_color	cast_ray(struct s_scene *scene, t_ray ray, int bounces)
 	double			dist;
 
 	closest_shape = NULL;
-	col = (t_color){.r = 0x00, .g = 0x00, .b = 0x00, .a = 0xFF};
+	col = (t_color){.r = 0x00, .g = 0x00, .b = 0x00, .a = 0xFF};	// TODO remove?
+	col = color_fade(scene->ambient->color, scene->ambient->light_ratio);
 	if (bounces <= 0)
 		return (col);
 	distance_to_nearest = INFINITY;
