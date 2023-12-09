@@ -6,13 +6,13 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:55 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/09 20:47:40 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/09 21:29:30 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TRACER_H
 # define TRACER_H
-# define BOUNCE_LIMIT 2
+# define BOUNCE_LIMIT 3
 # include "rt_typedef.h"
 # include "scene.h"
 
