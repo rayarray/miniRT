@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 21:36:06 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/08 15:30:37 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/09 20:34:47 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,10 @@ double	intersect_distance(struct s_shape *this, t_ray ray)
 	return (this->vtptr->intersect_distance(this, ray));
 }
 
-t_color	intersect_color(struct s_shape *this, struct s_scene *scene, t_ray ray)
+t_color	intersect_color(struct s_shape *this, struct s_scene *scene, t_ray ray,
+			int bounces)
 {
-	return (this->vtptr->intersect_color(this, scene, ray));
+	return (this->vtptr->intersect_color(this, scene, ray, bounces - 1));
 }
 
 void	shape_list_clear(struct s_shape **shape)

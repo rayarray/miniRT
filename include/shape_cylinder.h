@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:40:15 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/08 16:02:42 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/09 20:33:34 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ void	cylinder_dtor(struct s_cylinder *this);
 double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray);
 
 t_color	cylinder_intersect_color(struct s_cylinder *this,
-			struct s_scene *scene, t_ray ray);
+			struct s_scene *scene, t_ray ray, int bounces);
 
 #endif

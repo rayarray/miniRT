@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:16:05 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/08 16:03:46 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/09 21:06:35 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	sphere_ctor(struct s_sphere *this, t_vec loc, double diameter, t_color color
 	static const struct s_shape_vtable	sphere_vtable = {
 		(void (*)(struct s_shape *))sphere_dtor,
 		(double (*)(struct s_shape *, t_ray))sphere_intersect_distance,
-		(t_color (*)(struct s_shape *, struct s_scene *, t_ray))
+		(t_color (*)(struct s_shape *, struct s_scene *, t_ray, int))
 		sphere_intersect_color
 	};
 
@@ -108,7 +108,7 @@ double	sphere_intersect_distance(struct s_sphere *s, t_ray ray)
 }
 
 t_color	sphere_intersect_color(struct s_sphere *s, struct s_scene *scene,
-	t_ray ray)
+	t_ray ray, int bounces)
 {
 	t_color		color;
 	double		dist;
@@ -126,6 +126,8 @@ t_color	sphere_intersect_color(struct s_sphere *s, struct s_scene *scene,
 		color = apply_ambient(color, scene->ambient);
 		color = diffuse_shading(scene, impact_normal, color);
 		color = specular_lighting(scene, impact_normal, ray, color);
+		(void)bounces;
+		color = specular_reflection(scene, impact_normal, ray, color, bounces);
 	}
 	return (color);
 }

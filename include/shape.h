@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 13:07:15 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/08 16:09:10 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/09 20:32:17 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ struct s_shape_vtable
 {
 	void	(*shape_dtor)(struct s_shape *);
 	double	(*intersect_distance)(struct s_shape *, t_ray);
-	t_color	(*intersect_color)(struct s_shape *, struct s_scene *, t_ray);
+	t_color	(*intersect_color)(struct s_shape *, struct s_scene *, t_ray, int);
 };
 
 /*
@@ -56,7 +56,8 @@ void	shape_dtor(struct s_shape *this);
 
 double	intersect_distance(struct s_shape *this, t_ray ray);
 
-t_color	intersect_color(struct s_shape *this, struct s_scene *scene, t_ray ray);
+t_color	intersect_color(struct s_shape *this, struct s_scene *scene, t_ray ray,
+			int bounces);
 
 void	shape_list_clear(struct s_shape **shape);
 

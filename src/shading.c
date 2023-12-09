@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 21:28:54 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/09 19:45:43 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/09 21:07:23 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 #include "light.h"
 #include "color.h"
 #include "rt_math.h"
-#include "rt_typedef.h"
-#include "ambient_lighting.h"
 #include "tracer.h"
 
 t_color	apply_ambient(t_color color, struct s_ambient_lighting *ambience)
@@ -35,25 +33,26 @@ t_color	facing_ratio(t_vec surface_normal, t_vec facing,
 	return (surface_color);
 }
 
-t_color	diffuse_shading(struct s_scene *scene, t_ray impact_normal,
+#include <stdio.h>
+t_color	diffuse_shading(struct s_scene *scene, t_ray impact_norm,
 	t_color color)
 {
 	t_vec			v_l;
-	double			diffusely_reflected_light;
+	double			intensity;
 	struct s_light	*light;
 
 	light = scene->lights;
 	while (light != NULL)
 	{
-		v_l = vec_normalize(vec_sub(light->loc, impact_normal.origin));
-		if (!collision_test(scene, (t_ray){impact_normal.origin, v_l},
-			vec_length(vec_sub(impact_normal.origin, light->loc))))
+		v_l = vec_normalize(vec_sub(light->loc, impact_norm.origin));
+		if (!collision_test(scene, (t_ray){impact_norm.origin, v_l},
+			vec_length(vec_sub(impact_norm.origin, light->loc))))
 		{
-			// TODO use distance to factor brightness?
-			diffusely_reflected_light = DIFFUSE_COEFFICIENT * light->brightness
-				* fmax(0, dot_product(impact_normal.destination, v_l));
-			color = color_fade_to(color, light->color,
-					diffusely_reflected_light);
+			intensity = DIFFUSE_COEFFICIENT * light->brightness
+				* fmax(0, dot_product(impact_norm.destination, v_l));
+			intensity /= pow(vec_length(
+					vec_sub(light->loc, impact_norm.origin)), 2);
+			color = color_fade_to(color, light->color, intensity);
 		}
 		light = light->next;
 	}
@@ -61,15 +60,16 @@ t_color	diffuse_shading(struct s_scene *scene, t_ray impact_normal,
 }
 
 t_color	specular_lighting(struct s_scene *scene, t_ray impact_norm,
-	t_ray spectator_ray, t_color color)
+	t_ray eye_ray, t_color color)
 {
 	t_vec			v_l;
 	t_vec			v_r;
 	t_vec			v_e;
 	struct s_light	*light;
-	double			specular_reflected_light;
-
+	double			intensity;
+	
 	light = scene->lights;
+	v_e = vec_normalize(vec_sub(eye_ray.origin, impact_norm.origin));
 	while (light != NULL)
 	{
 		v_l = vec_normalize(vec_sub(light->loc, impact_norm.origin));
@@ -78,15 +78,33 @@ t_color	specular_lighting(struct s_scene *scene, t_ray impact_norm,
 		{
 			v_r = vec_sub(vec_scal_mul(impact_norm.destination,
 						(2 * dot_product(impact_norm.destination, v_l))), v_l);
-			v_e = vec_normalize(vec_sub(spectator_ray.origin,
-						impact_norm.origin));
-			// TODO Factor distance to brightness?
-			specular_reflected_light = SPECULAR_COEFFICIENT * light->brightness
-				* pow(fmax(0, dot_product(v_r, v_e)), 16);
-			color = color_fade_to(color, light->color,
-					specular_reflected_light);
+			intensity = SPECULAR_COEFFICIENT * light->brightness
+				* pow(fmax(0, dot_product(v_r, v_e)), SPECULAR_POWER);
+			intensity /= pow(vec_length(
+					vec_sub(light->loc, impact_norm.origin)), 2);
+			color = color_fade_to(color, light->color, intensity);
 		}
 		light = light->next;
 	}
+	return (color);
+}
+
+t_color	specular_reflection(struct s_scene *scene, t_ray impact_norm,
+	t_ray eye_ray, t_color color, int bounces)
+{
+	t_vec			v_s;
+	t_vec			v_e;
+	struct s_shape	*shape;
+	double			intensity;
+	t_color			refl_col;
+	
+	shape = scene->shapes;
+	v_e = vec_normalize(vec_sub(eye_ray.origin, impact_norm.origin));
+	v_s = vec_sub(vec_scal_mul(impact_norm.destination, 2 * dot_product(v_e, impact_norm.destination)
+		/ dot_product(impact_norm.destination, impact_norm.destination)), v_e);
+	refl_col = cast_ray(scene, (t_ray){impact_norm.origin, v_s}, bounces);
+	intensity = 0.5;
+	color = color_fade_to(color, refl_col, intensity);
+	shape = shape->next;
 	return (color);
 }

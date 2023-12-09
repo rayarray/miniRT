@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:43:11 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/08 15:16:29 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/09 20:54:55 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	cylinder_ctor(struct s_cylinder *this, t_vec orientation[2],
 	static const struct s_shape_vtable	vtable = {
 		(void (*)(struct s_shape *))cylinder_dtor,
 		(double (*)(struct s_shape *, t_ray))cylinder_intersect_distance,
-		(t_color (*)(struct s_shape *, struct s_scene *, t_ray))
+		(t_color (*)(struct s_shape *, struct s_scene *, t_ray, int))
 		cylinder_intersect_color
 	};
 
@@ -50,10 +50,11 @@ double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray)
 }
 
 t_color	cylinder_intersect_color(struct s_cylinder *this,
-	struct s_scene *scene, t_ray ray)
+	struct s_scene *scene, t_ray ray, int bounces)
 {
 	(void)this;
 	(void)ray;
 	(void)scene;
+	(void)bounces;
 	return (this->base.col);	//placeholder
 }
