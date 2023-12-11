@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/08 15:24:44 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/12 00:14:37 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	collision_test(struct s_scene *scene, t_ray ray, double length)
 	return (0);
 }
 
-static t_color	cast_ray(struct s_scene *scene, t_ray ray)
+t_color	cast_ray(struct s_scene *scene, t_ray ray)
 {
 	struct s_shape	*shape;
 	struct s_shape	*closest_shape;

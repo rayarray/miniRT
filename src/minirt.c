@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:36:12 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/08 15:30:02 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/12 00:27:46 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include "parser.h"
 #include "scene.h"
 #include "tracer.h"
+#include "render.h"
 
 /* 
 int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
@@ -64,40 +65,6 @@ void	tests(void)
 	printf("ray at 300, 300: (x%f, y%f, z%f)\n", r.dir.x, r.dir.y, r.dir.z);
 	r = getRay(c, 600, 600);
 	printf("ray at 600, 600: (x%f, y%f, z%f)\n", r.dir.x, r.dir.y, r.dir.z);
-}
-
-static uint32_t	coltouint32_t(t_color col)
-{
-	uint32_t	ret;
-
-	ret = 0;
-	ret += col.r << 24;
-	ret += col.g << 16;
-	ret += col.b << 8;
-	ret += col.a;
-	return (ret);
-}
-
-void	render(struct s_scene *scene, mlx_image_t *image)
-{
-	uint32_t	x;
-	uint32_t	y;
-	t_color		col;
-
-	y = 0 - 1;
-	while (++y < image->height)
-	{
-		x = 0 - 1;
-		while (++x < image->width)
-		{
-			col = trace_ray(scene, image->width, image->height, (t_pixel){x, y});
-//			printf(" ");
-			mlx_put_pixel(image, x, y, coltouint32_t(col));
-		}
-//		printf("\n");
-	}
-//	printf("image drawn");
-//	getchar();
 }
 
 static int	get_scene_from_input(struct s_scene **scene, int argc, char **argv)

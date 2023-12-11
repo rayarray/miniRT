@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:17:25 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/08 15:22:26 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/11 23:53:17 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int camera_ctor(struct s_camera *c, t_point3 loc, t_vec dir, int fov)
 	return (0);
 }
 
+// unused
 t_vec vecRotMatrixMul(double *matrix[3], t_vec vector) 
 {
 	t_vec	result;
@@ -97,6 +98,7 @@ t_vec vecRotMatrixMul(double *matrix[3], t_vec vector)
 	return (result);
 }
 
+// unused
 t_vec	vecZRotate(t_vec vector, double angle)
 {
 	double	*rotation_matrix[3];
@@ -107,6 +109,7 @@ t_vec	vecZRotate(t_vec vector, double angle)
 	return (vecRotMatrixMul(rotation_matrix, vector));
 }
 
+// unused
 t_vec	vecXRotate(t_vec vector, double angle)
 {
 	double	*rotation_matrix[3];

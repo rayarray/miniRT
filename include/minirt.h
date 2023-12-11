@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:02:44 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/27 04:00:59 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/12 00:29:05 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define IMAGE_WIDTH WIDTH
 # define IMAGE_HEIGHT HEIGHT
 # include "scene.h"
+# include "render.h"
 # include "MLX42.h"
 
 struct s_minirt

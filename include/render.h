@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tracer.h                                           :+:      :+:    :+:   */
+/*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 16:00:55 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/12 00:14:36 by rleskine         ###   ########.fr       */
+/*   Created: 2023/10/25 13:32:32 by rleskine          #+#    #+#             */
+/*   Updated: 2023/12/12 00:14:57 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TRACER_H
-# define TRACER_H
-
+#ifndef RENDER_H
+# define RENDER_H
+# include <math.h>
+# include "MLX42.h"
+# include "color.h"
 # include "camera.h"
-# include "rt_typedef.h"
 # include "scene.h"
+# include "tracer.h"
+# include "rt_typedef.h"
 
-t_color			trace_ray(struct s_scene *scene, uint32_t width, uint32_t height,
-	t_pixel	pixel_point);
-t_color	cast_ray(struct s_scene *scene, t_ray ray);
+void	render(struct s_scene *scene, mlx_image_t *image);
 
-int				collision_test(struct s_scene *scene, t_ray ray, double length);
-
-#endif	/* TRACER_H */
+#endif	/* RENDER_H */
