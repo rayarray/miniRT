@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <assert.h> // testing purposes
+#include <math.h>
 #include "MLX42.h"
 #include "libft.h"
 #include "minirt.h"
@@ -55,12 +56,14 @@ void	tests(void)
 	t_ray		r;
 
 	r.point = vecInit(0, 0, 0);
-	r.dir = vecInit(1, 0, 0);
-	c = initCamera(r, 800, 600, (90 * M_PI) / 2);
+	r.dir = vecInit(0, 1, 0);
+	c = initCamera(r, 600, 600, (90 * M_PI ) / 180);
 	r = getRay(c, 1, 1);
 	printf("ray at 0, 0: (x%f, y%f, z%f)\n", r.dir.x, r.dir.y, r.dir.z);
-	r = getRay(c, 800, 600);
-	printf("ray at 800, 600: (x%f, y%f, z%f)\n", r.dir.x, r.dir.y, r.dir.z);
+	r = getRay(c, 300, 300);
+	printf("ray at 300, 300: (x%f, y%f, z%f)\n", r.dir.x, r.dir.y, r.dir.z);
+	r = getRay(c, 600, 600);
+	printf("ray at 600, 600: (x%f, y%f, z%f)\n", r.dir.x, r.dir.y, r.dir.z);
 }
 
 static uint32_t	coltouint32_t(t_color col)

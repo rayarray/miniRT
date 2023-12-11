@@ -178,6 +178,7 @@ t_camera2	initCamera(t_ray center, int width, int height, double fov)
 {
 	t_camera2	c;
 
+	c.focus_dist = 1; // important, forgot
 	c.h_fov = fov;
 	c.center = center;
 	c.img_width = width;

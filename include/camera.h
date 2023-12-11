@@ -45,8 +45,8 @@ typedef struct s_camera2 {
 	double	aspect_ratio;
 	int		img_width;
 	int		img_height;
-	int		samples_per_px;
-	int		max_depth;		// not necessary here?
+	int		samples_per_px;	// not used currently
+	int		max_depth;		// not used currently
 	double	h_fov;			// radians!
 
 	t_vec	look_from;
