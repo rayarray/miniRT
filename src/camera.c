@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:17:25 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/12 08:51:52 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/12 08:59:35 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int camera_ctor(struct s_camera *c, t_point3 loc, t_vec dir, int fov)
 	c->loc = loc;
 	if (!is_direction_vector(dir))
 		return (1);
-	c->dir = dir;
+	c->dir = vec_normalize(dir);
 	if (!is_fov(fov))
 		return (1);
 	c->fov = fov;
