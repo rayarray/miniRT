@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:17:25 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/12 11:23:15 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/12 18:25:20 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_camera2	initCamera(t_ray center, int width, int height, double fov)
 	t_camera2	c;
 
 	c.focus_dist = 1;
-	c.max_depth = 10;
+	c.max_depth = BOUNCE_LIMIT;
 	c.h_fov = fov;
 	c.center = center;
 	c.img_width = width;

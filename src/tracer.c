@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/12 16:49:54 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/12 18:25:59 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 // Done using 
 // https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-generating-camera-rays/generating-camera-rays.html
 // as a guide
+/*	// DEPRECATED
 static t_vec	pixel_to_camera_ray(int fov, uint32_t width, uint32_t height,
 	t_pixel	pixel_point)
 {
@@ -37,7 +38,7 @@ static t_vec	pixel_to_camera_ray(int fov, uint32_t width, uint32_t height,
 	camera_point.x = camera_point.x * tan(half_fov_r);
 	camera_point.y = camera_point.y * tan(half_fov_r);
 	return (vec_normalize(camera_point));
-}
+} */
 
 // Tests if a given ray intersects with any shape along the ray within length.
 int	collision_test(struct s_scene *scene, t_ray ray, double length)
@@ -84,6 +85,7 @@ t_color	cast_ray(struct s_scene *scene, t_ray ray, int bounces)
 	return (col);
 }
 
+/* // DEPRECATED
 t_color	trace_ray(struct s_scene *scene, uint32_t width, uint32_t height,
 	t_pixel	pixel_point)
 {
@@ -97,4 +99,4 @@ t_color	trace_ray(struct s_scene *scene, uint32_t width, uint32_t height,
 	ray.destination = camera_point;
 	col = cast_ray(scene, ray, BOUNCE_LIMIT);
 	return (col);
-}
+} */
