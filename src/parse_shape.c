@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:30:47 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/08 15:34:29 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/12 08:55:42 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 
 t_parser_error	cylinder_evaluator(struct s_cylinder **c, char **args)
 {
-	t_vec	loc;
-	t_vec	axis;
-	double	diameter;
-	double	height;
-	t_color	color;
+//	t_vec	loc;
+//	t_vec	axis;
+//	double	diameter;
+//	double	height;
+//	t_color	color;
 
 	if (args[0] == NULL || args[1] == NULL || args[2] == NULL
 		|| args[3] == NULL || args[4] == NULL || args[5] == NULL)
@@ -33,14 +33,18 @@ t_parser_error	cylinder_evaluator(struct s_cylinder **c, char **args)
 	*c = malloc(sizeof(struct s_cylinder));
 	if (*c == NULL)
 		return (e_ENV_ERROR);
-	loc = rt_atovec(args[1]);
-	axis = rt_atovec(args[2]);
-	diameter = rt_atof(args[3]);
-	height = rt_atof(args[4]);
-	color = rt_atocol(args[5]);
-	if (cylinder_ctor(*c, (t_vec [2]){loc, axis},
-		(double [2]){diameter, height}, color))
+//	loc = rt_atovec(args[1]);
+//	axis = rt_atovec(args[2]);
+//	diameter = rt_atof(args[3]);
+//	height = rt_atof(args[4]);
+//	color = rt_atocol(args[5]);
+	if (cylinder_ctor(*c, (t_vec [2]){rt_atovec(args[1]), rt_atovec(args[2])}, 
+		(double [2]){rt_atof(args[3]), rt_atof(args[4])}, rt_atocol(args[5])))
+	{
+		free(*c);
+		*c = NULL;
 		return (e_ELEMENT_ARG_ERROR);
+	}
 	return (e_NO_ERROR);
 }
 
@@ -63,7 +67,11 @@ t_parser_error	plane_evaluator(struct s_plane **p, char **args)
 	normal = rt_atovec(args[2]);
 	color = rt_atocol(args[3]);
 	if (plane_ctor(*p, point, normal, color))
+	{
+		free(*p);
+		*p = NULL;
 		return (e_ELEMENT_ARG_ERROR);
+	}
 	return (e_NO_ERROR);
 }
 
@@ -86,7 +94,11 @@ t_parser_error	sphere_evaluator(struct s_sphere **s, char **args)
 	diameter = rt_atof(args[2]);
 	color = rt_atocol(args[3]);
 	if (sphere_ctor(*s, loc, diameter, color))
+	{
+		free(*s);
+		*s = NULL;
 		return (e_ELEMENT_ARG_ERROR);
+	}
 	return (e_NO_ERROR);
 }
 
