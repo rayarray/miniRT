@@ -1,0 +1,42 @@
+Tutorial videos about implementing polymorphism and inheritance in C using
+virtual function pointer table:
+https://www.youtube.com/watch?v=oS3a7wn9P_s
+https://www.youtube.com/watch?v=2v_qM5SJDlY
+Whole course:
+https://www.state-machine.com/video-course
+
+Sources:
+Camera:
+https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-generating-camera-rays/generating-camera-rays.html
+
+Rendering basic shapes:
+https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/parametric-and-implicit-surfaces.html
+
+Lighting:
+https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/what-is-shading-light-matter-interaction.html
+https://www.youtube.com/watch?v=8uNIR9hJF60&list=PLbyTU_tFIkcN2s0rMr0tl5utneA0B-9ok&index=1
+
+Multiple lights:
+https://computergraphics.stackexchange.com/questions/4792/path-tracing-with-multiple-lights
+
+Floating point comparisons:
+https://stackoverflow.com/questions/4915462/how-should-i-do-floating-point-comparison
+https://www.learncpp.com/cpp-tutorial/relational-operators-and-floating-point-comparisons/
+
+Allowed functions:
+
+fcntl
+	open
+
+unistd
+	close, read, write
+
+stdio
+	printf, perror, strerror
+
+stdlib
+	malloc, free, exit
+
+All functions of the mathlibrary (-lm man man 3 math)
+
+All functions of the MinilibX

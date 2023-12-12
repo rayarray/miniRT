@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rleskine <rleskine@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 15:28:58 by rleskine          #+#    #+#             */
-/*   Updated: 2023/04/26 11:51:23 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/11/18 02:36:45 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	cnv_case(char *s, int lcase)
 	{
 		if (lcase == -32 && *s > 96 && *s < 123)
 			*s = *s + lcase;
-		else if (lcase == 32 & *s > 64 && *s < 91)
+		else if ((lcase == 32) & (*s > 64) && *s < 91)
 			*s = *s + lcase;
 		s++;
 	}

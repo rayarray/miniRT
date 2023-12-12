@@ -36,6 +36,8 @@ obj/
 *.dylib
 
 # Executables
+miniRT
+miniRT*
 *.exe
 *.out
 *.app
@@ -61,5 +63,6 @@ dkms.conf
 # Temp files
 *~
 
-# Vscode
+# vscode etc.
 .vscode
+.DS_Store

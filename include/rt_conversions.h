@@ -1,0 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rt_conversions.h                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/14 19:55:32 by tsankola          #+#    #+#             */
+/*   Updated: 2023/11/18 21:19:54 by tsankola         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef RT_CONVERSIONS_H
+# define RT_CONVERSIONS_H
+# include "libft.h"
+# include "parser.h"
+# include "rt_math.h"
+# include "rt_typedef.h"
+
+// String conversions
+t_elem_type		rt_atoetype(const char *a);
+double			rt_atof(const char *a);
+t_vec			rt_atovec(const char *a);
+t_color			rt_atocol(const char *a);
+
+#endif

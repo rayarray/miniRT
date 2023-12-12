@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rleskine <rleskine@student.42.fr>          +#+  +:+       +#+         #
+#    By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/26 11:52:06 by rleskine          #+#    #+#              #
-#    Updated: 2023/06/07 15:10:26 by rleskine         ###   ########.fr        #
+#    Updated: 2023/11/18 02:32:54 by tsankola         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ $(INCOBJ):
 
 %.o: %.c
 	@echo "\033[2K [$(NAME)]: Compilation of $< \033[A"
-	$(CC) $(CFLAGS) -I $(HDR) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	$(foreach lib, $(LIBS), $(MAKE) -C $(lib) clean)
