@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:01:09 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/12 08:49:22 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/12 18:11:29 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_parser_error	ambient_lighting_evaluator(struct s_ambient_lighting **a_lt,
 		return (e_ELEMENT_ARG_ERROR);
 	*a_lt = malloc(sizeof(struct s_ambient_lighting));
 	if (*a_lt == NULL)
-		return (e_ENV_ERROR);
+		return (e_SYS_ERROR);
 	light_ratio = rt_atof(args[1]);
 	color = rt_atocol(args[2]);
 	if (ambient_lighting_ctor(*a_lt, light_ratio, color))
@@ -58,7 +58,7 @@ t_parser_error	camera_evaluator(struct s_camera **c, char **args)
 		return (e_ELEMENT_ARG_ERROR);
 	*c = malloc(sizeof(struct s_camera));
 	if (*c == NULL)
-		return (e_ENV_ERROR);
+		return (e_SYS_ERROR);
 	loc = rt_atovec(args[1]);
 	dir = rt_atovec(args[2]);
 	fov = ft_atoi(args[3]);
@@ -87,10 +87,11 @@ t_parser_error	light_evaluator(struct s_light **l, char **args)
 		l = &(*l)->next;
 	*l = malloc(sizeof(struct s_light));
 	if (*l == NULL)
-		return (e_ENV_ERROR);
+		return (e_SYS_ERROR);
 	loc = rt_atovec(args[1]);
 	brightness = rt_atof(args[2]);
-	color = rt_atocol(args[3]);
+	color = (t_color){0xFF, 0xFF, 0xFF, 0xFF};
+//	color = rt_atocol(args[3]);
 	if (light_ctor(*l, loc, brightness, color))
 	{
 		free(*l);
@@ -112,12 +113,12 @@ t_parser_error	parse_line_and_create_element(const char *line,
 		return (e_NO_ERROR);
 	args = rt_split(line, INPUT_DELIMS);
 	if (args == NULL)
-		err = e_ENV_ERROR;
+		err = e_SYS_ERROR;
 	else if (type == e_AMBIENT_LIGHTING && scene->ambient == NULL)
 		err = ambient_lighting_evaluator(&scene->ambient, args);
 	else if (type == e_CAMERA && scene->camera == NULL)
 		err = camera_evaluator(&scene->camera, args);
-	else if (type == e_LIGHT)
+	else if (type == e_LIGHT && scene->lights == NULL)
 		err = light_evaluator(&scene->lights, args);
 	else if (type > e_LIGHT && type < e_NAE)
 		err = shape_evaluator(&scene->shapes, args, type);

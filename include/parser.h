@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 17:02:32 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/08 15:59:37 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/12 18:08:12 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef enum e_parser_error
 	e_NO_ERROR,
 	e_TOO_MANY_ELEMENTS,
 	e_ELEMENT_ARG_ERROR,
-	e_ENV_ERROR,
+	e_SYS_ERROR,
 	e_LOGIC_ERROR,
 	e_ELEMENT_MISSING_ERROR
 }	t_parser_error;

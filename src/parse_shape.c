@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:30:47 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/12 08:55:42 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/12 18:08:11 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_parser_error	cylinder_evaluator(struct s_cylinder **c, char **args)
 		return (e_ELEMENT_ARG_ERROR);
 	*c = malloc(sizeof(struct s_cylinder));
 	if (*c == NULL)
-		return (e_ENV_ERROR);
+		return (e_SYS_ERROR);
 //	loc = rt_atovec(args[1]);
 //	axis = rt_atovec(args[2]);
 //	diameter = rt_atof(args[3]);
@@ -62,7 +62,7 @@ t_parser_error	plane_evaluator(struct s_plane **p, char **args)
 		return (e_ELEMENT_ARG_ERROR);
 	*p = malloc(sizeof(struct s_plane));
 	if (*p == NULL)
-		return (e_ENV_ERROR);
+		return (e_SYS_ERROR);
 	point = rt_atovec(args[1]);
 	normal = rt_atovec(args[2]);
 	color = rt_atocol(args[3]);
@@ -89,7 +89,7 @@ t_parser_error	sphere_evaluator(struct s_sphere **s, char **args)
 		return (e_ELEMENT_ARG_ERROR);
 	*s = malloc(sizeof(struct s_sphere));
 	if (*s == NULL)
-		return (e_ENV_ERROR);
+		return (e_SYS_ERROR);
 	loc = rt_atovec(args[1]);
 	diameter = rt_atof(args[2]);
 	color = rt_atocol(args[3]);
