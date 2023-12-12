@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/12 18:25:59 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/12 19:41:29 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,13 @@ static t_vec	pixel_to_camera_ray(int fov, uint32_t width, uint32_t height,
 int	collision_test(struct s_scene *scene, t_ray ray, double length)
 {
 	struct	s_shape *shape;
+	double	distance;
 
 	shape = scene->shapes;
 	while (shape != NULL)
 	{
-		if (flessthan(intersect_distance(shape, ray), length))
+		distance = intersect_distance(shape, ray);
+		if (flessthan(distance, length))
 			return (1);
 		shape = shape->next;
 	}
@@ -64,8 +66,8 @@ t_color	cast_ray(struct s_scene *scene, t_ray ray, int bounces)
 	double			dist;
 
 	closest_shape = NULL;
-	col = (t_color){.r = 0x00, .g = 0x00, .b = 0x00, .a = 0xFF};	// TODO remove?
-//	col = color_fade(scene->ambient->color, scene->ambient->light_ratio);
+	col = (t_color){.r = 0x00, .g = 0x00, .b = 0x00, .a = 0xFF};			// Black
+//	col = color_fade(scene->ambient->color, scene->ambient->light_ratio);	// use ambient light for background color
 	if (bounces <= 0)
 		return (col);
 	distance_to_nearest = INFINITY;

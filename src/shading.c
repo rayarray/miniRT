@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 21:28:54 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/09 21:07:23 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/12 19:27:16 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ t_color	facing_ratio(t_vec surface_normal, t_vec facing,
 	return (surface_color);
 }
 
-#include <stdio.h>
 t_color	diffuse_shading(struct s_scene *scene, t_ray impact_norm,
 	t_color color)
 {
@@ -103,7 +102,7 @@ t_color	specular_reflection(struct s_scene *scene, t_ray impact_norm,
 	v_s = vec_sub(vec_scal_mul(impact_norm.destination, 2 * dot_product(v_e, impact_norm.destination)
 		/ dot_product(impact_norm.destination, impact_norm.destination)), v_e);
 	refl_col = cast_ray(scene, (t_ray){impact_norm.origin, v_s}, bounces);
-	intensity = 0.5;
+	intensity = 0.5;	// TODO each shape should have some reflection factor
 	color = color_fade_to(color, refl_col, intensity);
 	shape = shape->next;
 	return (color);
