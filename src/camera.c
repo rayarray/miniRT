@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:17:25 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/04 13:14:34 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/12 08:51:52 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,10 @@ t_vec camera_up(t_vec camera_dir)
 	return (vecCross(camera_dir, world_up));
 }
 
-
 int camera_ctor(struct s_camera *c, t_point3 loc, t_vec dir, int fov)
 {
 	c->loc = loc;
-	if (!is_unitvec(dir)) // This may not be what's desired here. It's hard to come up with vectors that satisfy this requirement other than the cardinal directions
+	if (!is_direction_vector(dir))
 		return (1);
 	c->dir = dir;
 	if (!is_fov(fov))

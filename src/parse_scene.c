@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:01:09 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/08 14:52:33 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/12 08:49:22 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,11 @@ t_parser_error	ambient_lighting_evaluator(struct s_ambient_lighting **a_lt,
 	light_ratio = rt_atof(args[1]);
 	color = rt_atocol(args[2]);
 	if (ambient_lighting_ctor(*a_lt, light_ratio, color))
+	{
+		free(*a_lt);
+		*a_lt = NULL;
 		return (e_ELEMENT_ARG_ERROR);
+	}
 	return (e_NO_ERROR);
 }
 
@@ -59,7 +63,11 @@ t_parser_error	camera_evaluator(struct s_camera **c, char **args)
 	dir = rt_atovec(args[2]);
 	fov = ft_atoi(args[3]);
 	if (camera_ctor(*c, loc, dir, fov))
+	{
+		free(*c);
+		*c = NULL;
 		return (e_ELEMENT_ARG_ERROR);
+	}
 	return (e_NO_ERROR);
 }
 
@@ -84,7 +92,11 @@ t_parser_error	light_evaluator(struct s_light **l, char **args)
 	brightness = rt_atof(args[2]);
 	color = rt_atocol(args[3]);
 	if (light_ctor(*l, loc, brightness, color))
+	{
+		free(*l);
+		*l = NULL;
 		return (e_ELEMENT_ARG_ERROR);
+	}
 	return (e_NO_ERROR);
 }
 
