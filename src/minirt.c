@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:36:12 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/08 15:33:15 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/12 11:24:19 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,38 +21,7 @@
 #include "parser.h"
 #include "scene.h"
 #include "tracer.h"
-
-static uint32_t	coltouint32_t(t_color col)
-{
-	uint32_t	ret;
-
-	ret = 0;
-	ret += col.r << 24;
-	ret += col.g << 16;
-	ret += col.b << 8;
-	ret += col.a;
-	return (ret);
-}
-
-void	render(struct s_scene *scene, mlx_image_t *img)
-{
-	uint32_t	x;
-	uint32_t	y;
-	t_color		col;
-
-	y = 0 - 1;
-	while (++y < img->height)
-	{
-		x = 0 - 1;
-		while (++x < img->width)
-		{
-			col = trace_ray(scene, img->width, img->height, (t_pixel){x, y});
-			mlx_put_pixel(img, x, y, coltouint32_t(col));
-		}
-	}
-	// printf("image drawn");
-	// getchar();
-}
+#include "render.h"
 
 static int	get_scene_from_input(struct s_scene **scene, int argc, char **argv)
 {

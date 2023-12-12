@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 18:06:19 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/08 14:49:29 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/12 11:26:48 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,13 @@ void	minirt_resize_hook(int32_t width, int32_t height,
 
 void	minirt_loop_hook(struct s_minirt *minirt)
 {
-	render(minirt->scene, minirt->image);
+	static unsigned int	renderdone;
+
+	if (renderdone != minirt->image->width + minirt->image->height)
+	{
+		render(minirt->scene, minirt->image);
+		renderdone = minirt->image->width + minirt->image->height;
+	}
 }
 
 void	minirt_key_hook(mlx_key_data_t keydata, struct s_minirt *minirt)
