@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 17:58:30 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/13 21:41:29 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/13 21:56:41 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ t_color	color_apply_ambient(t_color surface, t_color ambient, double brightness)
 //	surface.r += color_diff.r;
 //	surface.g += color_diff.g;
 //	surface.b += color_diff.b;
-//	return (surface);
 	return (surface);
 }
 
