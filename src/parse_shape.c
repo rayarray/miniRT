@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:30:47 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/12 18:08:11 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/13 17:38:16 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_parser_error	cylinder_evaluator(struct s_cylinder **c, char **args)
 		return (e_ELEMENT_ARG_ERROR);
 	if (!is_double_triplet_strict(args[1]) || !is_double_triplet_strict(args[2])
 		|| !is_double(args[3]) || !is_double(args[4])
-		|| !is_int_triplet_strict(args[5]))
+		|| !is_byte_triplet_strict(args[5]))
 		return (e_ELEMENT_ARG_ERROR);
 	*c = malloc(sizeof(struct s_cylinder));
 	if (*c == NULL)
@@ -58,7 +58,7 @@ t_parser_error	plane_evaluator(struct s_plane **p, char **args)
 		|| args[3] == NULL)
 		return (e_ELEMENT_ARG_ERROR);
 	if (!is_double_triplet_strict(args[1]) || !is_double_triplet_strict(args[2])
-		|| !is_int_triplet_strict(args[3]))
+		|| !is_byte_triplet_strict(args[3]))
 		return (e_ELEMENT_ARG_ERROR);
 	*p = malloc(sizeof(struct s_plane));
 	if (*p == NULL)
@@ -85,7 +85,7 @@ t_parser_error	sphere_evaluator(struct s_sphere **s, char **args)
 		|| args[3] == NULL)
 		return (e_ELEMENT_ARG_ERROR);
 	if (!is_double_triplet_strict(args[1]) || !is_double(args[2])
-		|| !is_int_triplet_strict(args[3]))
+		|| !is_byte_triplet_strict(args[3]))
 		return (e_ELEMENT_ARG_ERROR);
 	*s = malloc(sizeof(struct s_sphere));
 	if (*s == NULL)

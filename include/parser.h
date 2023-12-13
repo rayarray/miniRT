@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 17:02:32 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/12 18:08:12 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/13 17:41:54 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PARSER_H
 # define BASES_BUFFER_SIZE 128
 # define REALLOC_FACTOR 2
-# define INPUT_DELIMS " \t"
+# define INPUT_DELIMS " \t\n"
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -39,8 +39,6 @@ typedef enum e_parser_error
 	e_LOGIC_ERROR,
 	e_ELEMENT_MISSING_ERROR
 }	t_parser_error;
-
-static const char	*g_elem_ids[7] = {"A", "C", "L", "sp", "pl", "cy", NULL};	// Good? Bad?
 
 struct s_elem_base
 {

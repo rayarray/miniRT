@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:39:10 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/12 10:25:24 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/13 16:42:15 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ t_color	plane_intersect_color(struct s_plane *this, struct s_scene *scene,
 	t_point3	impact;
 	t_vec		normal_to_ray;
 
-	(void)bounces;		// ...
 	col = this->base.col;
 	dist = plane_intersect_distance(this, ray);
 	col = apply_ambient(col, scene->ambient);

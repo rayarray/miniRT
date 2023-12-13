@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 17:02:19 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/08 15:01:38 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/13 16:40:49 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,11 @@ int	is_double(const char *s)
 	len = 0;
 	if (s[len] == '+' || s[len] == '-')
 		len++;
-	while (ft_isdigit(s[len]))
-	{
+	if (ft_isdigit(s[len]))
 		digit_found = 1;
+	while (ft_isdigit(s[len]))
 		len++;
-	}
-	if (s[len] == '.')
+	if (s[len] == '.' && digit_found)
 	{
 		len++;
 		if (!ft_isdigit(s[len]))
@@ -87,6 +86,7 @@ int	is_double_triplet_strict(const char *s)
 	return (0);
 }
 
+/*	// DEPRECATED
 int	is_int_triplet_strict(const char *s)
 {
 	int	total_length;
@@ -103,6 +103,49 @@ int	is_int_triplet_strict(const char *s)
 		length = is_int(&s[total_length]);
 		if (length > 0)
 			values_found++;
+		total_length += length;
+		if (passes == 3 || s[total_length++] != TRIPLET_DELIM)
+			break ;
+	}
+	if (values_found == 3 && (s[total_length] == '\0'
+			|| ft_strchr(VALID_TERMINATORS, s[total_length])))
+		return (total_length);
+	return (0);
+} */
+
+int	is_byte(const char *s)
+{
+	int	len;
+	int	val;
+
+	if (!ft_isdigit(s[0]))
+		return (0);
+	len = is_int(s);
+	if (len == 0 || len > 3)
+		return (0);
+	val = ft_atoi(s);
+	if (val > 255 || val < 0)
+		return 0;
+	return (len);
+}
+
+int	is_byte_triplet_strict(const char *s)
+{
+	int	total_length;
+	int	length;
+	int	values_found;
+	int	passes;
+
+	total_length = 0;
+	values_found = 0;
+	passes = 0;
+	while (1)
+	{
+		passes++;
+		length = is_byte(&s[total_length]);
+		if (length == 0)
+			return (0);
+		values_found++;
 		total_length += length;
 		if (passes == 3 || s[total_length++] != TRIPLET_DELIM)
 			break ;

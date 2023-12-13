@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:01:09 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/12 18:11:29 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/13 16:41:40 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_parser_error	ambient_lighting_evaluator(struct s_ambient_lighting **a_lt,
 
 	if (args[0] == NULL || args[1] == NULL || args[2] == NULL)
 		return (e_ELEMENT_ARG_ERROR);
-	if (!is_double(args[1]) || !is_int_triplet_strict(args[2]))
+	if (!is_double(args[1]) || !is_byte_triplet_strict(args[2]))
 		return (e_ELEMENT_ARG_ERROR);
 	*a_lt = malloc(sizeof(struct s_ambient_lighting));
 	if (*a_lt == NULL)
@@ -81,7 +81,7 @@ t_parser_error	light_evaluator(struct s_light **l, char **args)
 		|| args[2] == NULL || args[3] == NULL)
 		return (e_ELEMENT_ARG_ERROR);
 	if (!is_double_triplet_strict(args[1]) || !is_double(args[2])
-		|| !is_int_triplet_strict(args[3]))
+		|| !is_byte_triplet_strict(args[3]))
 		return (e_ELEMENT_ARG_ERROR);
 	while (*l != NULL)
 		l = &(*l)->next;
@@ -91,7 +91,7 @@ t_parser_error	light_evaluator(struct s_light **l, char **args)
 	loc = rt_atovec(args[1]);
 	brightness = rt_atof(args[2]);
 	color = (t_color){0xFF, 0xFF, 0xFF, 0xFF};
-//	color = rt_atocol(args[3]);
+//	color = rt_atocol(args[3]);		// bonus
 	if (light_ctor(*l, loc, brightness, color))
 	{
 		free(*l);

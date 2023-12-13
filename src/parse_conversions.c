@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 19:56:43 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/08 15:57:51 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/13 17:41:38 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,16 @@ static int	skip_whitespace(const char **cptr)
 
 t_elem_type	rt_atoetype(const char *a)
 {
-	int	i;
-	int	len;
+	static const char	*elem_ids[7] =	{"A", "C", "L", "sp", "pl", "cy", NULL};
+	int					i;
+	int					len;
 
 	skip_whitespace(&a);
 	i = -1;
-	while (g_elem_ids[++i] != NULL)
+	while (elem_ids[++i] != NULL)
 	{
-		len = ft_strlen(g_elem_ids[i]);
-		if (ft_strncmp(a, g_elem_ids[i], len) == 0
+		len = ft_strlen(elem_ids[i]);
+		if (ft_strncmp(a, elem_ids[i], len) == 0
 			&& ft_strchr(" \t", *(a + len)))
 			break ;
 	}
@@ -85,11 +86,11 @@ t_color	rt_atocol(const char *a)
 {
 	t_color	col;
 
-	col.r = (unsigned char)atoi(a);
+	col.r = (unsigned char)ft_atoi(a);
 	a = ft_strchr(a, ',');
-	col.g = (unsigned char)atoi(++a);
+	col.g = (unsigned char)ft_atoi(++a);
 	a = ft_strchr(a, ',');
-	col.b = (unsigned char)atoi(++a);
+	col.b = (unsigned char)ft_atoi(++a);
 	col.a = 0xFF;
 	return (col);
 }

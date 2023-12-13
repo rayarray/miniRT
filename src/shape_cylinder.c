@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:43:11 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/09 20:54:55 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/13 17:38:21 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "rt_validations.h"
 #include "rt_typedef.h"
 
+#include <stdio.h>
 int	cylinder_ctor(struct s_cylinder *this, t_vec orientation[2],
 	double dimensions[2], t_color color)
 {
@@ -26,7 +27,7 @@ int	cylinder_ctor(struct s_cylinder *this, t_vec orientation[2],
 
 	shape_ctor(&this->base, e_CYLINDER, orientation[e_LOCATION], color);
 	this->base.vtptr = &vtable;
-	if (!is_unitvec(orientation[e_AXIS]))
+	if (!is_direction_vector(orientation[e_AXIS]))
 		return (1);
 	this->diameter = dimensions[e_DIAMETER];
 	this->height = dimensions[e_HEIGHT];
