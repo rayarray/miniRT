@@ -6,10 +6,11 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 17:35:34 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/12 18:18:42 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/13 18:02:17 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "parser.h"
 #include "scene.h"
 #include "camera.h"
