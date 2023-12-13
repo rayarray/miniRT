@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:16:05 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/12 20:05:36 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/13 21:43:12 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,10 +129,11 @@ t_color	sphere_intersect_color(struct s_sphere *s, struct s_scene *scene,
 			impact = vec_add(impact, vec_scal_mul(surface_normal, 0.00001));
 		}
 		impact_normal = (t_ray){impact, surface_normal};
-		color = apply_ambient(color, scene->ambient);
-		color = diffuse_shading(scene, impact_normal, color);
-		color = specular_lighting(scene, impact_normal, ray, color);
+		t_color amb_color = apply_ambient(color, scene->ambient);
+		t_color diff_color = diffuse_shading(scene, impact_normal, color);
+//		color = specular_lighting(scene, impact_normal, ray, color);
 		color = specular_reflection(scene, impact_normal, ray, color, bounces);
+		color = color_apply_light(amb_color, diff_color, 0.5);
 	}
 	return (color);
 }
