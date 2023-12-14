@@ -6,14 +6,14 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 21:31:29 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/14 16:05:46 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/14 23:20:43 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHADING_H
 # define SHADING_H
-# define DIFFUSE_COEFFICIENT 16.0
-# define SPECULAR_COEFFICIENT 16.0
+# define DIFFUSE_COEFFICIENT 4.0
+# define SPECULAR_COEFFICIENT 8.0
 # define SPECULAR_POWER 16.0
 # include "rt_typedef.h"
 # include "ambient_lighting.h"

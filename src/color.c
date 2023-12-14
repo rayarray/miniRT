@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 17:58:30 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/14 16:25:11 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/14 23:21:53 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static t_color	color_clamped(int r, int g, int b) {
 
 t_color	color_fade(t_color c, double intensity)
 {
+	if (fgreaterthan(intensity, 1.0))
+		intensity = 1.0;
 	c.r = round(((double)c.r * intensity));
 	c.g = round(((double)c.g * intensity));
 	c.b = round(((double)c.b * intensity));
@@ -56,6 +58,18 @@ t_color	color_mix(t_color c1, t_color c2)
 		c1.r * c2.r / 255,		// Rounding errors here?
 		c1.g * c2.g / 255,
 		c1.b * c2.b / 255,
+		0xFF
+	});
+}
+
+t_color	color_reflect_light(t_color surface, t_color light, double intensity)
+{
+	if (fgreaterthan(intensity, 1.0))
+		intensity = 1.0;
+	return ((t_color){
+		round((double)surface.r * (1 - intensity) + light.r * (intensity)),
+		round((double)surface.g * (1 - intensity) + light.g * (intensity)),
+		round((double)surface.b * (1 - intensity) + light.b * (intensity)),
 		0xFF
 	});
 }

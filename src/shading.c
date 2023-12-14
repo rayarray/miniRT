@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 21:28:54 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/14 16:05:26 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/14 23:19:00 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_color	specular_lighting(struct s_scene *scene, t_ray impact_norm,
 				* pow(fmax(0, dot_product(v_r, v_e)), SPECULAR_POWER);
 			intensity /= pow(vec_length(
 					vec_sub(light->loc, impact_norm.origin)), 2);
-			color = color_apply_light(color, light->color, intensity);
+			color = color_reflect_light(color, light->color, intensity);
 		}
 		light = light->next;
 	}
