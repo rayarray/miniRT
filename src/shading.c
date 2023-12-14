@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 21:28:54 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/13 21:57:19 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/14 16:05:26 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 #include "rt_math.h"
 #include "tracer.h"
 
-t_color	apply_ambient(t_color color, struct s_ambient_lighting *ambience)
+t_color	apply_ambient(struct s_ambient_lighting *ambience)
 {
-	return (color_apply_ambient(color, ambience->color, ambience->light_ratio));
+	return (color_fade(ambience->color, ambience->light_ratio));
 }
 
 t_color	facing_ratio(t_vec surface_normal, t_vec facing,

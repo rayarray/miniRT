@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:16:05 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/13 22:03:13 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/14 16:19:06 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static double	analytic_intersect_distance(struct s_sphere *s, t_ray ray)
 	results[0] = INFINITY;
 	a = dot_product(ray.destination, ray.destination);
 	b = 2 * dot_product(ray.destination, vec_sub(ray.origin, s->base.loc));
-	c = pow(vec_length(vec_sub(ray.origin, s->base.loc)), 2) - pow(s->diameter / 4, 2);
+	c = pow(vec_length(vec_sub(ray.origin, s->base.loc)), 2) - pow(s->diameter / 2, 2);
 	discriminant = pow(b, 2) - 4 * a * c;
 //	if (a == 0)					// Would result in a divide by zero
 //		result = INFINITY;		// but this shouldn't happen because ray.destination should be normalized.
@@ -118,7 +118,7 @@ t_color	sphere_intersect_color(struct s_sphere *s, struct s_scene *scene,
 	t_ray		impact_normal;
 
 	dist = sphere_intersect_distance(s, ray);
-	color = s->base.col;
+	color = (t_color){0, 0, 0, 0xFF};
 	if (dist != INFINITY)
 	{
 		impact = vec_add(ray.origin, vec_scal_mul(ray.destination, dist));
@@ -129,10 +129,12 @@ t_color	sphere_intersect_color(struct s_sphere *s, struct s_scene *scene,
 			impact = vec_add(impact, vec_scal_mul(surface_normal, 0.00001));
 		}
 		impact_normal = (t_ray){impact, surface_normal};
-		color = apply_ambient(color, scene->ambient);
+		color = apply_ambient(scene->ambient);
 		color = diffuse_shading(scene, impact_normal, color);
 		color = specular_lighting(scene, impact_normal, ray, color);
-		color = specular_reflection(scene, impact_normal, ray, color, bounces);
+		(void)bounces;
+//		color = specular_reflection(scene, impact_normal, ray, color, bounces);
+		color = color_mix(s->base.col, color);
 	}
 	return (color);
 }

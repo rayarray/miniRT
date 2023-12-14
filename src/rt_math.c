@@ -6,11 +6,25 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:53:18 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/08 14:57:00 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/14 16:22:27 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt_math.h"
+
+int	imax(int a, int b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
+
+int imin(int a, int b)
+{
+	if (b < a)
+		return (b);
+	return (a);
+}
 
 int	feq(double a, double b)
 {
