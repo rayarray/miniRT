@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:32:32 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/16 17:07:20 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/14 10:37:45 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ t_vec	vecCross(t_vec v1, t_vec v2);
 double	vecLengthSquared(t_vec v1);
 double	vecLength(t_vec v1);
 t_vec	unitVector(t_vec v1);
+void	vecPrint(char *name, t_vec v, int newline);
 
 #endif	/* VECTOR_H */

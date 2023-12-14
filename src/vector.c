@@ -6,10 +6,11 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:32:10 by rleskine          #+#    #+#             */
-/*   Updated: 2023/10/26 16:50:52 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/14 15:31:17 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h> // debug thingy
 #include "vector.h"
 
 t_vec	vecInit(double x, double y, double z)
@@ -73,7 +74,7 @@ t_vec	vecCross(t_vec v1, t_vec v2)
 
 double	vecLengthSquared(t_vec v1)
 {
-	return (v1.x * v1.x + v1.y * v1.y + v1.z * v1.z);
+	return ((v1.x * v1.x) + (v1.y * v1.y) + (v1.z * v1.z));
 }
 
 double	vecLength(t_vec v1)
@@ -90,4 +91,13 @@ t_vec	unitVector(t_vec v1)
 	v1.y /= len;
 	v1.z /= len;
 	return (v1);
+}
+
+// debug thingy
+void	vecPrint(char *name, t_vec v, int newline)
+{
+	if (newline)
+		printf(" %s x%f y%f z%f\n", name, v.x, v.y, v.z);
+	else
+		printf(" %s x%f y%f z%f ", name, v.x, v.y, v.z);
 }

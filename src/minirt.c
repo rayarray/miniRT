@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:36:12 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/12 11:24:19 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/14 15:33:21 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@
 #include "scene.h"
 #include "tracer.h"
 #include "render.h"
+
+void	tests()
+{
+	double test = vecLength(vecInit(-0.901, 0.576, 1));
+	printf("test: %f\n", test);
+	t_vec dist = vecCross(vecInit(-1,0,1), vecInit(1,0,2));
+	vecPrint("dist", dist, 1);
+}
 
 static int	get_scene_from_input(struct s_scene **scene, int argc, char **argv)
 {
@@ -58,6 +66,7 @@ int	main(int argc, char **argv)
 	struct s_minirt	data;	
 	int				exit_code;
 
+	tests();
 	data.mlx = NULL;
 	exit_code = get_scene_from_input(&data.scene, argc, argv);
 	if (exit_code == EXIT_SUCCESS)

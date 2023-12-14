@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shape_cylinder.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:40:15 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/09 20:33:34 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/14 13:25:17 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ struct s_cylinder
 	struct s_shape	base;
 	t_vec			axis;
 	double			diameter;
+	double			dia2;
 	double			height;
 };
 

@@ -6,7 +6,7 @@
 #    By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 16:29:22 by rleskine          #+#    #+#              #
-#    Updated: 2023/12/12 12:00:06 by rleskine         ###   ########.fr        #
+#    Updated: 2023/12/14 14:07:07 by rleskine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,14 +16,14 @@ NAME		=	miniRT
 _HDR			=	ambient_lighting.h camera.h color.h get_next_line.h light.h \
 				minirt.h parser.h rt_conversions.h rt_math.h rt_typedef.h \
 				rt_validations.h scene.h shading.h shape_cylinder.h shape.h \
-				shape_plane.h shape_sphere.h tracer.h vector.h render.h
+				shape_plane.h shape_sphere.h tracer.h vector.h render.h ray.h
 
 SRC			=	ambient_lighting.c camera.c parse_file_reader.c get_next_line.c \
 				get_next_line_utils.c light.c minirt.c parse_conversions.c \
 				parse_scene.c parse_shape.c parse_utilities.c rt_math.c \
 				rt_split.c scene.c shape.c shape_cylinder.c \
 				shape_plane.c shape_sphere.c tracer.c vector.c hooks.c color.c \
-				shading.c value_checks.c form_checks.c render.c
+				shading.c value_checks.c form_checks.c render.c ray.c
 
 LIBS		=	libft.a libftprintf.a
 LIBDIRS		=	libft libft/libftprintf
