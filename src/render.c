@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 23:55:46 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/12 11:23:31 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/14 15:46:10 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	render(struct s_scene *scene, mlx_image_t *image)
 		while (++x < image->width)
 		{
 			camray = getRay(camera, x, y);
-			camray.destination = vecAdd(camray.destination, scene->camera->dir);
+			camray.destination = unitVector(vecAdd(camray.destination, scene->camera->dir));
 			col = cast_ray(scene, camray, camera.max_depth);
 			mlx_put_pixel(image, x, y, coltouint32_t(col));
 		}
