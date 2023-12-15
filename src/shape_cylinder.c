@@ -6,13 +6,15 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:43:11 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/14 15:42:18 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/15 15:18:47 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shape_cylinder.h"
 #include "rt_validations.h"
-#include "rt_typedef.h"
+#include "shading.h"
+#include "color.h"
+
 
 #include <stdio.h>
 int	cylinder_ctor(struct s_cylinder *this, t_vec orientation[2],
@@ -59,6 +61,23 @@ double	interSectPlane(struct s_cylinder *this, t_ray ray)
 	return (-1);
 }
 
+double	interSectPlane2(struct s_cylinder *this, t_ray ray)
+{
+	double	distance;
+	double	denom;
+
+	distance = -1;
+	denom = vecDot(this->axis, ray.destination);
+	if (!feq(denom, 0))
+		distance = vecDot(vecSub(this->base.loc, ray.origin), this->axis)
+			/ denom;
+	if (flessthan(distance, 0))
+		distance = INFINITY;
+	//if (fleq(ray.destination.y, 0) && distance != INFINITY)
+	//	printf("cyl dist = %f\n", distance);
+	return (distance);
+}
+
 double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray)
 {
 	double	distance;
@@ -77,8 +96,8 @@ double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray)
 	ray.destination = unitVector(ray.destination);
 	distance = INFINITY;
 	//ray.origin = vecSub(ray.origin, this->base.loc);
-	t = interSectPlane(this, ray);
-	if (t >= 0)
+	t = interSectPlane2(this, ray);
+	if (t >= 0 && t < INFINITY)
 	{
 		p = vecAdd(ray.origin, vecMul(ray.destination, t));
 		v = vecSub(p, this->base.loc);
@@ -86,7 +105,7 @@ double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray)
 		if (d2 <= this->dia2)
 		{
 			//printf("d2 = %f\n", d2);
-			return (sqrt(d2));
+			return (t);
 		}
 	}
 	return (distance);	// placeholder
@@ -95,9 +114,18 @@ double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray)
 t_color	cylinder_intersect_color(struct s_cylinder *this,
 	struct s_scene *scene, t_ray ray, int bounces)
 {
-	(void)this;
-	(void)ray;
-	(void)scene;
+	t_color		color;
+	double		dist;
+	t_point3	impact;
+	t_vec		normal_to_ray;
+
+	dist = cylinder_intersect_distance(this, ray);
+	impact = vecAdd(ray.origin, vecMul(ray.destination, dist));
+	normal_to_ray = this->axis;
+	color = apply_ambient(scene->ambient);
+	color = diffuse_shading(scene, (t_ray){impact, normal_to_ray}, color);
+	color = color_mix(this->base.col, color);
+	color = specular_lighting(scene, (t_ray){impact, normal_to_ray}, ray, color);
 	(void)bounces;
-	return (this->base.col);	//placeholder
+	return (color);	//placeholder
 }
