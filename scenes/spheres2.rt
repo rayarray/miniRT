@@ -7,9 +7,9 @@
 # Plane: type identifier | xyz coordinates of a point | normal vector | colors (RGB)
 # Cylinder: type identifer | xyz coordinates | vector of axis of cylinder | diameter | height | colors (RGB)
 
-A	0.6	255,255,255
-C	0,0,0	0,0,1	30
-L	0,3,5	0.6	255,255,255
-sp	0,0,10	5.0	0,255,0
-sp	2.5,0,10	5.0	255,0,0
-sp	-2.5,0,10	5.0	0,0,255
+A	0.4	255,255,255
+C	0,0,0	0,0,1	60
+L	0,3,6	0.8	255,255,255
+sp	-5,0,10	5	255,0,0
+sp	0,0,10	5	0,255,0
+sp	5,0,10	5	0,0,255

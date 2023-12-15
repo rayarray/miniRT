@@ -6,13 +6,14 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:39:10 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/13 16:42:15 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/14 23:22:13 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shape_plane.h"
 #include "rt_validations.h"
 #include "shading.h"
+#include "color.h"
 
 int	plane_ctor(struct s_plane *plane, t_vec point, t_vec normal, t_color color)
 {
@@ -52,27 +53,29 @@ double	plane_intersect_distance(struct s_plane *this, t_ray ray)
 	return (distance);
 }
 
-t_color	plane_intersect_color(struct s_plane *this, struct s_scene *scene,
+t_color	plane_intersect_color(struct s_plane *p, struct s_scene *scene,
 	t_ray ray, int bounces)
 {
-	t_color		col;
+	t_color		color;
 	double		dist;
 	t_point3	impact;
 	t_vec		normal_to_ray;
 
-	col = this->base.col;
-	dist = plane_intersect_distance(this, ray);
-	col = apply_ambient(col, scene->ambient);
+	color = (t_color){0, 0, 0, 0xFF};
+	dist = plane_intersect_distance(p, ray);
 	if (dist != INFINITY)
 	{
 		impact = vec_add(ray.origin, vec_scal_mul(ray.destination, dist));
-		if (fgreaterthan(dot_product(ray.destination, this->normal), 0))
-			normal_to_ray = vec_neg(this->normal);
+		if (fgreaterthan(dot_product(ray.destination, p->normal), 0))
+			normal_to_ray = vec_neg(p->normal);
 		else
-			normal_to_ray = this->normal;
-		col = diffuse_shading(scene, (t_ray){impact, normal_to_ray}, col);
-		col = specular_lighting(scene, (t_ray){impact, normal_to_ray}, ray, col);
-		col = specular_reflection(scene, (t_ray){impact, normal_to_ray}, ray, col, bounces);
+			normal_to_ray = p->normal;
+		color = apply_ambient(scene->ambient);
+		color = diffuse_shading(scene, (t_ray){impact, normal_to_ray}, color);
+		color = color_mix(p->base.col, color);
+		color = specular_lighting(scene, (t_ray){impact, normal_to_ray}, ray, color);
+		(void)bounces;
+//		color = specular_reflection(scene, (t_ray){impact, normal_to_ray}, ray, color, bounces);
 	}
-	return (col);
+	return (color);
 }

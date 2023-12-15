@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:15:02 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/08 16:00:06 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/14 16:22:46 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 # endif
 # include <math.h>
 # include "rt_typedef.h"
+
+// Integer functions
+int	imax(int a, int b);
+int imin(int a, int b);
 
 // Floating point comparisons
 int		feq(double a, double b);

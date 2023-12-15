@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 21:28:54 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/12 19:27:16 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/14 23:19:00 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 #include "rt_math.h"
 #include "tracer.h"
 
-t_color	apply_ambient(t_color color, struct s_ambient_lighting *ambience)
+t_color	apply_ambient(struct s_ambient_lighting *ambience)
 {
-	return (color_apply_ambient(color, ambience->color, ambience->light_ratio));
+	return (color_fade(ambience->color, ambience->light_ratio));
 }
 
 t_color	facing_ratio(t_vec surface_normal, t_vec facing,
@@ -29,7 +29,7 @@ t_color	facing_ratio(t_vec surface_normal, t_vec facing,
 
 	ratio = 1 + dot_product(surface_normal, facing);
 	if (flessthan(ratio, 1))
-		surface_color = color_fade_to(surface_color, ambient_color, ratio);
+		surface_color = color_apply_light(surface_color, ambient_color, ratio);
 	return (surface_color);
 }
 
@@ -51,7 +51,7 @@ t_color	diffuse_shading(struct s_scene *scene, t_ray impact_norm,
 				* fmax(0, dot_product(impact_norm.destination, v_l));
 			intensity /= pow(vec_length(
 					vec_sub(light->loc, impact_norm.origin)), 2);
-			color = color_fade_to(color, light->color, intensity);
+			color = color_apply_light(color, light->color, intensity);
 		}
 		light = light->next;
 	}
@@ -81,7 +81,7 @@ t_color	specular_lighting(struct s_scene *scene, t_ray impact_norm,
 				* pow(fmax(0, dot_product(v_r, v_e)), SPECULAR_POWER);
 			intensity /= pow(vec_length(
 					vec_sub(light->loc, impact_norm.origin)), 2);
-			color = color_fade_to(color, light->color, intensity);
+			color = color_reflect_light(color, light->color, intensity);
 		}
 		light = light->next;
 	}
@@ -97,13 +97,15 @@ t_color	specular_reflection(struct s_scene *scene, t_ray impact_norm,
 	double			intensity;
 	t_color			refl_col;
 	
+	if (bounces <= 0)
+		return color;
 	shape = scene->shapes;
 	v_e = vec_normalize(vec_sub(eye_ray.origin, impact_norm.origin));
 	v_s = vec_sub(vec_scal_mul(impact_norm.destination, 2 * dot_product(v_e, impact_norm.destination)
 		/ dot_product(impact_norm.destination, impact_norm.destination)), v_e);
 	refl_col = cast_ray(scene, (t_ray){impact_norm.origin, v_s}, bounces);
-	intensity = 0.5;	// TODO each shape should have some reflection factor
-	color = color_fade_to(color, refl_col, intensity);
+	intensity = 0.5;	// TODO each shape should have their own reflection factor or something
+	color = color_apply_light(color, refl_col, intensity);
 	shape = shape->next;
 	return (color);
 }

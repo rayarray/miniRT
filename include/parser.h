@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 17:02:32 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/13 17:41:54 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/13 17:49:12 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,14 @@
 # define INPUT_DELIMS " \t\n"
 # include <fcntl.h>
 # include <unistd.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include "libft.h"
 # include "rt_typedef.h"
-# include "shape.h"
 # include "get_next_line.h"
 # include "ambient_lighting.h"
 # include "camera.h"
 # include "light.h"
+# include "shape.h"
 # include "shape_cylinder.h"
 # include "shape_sphere.h"
 # include "shape_plane.h"
