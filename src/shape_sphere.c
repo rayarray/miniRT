@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:16:05 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/14 23:20:03 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/18 16:09:12 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,30 +111,22 @@ double	sphere_intersect_distance(struct s_sphere *s, t_ray ray)
 t_color	sphere_intersect_color(struct s_sphere *s, struct s_scene *scene,
 	t_ray ray, int bounces)
 {
-	t_color		color;
 	double		dist;
 	t_point3	impact;
 	t_vec		surface_normal;
 	t_ray		impact_normal;
 
+	(void)bounces;
 	dist = sphere_intersect_distance(s, ray);
-	color = (t_color){0, 0, 0, 0xFF};
-	if (dist != INFINITY)
+	if (dist == INFINITY)
+		return ((t_color){0, 0, 0, 0xFF});
+	impact = vec_add(ray.origin, vec_scal_mul(ray.destination, dist));
+	surface_normal = vec_normalize(vec_sub(impact, s->base.loc));
+	if (fgreaterthan(dot_product(ray.destination, surface_normal), 0))
 	{
-		impact = vec_add(ray.origin, vec_scal_mul(ray.destination, dist));
-		surface_normal = vec_normalize(vec_sub(impact, s->base.loc));
-		if (fgreaterthan(dot_product(ray.destination, surface_normal), 0))
-		{
-			surface_normal = vec_neg(surface_normal);
-			impact = vec_add(impact, vec_scal_mul(surface_normal, 0.00001));
-		}
-		impact_normal = (t_ray){impact, surface_normal};
-		color = apply_ambient(scene->ambient);
-		color = diffuse_shading(scene, impact_normal, color);
-		color = color_mix(s->base.col, color);
-		color = specular_lighting(scene, impact_normal, ray, color);
-		(void)bounces;
-//		color = specular_reflection(scene, impact_normal, ray, color, bounces);
+		surface_normal = vec_neg(surface_normal);
+		impact = vec_add(impact, vec_scal_mul(surface_normal, 0.00001));
 	}
-	return (color);
+	impact_normal = (t_ray){impact, surface_normal};
+	return (apply_shading(scene, s->base.col, impact_normal, ray));
 }

@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 21:28:54 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/14 23:19:00 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/18 16:03:07 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_color	diffuse_shading(struct s_scene *scene, t_ray impact_norm,
 	return (color);
 }
 
-t_color	specular_lighting(struct s_scene *scene, t_ray impact_norm,
+t_color	specular_reflection(struct s_scene *scene, t_ray impact_norm,
 	t_ray eye_ray, t_color color)
 {
 	t_vec			v_l;
@@ -88,7 +88,8 @@ t_color	specular_lighting(struct s_scene *scene, t_ray impact_norm,
 	return (color);
 }
 
-t_color	specular_reflection(struct s_scene *scene, t_ray impact_norm,
+/* // Needs rework, not mandatory or bonus, but nice to have.
+t_color	reflection(struct s_scene *scene, t_ray impact_norm,
 	t_ray eye_ray, t_color color, int bounces)
 {
 	t_vec			v_s;
@@ -107,5 +108,17 @@ t_color	specular_reflection(struct s_scene *scene, t_ray impact_norm,
 	intensity = 0.5;	// TODO each shape should have their own reflection factor or something
 	color = color_apply_light(color, refl_col, intensity);
 	shape = shape->next;
+	return (color);
+} */
+
+t_color	apply_shading(struct s_scene *scene, t_color surface_color,
+	t_ray impact_normal, t_ray spectator_ray)
+{
+	t_color	color;
+
+	color = apply_ambient(scene->ambient);
+	color = diffuse_shading(scene, impact_normal, color);
+	color = color_mix(surface_color, color);
+	color = specular_reflection(scene, impact_normal, spectator_ray, color);
 	return (color);
 }
