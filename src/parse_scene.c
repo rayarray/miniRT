@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:01:09 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/13 16:41:40 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/18 15:43:18 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,7 @@ t_parser_error	light_evaluator(struct s_light **l, char **args)
 		return (e_SYS_ERROR);
 	loc = rt_atovec(args[1]);
 	brightness = rt_atof(args[2]);
-	color = (t_color){0xFF, 0xFF, 0xFF, 0xFF};
-//	color = rt_atocol(args[3]);		// bonus
+	color = rt_atocol(args[3]);
 	if (light_ctor(*l, loc, brightness, color))
 	{
 		free(*l);
@@ -118,7 +117,7 @@ t_parser_error	parse_line_and_create_element(const char *line,
 		err = ambient_lighting_evaluator(&scene->ambient, args);
 	else if (type == e_CAMERA && scene->camera == NULL)
 		err = camera_evaluator(&scene->camera, args);
-	else if (type == e_LIGHT && scene->lights == NULL)
+	else if (type == e_LIGHT)
 		err = light_evaluator(&scene->lights, args);
 	else if (type > e_LIGHT && type < e_NAE)
 		err = shape_evaluator(&scene->shapes, args, type);
