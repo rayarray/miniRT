@@ -6,6 +6,6 @@
 # Cylinder: type identifer 'cy' | xyz coordinates | vector of axis of cylinder | diameter | height | colors (RGB)
 
 A	0.2	255,255,255
-C	0,0,0	0,0,1	90
+C	0,0,0	0,-1,0	90
 L	0,-4,-4	0.6		255,0,0
-sp	0,0,7	3.0		0,255,255
+sp	0,0,-7	3.0		255,255,0
