@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 13:07:15 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/09 20:32:17 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/18 16:16:53 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	shape_dtor(struct s_shape *this);
 
 double	intersect_distance(struct s_shape *this, t_ray ray);
 
+// bounces here is to support a "proper" ray tracing with bouncing rays. This is
+// not required by the subject, however and might not be implemented.
 t_color	intersect_color(struct s_shape *this, struct s_scene *scene, t_ray ray,
 			int bounces);
 

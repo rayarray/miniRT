@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:39:10 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/14 23:22:13 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/18 16:09:52 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,26 +56,17 @@ double	plane_intersect_distance(struct s_plane *this, t_ray ray)
 t_color	plane_intersect_color(struct s_plane *p, struct s_scene *scene,
 	t_ray ray, int bounces)
 {
-	t_color		color;
 	double		dist;
 	t_point3	impact;
-	t_vec		normal_to_ray;
+	t_ray		impact_normal;
 
-	color = (t_color){0, 0, 0, 0xFF};
+	(void)bounces;
 	dist = plane_intersect_distance(p, ray);
-	if (dist != INFINITY)
-	{
-		impact = vec_add(ray.origin, vec_scal_mul(ray.destination, dist));
-		if (fgreaterthan(dot_product(ray.destination, p->normal), 0))
-			normal_to_ray = vec_neg(p->normal);
-		else
-			normal_to_ray = p->normal;
-		color = apply_ambient(scene->ambient);
-		color = diffuse_shading(scene, (t_ray){impact, normal_to_ray}, color);
-		color = color_mix(p->base.col, color);
-		color = specular_lighting(scene, (t_ray){impact, normal_to_ray}, ray, color);
-		(void)bounces;
-//		color = specular_reflection(scene, (t_ray){impact, normal_to_ray}, ray, color, bounces);
-	}
-	return (color);
+	if (dist == INFINITY)
+		return ((t_color){0, 0, 0, 0xFF});
+	impact = vec_add(ray.origin, vec_scal_mul(ray.destination, dist));
+	impact_normal = (t_ray){impact, p->normal};
+	if (fgreaterthan(dot_product(ray.destination, p->normal), 0))
+		impact_normal.destination = vec_neg(impact_normal.destination);
+	return (apply_shading(scene, p->base.col, impact_normal, ray));
 }
