@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:40:15 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/14 13:25:17 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/18 15:07:14 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define SHAPE_CYLINDER_H
 # include "rt_typedef.h"
 # include "shape.h"
+
+# define CYL_SIDE	0
+# define CYL_BOT	1
+# define CYL_TOP	2
 
 typedef enum e_cylinder_dimension_index
 {

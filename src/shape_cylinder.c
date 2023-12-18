@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:43:11 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/15 15:18:47 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/18 16:29:45 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ double	interSectPlane2(struct s_cylinder *this, t_ray ray)
 	return (distance);
 }
 
-double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray)
+//this is code for 2d disk intersect
+double	disk_intersect_distance(struct s_cylinder *this, t_ray ray)
 {
 	double	distance;
 	double	t;
@@ -86,7 +87,6 @@ double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray)
 	t_vec	p;
 	t_vec	v;
 	static int	onlyonce;
-
 	if (!onlyonce)
 	{
 		vecPrint("cyl axis", this->axis, ++onlyonce);
@@ -110,6 +110,87 @@ double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray)
 	}
 	return (distance);	// placeholder
 }
+
+// double	cylinder_clip(struct s_cylinder *this, t_ray ray, double in, double out)
+// {
+// 	int		surfin;
+// 	int		surfout;
+// 	double	dc;
+// 	double	dw;
+// 	double	t;
+
+// 	surfin = CYL_SIDE;
+// 	surfout = CYL_SIDE;
+// 	dc = this->axis.x * ray.destination.x + this->axis.y * ray.destination.y + this->axis.z * ray.destination.z;
+// 	dw = this->base.loc.x * ray.origin.x + this->base.loc.y * ray.origin.y + this->base.loc.z * ray.origin.z;
+// 	if ( dc == 0.0 ) { // if parallel to bottom plane
+// 		if (fgeq(dw, 0.0))
+// 			return (INFINITY);
+// 		else
+// 		{
+// 			t = - dw / dc;
+// 			if (fgeq(dc, 0.0))
+// 			{
+// 				if (t >)
+// 			}
+// 		}
+// 	}
+// }
+
+double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray)
+{
+	t_vec	rc;
+	double	d;
+	double	t;
+	double	s;
+	t_vec	nv;
+	t_vec	dv;
+	t_vec	ov;
+	static int	onlyonce;
+
+	d = disk_intersect_distance(this, ray);
+	if (flessthan(d, INFINITY))
+		return (d);
+	rc = this->base.loc;
+	this->base.loc = vecAdd(this->base.loc, vecMul(this->axis, this->height));
+	d = disk_intersect_distance(this, ray);
+	this->base.loc = rc;
+	if (flessthan(d, INFINITY))
+		return (d);
+ 	if (!onlyonce)
+ 	{
+		vecPrint("cyl axis", this->axis, ++onlyonce);
+ 		ray.destination = unitVector(ray.destination);
+ 		vecPrint("cam dir ", ray.destination, 1);
+		printf("cyl axis len %f, cam dir len %f\n", vecLength(this->axis), vecLength(ray.destination));
+ 	}
+	rc = vecSub(ray.origin, this->base.loc);
+	nv = vecCross(ray.destination, this->axis);
+	if (vecLengthSquared(nv) <= RT_EPSILON)
+	{
+		d = vecDot(rc, this->axis);
+		dv.x = rc.x - d * this->axis.x;
+		dv.y = rc.y - d * this->axis.y;
+		dv.z = rc.z - d * this->axis.z;
+		d = vecLength(dv);
+		if (d <= this->diameter)
+			return (1);
+		else
+			return (INFINITY);
+	}
+	nv = unitVector(nv);
+	d = fabs(vecDot(rc, nv));
+	if (d <= this->diameter)
+	{
+		ov = vecCross(rc, this->axis);
+		t = vecDot(ov, nv) / vecLength(nv);
+		ov = unitVector(vecCross(nv, this->axis));
+		s = fabs(sqrt(this->dia2 - (d * d)) / vecDot(ray.destination, ov));
+		return (t - s);
+	}
+	return (INFINITY);
+}
+
 
 t_color	cylinder_intersect_color(struct s_cylinder *this,
 	struct s_scene *scene, t_ray ray, int bounces)
