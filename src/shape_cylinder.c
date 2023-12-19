@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:43:11 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/18 16:29:45 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/19 18:34:00 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,23 @@ double	disk_intersect_distance(struct s_cylinder *this, t_ray ray)
 	return (distance);	// placeholder
 }
 
+int	cylinderCapIntersect(struct s_cylinder *this, t_ray ray)
+{
+	double	distance;
+	t_vec	temp;
+
+	distance = disk_intersect_distance(this, ray);
+	if (flessthan(distance, INFINITY))
+		return (1);
+	temp = this->base.loc;
+	this->base.loc = vecAdd(this->base.loc, vecMul(this->axis, this->height));
+	distance = disk_intersect_distance(this, ray);
+	this->base.loc = temp;
+	if (flessthan(distance, INFINITY))
+		return (1);
+	return (0);
+}
+
 // double	cylinder_clip(struct s_cylinder *this, t_ray ray, double in, double out)
 // {
 // 	int		surfin;
@@ -144,7 +161,7 @@ double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray)
 	double	t;
 	double	s;
 	t_vec	nv;
-	t_vec	dv;
+	//t_vec	dv;
 	t_vec	ov;
 	static int	onlyonce;
 
@@ -166,18 +183,18 @@ double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray)
  	}
 	rc = vecSub(ray.origin, this->base.loc);
 	nv = vecCross(ray.destination, this->axis);
-	if (vecLengthSquared(nv) <= RT_EPSILON)
-	{
-		d = vecDot(rc, this->axis);
-		dv.x = rc.x - d * this->axis.x;
-		dv.y = rc.y - d * this->axis.y;
-		dv.z = rc.z - d * this->axis.z;
-		d = vecLength(dv);
-		if (d <= this->diameter)
-			return (1);
-		else
-			return (INFINITY);
-	}
+	// if (vecLengthSquared(nv) <= RT_EPSILON)
+	// {
+	// 	d = vecDot(rc, this->axis);
+	// 	dv.x = rc.x - d * this->axis.x;
+	// 	dv.y = rc.y - d * this->axis.y;
+	// 	dv.z = rc.z - d * this->axis.z;
+	// 	d = vecLength(dv);
+	// 	if (d <= this->diameter)
+	// 		return (1);
+	// 	else
+	// 		return (INFINITY);
+	// }
 	nv = unitVector(nv);
 	d = fabs(vecDot(rc, nv));
 	if (d <= this->diameter)
@@ -186,11 +203,16 @@ double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray)
 		t = vecDot(ov, nv) / vecLength(nv);
 		ov = unitVector(vecCross(nv, this->axis));
 		s = fabs(sqrt(this->dia2 - (d * d)) / vecDot(ray.destination, ov));
+		ray.destination = vecAdd(ray.origin, vecMul(ray.destination, s - t));
+		ray.origin = vecAdd(this->base.loc, vecMul(this->axis, this->height / 2));
+		ray.destination = unitVector(vecSub(ray.destination, ray.origin));
+		if (cylinderCapIntersect(this, ray))
+			return (INFINITY);
+		printf("t - s:[%f]\n", s - t);
 		return (t - s);
 	}
 	return (INFINITY);
 }
-
 
 t_color	cylinder_intersect_color(struct s_cylinder *this,
 	struct s_scene *scene, t_ray ray, int bounces)
