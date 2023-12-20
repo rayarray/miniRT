@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:40:15 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/18 15:07:14 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/20 17:01:02 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,24 @@ struct s_cylinder
 {
 	struct s_shape	base;
 	t_vec			axis;
+	t_point3		center;
+	double			radius;
+	double			rad2;
 	double			diameter;
 	double			dia2;
 	double			height;
-};
+	t_plane_eq		top;
+	t_plane_eq		bot;
+}	t_cylinder;
+
+typedef struct s_surface_hits
+{
+	int		surfin;
+	double	in;
+	int		surfout;
+	double	out;
+	int		pass;
+}	t_surface_hits;
 
 int		cylinder_ctor(struct s_cylinder *this, t_vec orientation[2],
 			double dimensions[2], t_color color);

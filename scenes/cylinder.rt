@@ -5,7 +5,8 @@
 # Plane: type identifier 'pl' | xyz coordinates of a point | normal vector | colors (RGB)
 # Cylinder: type identifer 'cy' | xyz coordinates | vector of axis of cylinder | diameter | height | colors (RGB)
 
-A 0.6 255,255,255
-L -2,1,0 1 255,255,255
-C 0,0,-1 0,0,1 60
-cy 0,0,0.5 1,0,0.1 0.3 1 64,64,255
+A 0.3 255,255,255
+L 4,0,0 1 255,255,255
+C 0,0,-3 0,0,1 60
+cy -1,0,0 1,0.3,0.3 1 2 64,64,255
+#sp 0,0,0 0.2 32,255,32

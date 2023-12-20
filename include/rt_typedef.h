@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_typedef.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:45:14 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/08 16:00:34 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/20 16:54:35 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,13 @@ typedef struct s_pixel
 	uint32_t	x;
 	uint32_t	y;
 }	t_pixel;
+
+typedef struct s_plane_eq
+{
+	double	a;
+	double	b;
+	double	c;
+	double	d;
+}	t_plane_eq;
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_math.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:53:18 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/14 16:22:27 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/20 16:58:07 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,4 +114,15 @@ t_vec	vec_scal_mul(t_vec a, double s)
 	a.y *= s;
 	a.z *= s;
 	return (a);
+}
+
+t_plane_eq	plane_eq(t_point3 loc, t_vec normal)
+{
+	t_plane_eq	plane;
+
+	plane.a = normal.x;
+	plane.b = normal.y;
+	plane.c = normal.z;
+	plane.d = -(loc.x + loc.y + loc.z);
+	return (plane);
 }
