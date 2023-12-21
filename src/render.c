@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 23:55:46 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/12 11:23:31 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/21 12:46:40 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,14 @@ void	render(struct s_scene *scene, mlx_image_t *image)
 		{
 			camray = getRay(camera, x, y);
 			camray.destination = vecAdd(camray.destination, scene->camera->dir);
-			col = cast_ray(scene, camray, camera.max_depth);
+			if ((	x == image->width / 2 && y == 0)
+				|| (x == image->width / 2 && y == image->height / 2)
+				|| (x == image->width / 2 && y == image->height - 1)) {
+				printf("debug activated at x:%d y:%d\n", x, y);
+				col = cast_ray(scene, camray, -1);
+			}
+			else
+				col = cast_ray(scene, camray, camera.max_depth);
 			mlx_put_pixel(image, x, y, coltouint32_t(col));
 		}
 	}

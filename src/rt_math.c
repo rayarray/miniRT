@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:53:18 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/20 16:58:07 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/21 13:38:57 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,6 @@ t_plane_eq	plane_eq(t_point3 loc, t_vec normal)
 	plane.b = normal.y;
 	plane.c = normal.z;
 	plane.d = -(loc.x + loc.y + loc.z);
+	//plane.d = (normal.x * loc.x + normal.y * loc.y + normal.z * loc.z);
 	return (plane);
 }

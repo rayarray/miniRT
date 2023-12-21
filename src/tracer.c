@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tracer.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/12 19:41:29 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/21 12:45:28 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,17 @@ t_color	cast_ray(struct s_scene *scene, t_ray ray, int bounces)
 	closest_shape = NULL;
 	col = (t_color){.r = 0x00, .g = 0x00, .b = 0x00, .a = 0xFF};			// Black
 //	col = color_fade(scene->ambient->color, scene->ambient->light_ratio);	// use ambient light for background color
-	if (bounces <= 0)
-		return (col);
+	//if (bounces <= 0) // commented out for debug
+	//	return (col);
 	distance_to_nearest = INFINITY;
 	shape = scene->shapes;
 	while (shape != NULL)
 	{
+		if (bounces == -1)
+			shape->debug = 1;
 		dist = intersect_distance(shape, ray);
+		if (shape->debug == 1)
+			shape->debug = 0;
 		if (flessthan(dist, distance_to_nearest))
 		{
 			distance_to_nearest = dist;
@@ -82,6 +86,8 @@ t_color	cast_ray(struct s_scene *scene, t_ray ray, int bounces)
 		}
 		shape = shape->next;
 	}
+	if (bounces == -1)
+		printf("debug at cast_ray\n");
 	if (closest_shape)
 		col = intersect_color(closest_shape, scene, ray, bounces);
 	return (col);

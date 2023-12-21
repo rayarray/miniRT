@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shape.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 13:07:15 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/09 20:32:17 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/21 12:36:26 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ struct s_shape
 	t_elem_type					type;
 	t_vec						loc;
 	t_color						col;
+	int							debug;
 };
 
 void	shape_ctor(struct s_shape *this, t_elem_type type, t_vec loc,
