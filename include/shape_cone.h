@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:28:07 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/18 18:23:29 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/27 17:21:23 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ struct s_cone
 {
 	struct s_shape	base;
 	t_vec			axis;
+	t_vec			vertex;
 	double			diameter;
 	double			height;
+	double			angle;
 };
 
 int		cone_ctor(struct s_cone *this, t_vec orientation[2],
