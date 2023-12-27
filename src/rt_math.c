@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:53:18 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/14 16:22:27 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/27 16:59:58 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,4 +114,26 @@ t_vec	vec_scal_mul(t_vec a, double s)
 	a.y *= s;
 	a.z *= s;
 	return (a);
+}
+
+double	min_pos_discriminant(double a, double b, double c)
+{	// Source material says this method might produce errors ("catastrophic cancellation")
+	// TODO replace with a better method
+	double discriminant;
+	double results[3];
+	
+	results[0] = INFINITY;
+	discriminant = pow(b, 2) - 4 * a * c;
+	if (feq(discriminant, 0))
+			results[0] = -b / (2 * a);
+	else if (fgreaterthan(discriminant, 0))
+	{
+		results[1] = (-b + sqrt(discriminant)) / (2 * a);
+		results[2] = (-b - sqrt(discriminant)) / (2 * a);
+		if (fgreaterthan(results[1], 0) && fgreaterthan(results[2], 0))
+			results[0] = fmin(results[1], results[2]);
+		else if (!(flessthan(results[1], 0) && flessthan(results[2], 0)))
+			results[0] = fmax(results[1], results[2]);
+	}
+	return (results[0]);
 }

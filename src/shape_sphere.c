@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:16:05 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/18 16:09:12 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/27 15:46:13 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,30 +69,11 @@ static double	analytic_intersect_distance(struct s_sphere *s, t_ray ray)
 	double	a;
 	double	b;
 	double	c;
-	double	discriminant;
-	double	results[3];
 
-	results[0] = INFINITY;
 	a = dot_product(ray.destination, ray.destination);
 	b = 2 * dot_product(ray.destination, vec_sub(ray.origin, s->base.loc));
 	c = pow(vec_length(vec_sub(ray.origin, s->base.loc)), 2) - pow(s->diameter / 2, 2);
-	discriminant = pow(b, 2) - 4 * a * c;
-//	if (a == 0)					// Would result in a divide by zero
-//		result = INFINITY;		// but this shouldn't happen because ray.destination should be normalized.
-	if (feq(discriminant, 0))
-		results[0] = -b / (2 * a);
-	else if (fgreaterthan(discriminant, 0))
-	{ 
-		results[1] = (-b + sqrt(discriminant)) / (2 * a);	// Source material says this method might produce errors ("catastrophic cancellation")
-		results[2] = (-b - sqrt(discriminant)) / (2 * a);	// TODO replace with a better method
-/* 		if (flessthan(results[1], 0) && flessthan(results[2], 0))
-			results[0] = INFINITY;
-		else  */if (fgreaterthan(results[1], 0) && fgreaterthan(results[2], 0))
-			results[0] = fmin(results[1], results[2]);
-		else if (!(flessthan(results[1], 0) && flessthan(results[2], 0)))
-			results[0] = fmax(results[1], results[2]);
-	}
-	return (results[0]);
+	return (min_pos_discriminant(a, b, c));
 }
 
 double	sphere_intersect_distance(struct s_sphere *s, t_ray ray)
