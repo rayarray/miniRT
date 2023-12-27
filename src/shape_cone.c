@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:28:09 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/27 20:51:10 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/27 21:33:15 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,25 +52,19 @@ double	cone_intersect_distance(struct s_cone *this, t_ray ray)
 	double	b;
 	double	c;
 	double	distance;
-	t_vec	rl;
-
-	t_vec	ca;
-
-	ca = this->axis;
+	t_vec	rl;			// vector from ray origin to vertex
 
 	cq = pow(this->diameter / 2, 2) / pow(this->height, 2);
-	a = dot_product(ray.destination, ray.destination) - (cq + 1) * pow(dot_product(ray.destination, ca), 2);
+	a = dot_product(ray.destination, ray.destination) - (cq + 1) * pow(dot_product(ray.destination, this->axis), 2);
 	rl = vec_sub(ray.origin, this->vertex);
-	b = 2 * ((dot_product(rl, ray.destination) - (cq + 1) * dot_product(rl, ca) * dot_product(ray.destination, ca)));
-	c = dot_product(rl, rl) - (cq + 1) * pow(dot_product(rl, ca), 2);
+	b = 2 * ((dot_product(rl, ray.destination) - (cq + 1) * dot_product(rl, this->axis) * dot_product(ray.destination, this->axis)));
+	c = dot_product(rl, rl) - (cq + 1) * pow(dot_product(rl, this->axis), 2);
 	distance = min_pos_discriminant(a, b, c);
 
-	double hit_position = dot_product(vec_sub(this->vertex, vec_scal_mul(ray.destination, distance)), ca);
-	if (!fgeq(hit_position, 0) || !fleq(hit_position, vec_length(vec_sub(this->vertex, this->base.loc))))
-		distance = INFINITY;
-	else
+	double hit_distance = dot_product(vec_sub(this->vertex, vec_scal_mul(ray.destination, distance)), this->axis);
+ 	if (fgreaterthan(hit_distance, this->height))
 	{
-		double denom_base = dot_product(ca, ray.destination);
+		double denom_base = dot_product(this->axis, ray.destination);
 		if (!feq(denom_base, 0))
 			distance = dot_product(vec_sub(this->base.loc, ray.origin), this->axis)
 				/ denom_base;
@@ -78,6 +72,8 @@ double	cone_intersect_distance(struct s_cone *this, t_ray ray)
 		if (flessthan(distance, 0) || fgreaterthan(vec_distance(impact, this->base.loc), this->diameter / 2))
 			distance = INFINITY;
 	}
+	else if (flessthan(hit_distance, 0))
+		distance = INFINITY;
 	return (distance);
 }
 
@@ -90,12 +86,12 @@ t_color	cone_intersect_color(struct s_cone *this, struct s_scene *scene,
 	t_vec		normal;
 
 	(void)bounces;
-	//return this->base.col;
 	dist = cone_intersect_distance(this, ray);
 	if (dist == INFINITY)
 		return ((t_color){0, 0, 0, 0xFF});
 	impact = vec_add(ray.origin, vec_scal_mul(ray.destination, dist));
-	if (dot_product(this->axis, ray.destination) && fleq(vec_distance(impact, this->base.loc), this->diameter / 2))
+	if (feq(dot_product(vec_sub(impact, this->base.loc), this->axis), 0)
+			&& fleq(vec_distance(impact, this->base.loc), this->diameter / 2))
 		impact_normal = (t_ray){impact, this->axis};
 	else
 	{
