@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:45:14 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/08 16:00:34 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/18 16:45:35 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ typedef enum e_elem_type
 	e_SPHERE = 3,
 	e_PLANE = 4,
 	e_CYLINDER = 5,
-	e_NAE = 6
+	e_CONE = 6,
+	e_NAE = 7
 }	t_elem_type;
 
 typedef struct s_color

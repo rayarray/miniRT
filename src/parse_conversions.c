@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 19:56:43 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/13 17:41:38 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/18 18:23:57 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static int	skip_whitespace(const char **cptr)
 
 t_elem_type	rt_atoetype(const char *a)
 {
-	static const char	*elem_ids[7] =	{"A", "C", "L", "sp", "pl", "cy", NULL};
+	static const char	*elem_ids[8] =	{"A", "C", "L", "sp", "pl", "cy", "co",
+							NULL};
 	int					i;
 	int					len;
 

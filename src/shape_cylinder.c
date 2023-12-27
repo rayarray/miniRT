@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:43:11 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/13 17:38:21 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/18 18:02:21 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "rt_validations.h"
 #include "rt_typedef.h"
 
-#include <stdio.h>
 int	cylinder_ctor(struct s_cylinder *this, t_vec orientation[2],
 	double dimensions[2], t_color color)
 {

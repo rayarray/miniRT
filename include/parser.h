@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 17:02:32 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/13 17:49:12 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/18 18:07:16 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include "shape_cylinder.h"
 # include "shape_sphere.h"
 # include "shape_plane.h"
+# include "shape_cone.h"
 
 typedef enum e_parser_error
 {

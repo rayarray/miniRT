@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:30:47 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/13 17:38:16 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/18 18:07:37 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,29 @@
 #include "rt_validations.h"
 #include "rt_conversions.h"
 #include "rt_typedef.h"
+
+
+t_parser_error	cone_evaluator(struct s_cone **c, char **args)
+{
+	if (args[0] == NULL || args[1] == NULL || args[2] == NULL
+		|| args[3] == NULL || args[4] == NULL || args[5] == NULL)
+		return (e_ELEMENT_ARG_ERROR);
+	if (!is_double_triplet_strict(args[1]) || !is_double_triplet_strict(args[2])
+		|| !is_double(args[3]) || !is_double(args[4])
+		|| !is_byte_triplet_strict(args[5]))
+		return (e_ELEMENT_ARG_ERROR);
+	*c = malloc(sizeof(struct s_cone));
+	if (*c == NULL)
+		return (e_SYS_ERROR);
+	if (cone_ctor(*c, (t_vec [2]){rt_atovec(args[1]), rt_atovec(args[2])}, 
+		(double [2]){rt_atof(args[3]), rt_atof(args[4])}, rt_atocol(args[5])))
+	{
+		free(*c);
+		*c = NULL;
+		return (e_ELEMENT_ARG_ERROR);
+	}
+	return (e_NO_ERROR);
+}
 
 t_parser_error	cylinder_evaluator(struct s_cylinder **c, char **args)
 {
@@ -113,5 +136,7 @@ t_parser_error	shape_evaluator(struct s_shape **shapes, char **args,
 		return (plane_evaluator((struct s_plane **)shapes, args));
 	else if (type == e_CYLINDER)
 		return (cylinder_evaluator((struct s_cylinder **)shapes, args));
+	else if (type == e_CONE)
+		return (cone_evaluator((struct s_cone **)shapes, args));
 	return (e_LOGIC_ERROR);
 }
