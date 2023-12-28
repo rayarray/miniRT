@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:32:10 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/14 15:31:17 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/28 14:41:02 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,9 @@ void	vecPrint(char *name, t_vec v, int newline)
 		printf(" %s x%f y%f z%f\n", name, v.x, v.y, v.z);
 	else
 		printf(" %s x%f y%f z%f ", name, v.x, v.y, v.z);
+}
+
+t_vec vecOrigo(void)
+{
+	return vecInit(0, 0, 0);
 }

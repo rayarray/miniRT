@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:32:32 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/14 10:37:45 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/28 14:48:35 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ double	vecLengthSquared(t_vec v1);
 double	vecLength(t_vec v1);
 t_vec	unitVector(t_vec v1);
 void	vecPrint(char *name, t_vec v, int newline);
+t_vec   vecOrigo(void);
 
 #endif	/* VECTOR_H */

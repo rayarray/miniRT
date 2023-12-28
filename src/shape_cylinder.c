@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:43:11 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/21 13:44:56 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/28 18:27:01 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 #include "shading.h"
 #include "color.h"
 
-
 #include <stdio.h>
+
 int	cylinder_ctor(struct s_cylinder *this, t_vec orientation[2],
 	double dimensions[2], t_color color)
 {
@@ -37,12 +37,15 @@ int	cylinder_ctor(struct s_cylinder *this, t_vec orientation[2],
 	this->height = dimensions[e_HEIGHT];
 	this->axis = unitVector(orientation[e_AXIS]);
 	this->center = vecAdd(this->base.loc, vecMul(this->axis, this->height / 2));
-	this->bot = plane_eq(this->base.loc, vecSub(vecInit(0, 0, 0), this->axis));
-	this->top = plane_eq(vecAdd(this->base.loc,
-				vecMul(this->axis, this->height)), this->axis);
+	//this->bot = plane_eq(this->base.loc, vecSub(vecInit(0, 0, 0), this->axis));
+	//this->top = plane_eq(vecAdd(this->base.loc,
+	//			vecMul(this->axis, this->height)), this->axis);
+	this->bot = plane_eq(vecInit(0, 0, 0), vec_neg(this->axis));
+	this->top = plane_eq(vecAdd(vecOrigo(), vecMul(this->axis, this->height)), this->axis);
 	// vecSub(vecInit(0, 0, 0), this->axis)
 	printf("bot a%f b%f c%f d%f\n", this->bot.a, this->bot.b, this->bot.c, this->bot.d);
 	printf("top a%f b%f c%f d%f\n", this->top.a, this->top.b, this->top.c, this->top.d);
+	vecPrint("cyl axis", this->axis, 1);
 	return (0);
 }
 
@@ -184,7 +187,7 @@ double	cylinder_clip_cap(struct s_cylinder *this, t_ray ray, t_surface_hits *hit
 	static int onlyonce;
 
 	hit->pass++; // first pass is CYL_BOT and second pass is CYL_TOP
-	if (!onlyonce || onlyonce != hit->pass)
+	if (!onlyonce || onlyonce < hit->pass)
 	{
 		printf("plane a%f b%f c%f d%f\n", plane.a, plane.b, plane.c, plane.d);
 		onlyonce++;
@@ -225,6 +228,8 @@ double	cylinder_clip_cap(struct s_cylinder *this, t_ray ray, t_surface_hits *hit
 	//printf("running [%d] pass of cylclipcap\n", hit->pass);
 	if (hit->pass == 1)
 		return (cylinder_clip_cap(this, ray, hit, this->top));
+	else if ((hit->surfin == CYL_BOT && hit->surfout == CYL_TOP) || (hit->surfin == CYL_TOP && hit->surfout == CYL_BOT))
+		return (fmin(hit->in, hit->out));
 	else if (hit->in < hit->out)
 		return (hit->in);
 	else
@@ -270,10 +275,31 @@ int	infinite_cylinder_intersect(struct s_cylinder *this, t_ray ray, t_surface_hi
 	return (0);
 }
 
+t_surface_hits	cylinder_intersect_hits(struct s_cylinder *this, t_ray ray)
+{
+	t_surface_hits	hits;
+	t_vec			origo;
+
+	ft_bzero(&hits, sizeof(t_surface_hits));
+	infinite_cylinder_intersect(this, ray, &hits);
+	origo = this->base.loc;
+	this->base.loc = vecOrigo();
+	ray.origin = vecSub(ray.origin, origo);
+	cylinder_clip_cap(this, ray, &hits, this->bot);
+	this->base.loc = origo;
+	if (hits.in > hits.out)
+	{
+		hits.in = hits.out;
+		hits.surfin = hits.surfout;
+	}
+	return hits;
+}
+
 double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray)
 {
 	t_surface_hits	hits;
-	static int onlyonce;
+	//static int onlyonce;
+	t_vec			origo;
 	double rval;
 
 	ft_bzero(&hits, sizeof(t_surface_hits));
@@ -283,14 +309,28 @@ double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray)
 		return (INFINITY);
 	if (this->base.debug || this->debug) {
 		//printf("surfin:%d surfout:%d\nin:%f\nout:%f\n", hits.surfin, hits.surfout, hits.in, hits.out);
-		onlyonce = 1;
+		//onlyonce = 1;
 	}
+	origo = this->base.loc;
+	this->base.loc = vecScalar(0);
+	ray.origin = vecSub(ray.origin, origo);
 	rval = cylinder_clip_cap(this, ray, &hits, this->bot);
-	if (this->debug) {
-		//printf("dist:%f surfin:%d surfout:%d\nin:%f\nout:%f\n", rval, hits.surfin, hits.surfout, hits.in, hits.out);
-		onlyonce = 2;
+	this->base.loc = origo;
+	if (this->debug || this->base.debug) {
+		printf("dist:%f surfin:%d surfout:%d\nin:%f\nout:%f\n", rval, hits.surfin, hits.surfout, hits.in, hits.out);
+		//onlyonce = 2;
 	}
 	return rval;
+}
+
+t_vec	cylinder_hit_normal(struct s_cylinder *this, t_point3 impact)
+{
+	double	t;
+	t_vec	pt;
+	
+	t = vecDot(vecSub(impact, this->base.loc), this->axis);
+	pt = vecAdd(this->base.loc, vecMul(this->axis, t));
+	return (unitVector(vecSub(impact, pt)));
 }
 
 // double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray)
@@ -356,28 +396,88 @@ double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray)
 // 	return (INFINITY);
 // }
 
-t_color	cylinder_intersect_color(struct s_cylinder *this,
-	struct s_scene *scene, t_ray ray, int bounces)
+// t_color	cylinder_intersect_color(struct s_cylinder *this,
+// 	struct s_scene *scene, t_ray ray, int bounces)
+// {
+// 	t_color		color;
+// 	double		dist;
+// 	t_point3	impact;
+// 	t_vec		normal_to_ray;
+// 	t_surface_hits hit;
+
+// 	// if (bounces == -2) {
+// 	// 	this->debug = 1;
+// 	// 	printf("debug at intersect_color\n");
+// 	// 	dist = cylinder_intersect_distance(this, ray);
+// 	// 	this->debug = 0;
+// 	// }
+// 	// else
+// 	hit = cylinder_intersect_hits(this, ray);
+// 	dist = fmin(hit.in, hit.out);
+// 	if (dist == hit.out)
+// 	{
+// 		hit.in = hit.out;
+// 		hit.surfin = hit.surfout;
+// 	}
+// 	//dist = cylinder_intersect_distance(this, ray);
+// 	impact = vecAdd(ray.origin, vecMul(ray.destination, dist));
+// 	// if ((dist == hit.in && hit.surfin == CYL_SIDE) || (dist == hit.out && hit.surfout == CYL_SIDE))
+// 	// 	normal_to_ray = unitVector(vecSub(this->base.loc, impact));
+// 	// else
+// 	// 	normal_to_ray = this->axis;
+// 	if (hit.surfin == CYL_SIDE)
+// 		normal_to_ray = cylinder_hit_normal(this, impact);
+// 	else if (hit.surfin == CYL_BOT)
+// 		normal_to_ray = this->axis;
+// 	else
+// 		normal_to_ray = vec_neg(this->axis);
+// 	if (this->debug || bounces < 0)
+// 		printf("in%f surfin%d out%f surfout%d\n", hit.in, hit.surfin, hit.out, hit.surfout);
+// 	//normal_to_ray = unitVector(vecSub(impact, this->center));
+// 	color = (t_color){0, 0, 0, 0xFF};
+// 	color = apply_ambient(scene->ambient);
+// 	color = diffuse_shading(scene, (t_ray){impact, normal_to_ray}, color);
+// 	color = color_mix(this->base.col, color);
+// 	color = specular_lighting(scene, (t_ray){impact, normal_to_ray}, ray, color);
+// 	(void)bounces;
+// 	return (color);	//placeholder
+// }
+
+t_color	cylinder_intersect_color(struct s_cylinder *this, struct s_scene *scene,
+	t_ray ray, int bounces)
 {
 	t_color		color;
 	double		dist;
 	t_point3	impact;
-	t_vec		normal_to_ray;
+	t_vec		surface_normal;
+	t_ray		impact_normal;
+	t_surface_hits	hit;
 
-	// if (bounces == -2) {
-	// 	this->debug = 1;
-	// 	printf("debug at intersect_color\n");
-	// 	dist = cylinder_intersect_distance(this, ray);
-	// 	this->debug = 0;
-	// }
-	// else
-	dist = cylinder_intersect_distance(this, ray);
-	impact = vecAdd(ray.origin, vecMul(ray.destination, dist));
-	normal_to_ray = unitVector(vecSub(impact, this->center));
-	color = apply_ambient(scene->ambient);
-	color = diffuse_shading(scene, (t_ray){impact, normal_to_ray}, color);
-	color = color_mix(this->base.col, color);
-	color = specular_lighting(scene, (t_ray){impact, normal_to_ray}, ray, color);
-	(void)bounces;
-	return (color);	//placeholder
+	hit = cylinder_intersect_hits(this, ray);
+	dist = hit.in;
+	if (this->debug || bounces == -2)
+		printf("surf:%d dist:%f\n", hit.surfin, dist);
+	color = (t_color){0, 0, 0, 0x77};
+	if (dist != INFINITY)
+	{
+		impact = vec_add(ray.origin, vec_scal_mul(ray.destination, dist));
+		if (hit.surfin == CYL_SIDE)
+			surface_normal = cylinder_hit_normal(this, impact);
+		else if (hit.surfin == CYL_BOT)
+			surface_normal = vec_neg(this->axis);
+		else
+			surface_normal = this->axis;
+		if (bounces == -2)
+			vecPrint("surface_normal", surface_normal, 1);
+		impact_normal = (t_ray){impact, surface_normal};
+		color = apply_ambient(scene->ambient);
+		color = diffuse_shading(scene, impact_normal, color);
+		color = color_mix(this->base.col, color);
+		color = specular_lighting(scene, impact_normal, ray, color);
+		(void)bounces;
+//		color = specular_reflection(scene, impact_normal, ray, color, bounces);
+	}
+	return (color);
 }
+
+

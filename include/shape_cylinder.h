@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:40:15 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/21 11:56:23 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/28 14:10:03 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ struct s_cylinder
 	t_plane_eq		top;
 	t_plane_eq		bot;
 	int				debug;
-}	t_cylinder;
+};
 
 typedef struct s_surface_hits
 {

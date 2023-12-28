@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/21 12:45:28 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/28 18:33:27 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	collision_test(struct s_scene *scene, t_ray ray, double length)
 	{
 		distance = intersect_distance(shape, ray);
 		if (flessthan(distance, length))
-			return (1);
+			return (0);
 		shape = shape->next;
 	}
 	return (0);
