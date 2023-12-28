@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:16:05 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/27 15:46:13 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/28 23:22:35 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	sphere_dtor(struct s_sphere *this)
 	_shape_base_dtor(&this->base);
 }
 
-static double	geometric_intersect_distance(struct s_sphere *s, t_ray ray)
+double	geometric_intersect_distance(struct s_sphere *s, t_ray ray)
 {
 	t_vec	l;	// vector between origin and sphere
 	double	tca;	// distance from origin to a line s that is perpendicular between destination line and l
@@ -71,6 +71,8 @@ static double	analytic_intersect_distance(struct s_sphere *s, t_ray ray)
 	double	c;
 
 	a = dot_product(ray.destination, ray.destination);
+	if (feq(a, 0))					// Would result in a divide by zero
+		return (INFINITY);
 	b = 2 * dot_product(ray.destination, vec_sub(ray.origin, s->base.loc));
 	c = pow(vec_length(vec_sub(ray.origin, s->base.loc)), 2) - pow(s->diameter / 2, 2);
 	return (min_pos_discriminant(a, b, c));
@@ -82,7 +84,7 @@ double	sphere_intersect_distance(struct s_sphere *s, t_ray ray)
 	double	geom;
 
 	anal = analytic_intersect_distance(s, ray);		// calculating distance using two methods for error checking. 
-	geom = geometric_intersect_distance(s, ray);
+//	geom = geometric_intersect_distance(s, ray);
 	(void)geom;
 //	if (anal != INFINITY && geom != INFINITY && !feq(anal, geom))
 //		printf("sphere's geometric and analytic intersect differs by %f: anal %f geom %f!\n", anal - geom, anal, geom);

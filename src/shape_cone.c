@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:28:09 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/27 21:33:15 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/28 21:13:26 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	cone_dtor(struct s_cone *this)
 	_shape_base_dtor(&this->base);
 }
 
+#include <stdio.h>
 // https://davidjcobb.github.io/articles/ray-cone-intersection
 double	cone_intersect_distance(struct s_cone *this, t_ray ray)
 {
@@ -61,7 +62,7 @@ double	cone_intersect_distance(struct s_cone *this, t_ray ray)
 	c = dot_product(rl, rl) - (cq + 1) * pow(dot_product(rl, this->axis), 2);
 	distance = min_pos_discriminant(a, b, c);
 
-	double hit_distance = dot_product(vec_sub(this->vertex, vec_scal_mul(ray.destination, distance)), this->axis);
+ 	double hit_distance = dot_product(vec_sub(this->vertex, vec_scal_mul(ray.destination, distance)), this->axis);
  	if (fgreaterthan(hit_distance, this->height))
 	{
 		double denom_base = dot_product(this->axis, ray.destination);
@@ -71,6 +72,8 @@ double	cone_intersect_distance(struct s_cone *this, t_ray ray)
 		t_vec impact = vec_add(ray.origin, vec_scal_mul(ray.destination, distance));
 		if (flessthan(distance, 0) || fgreaterthan(vec_distance(impact, this->base.loc), this->diameter / 2))
 			distance = INFINITY;
+		else
+			printf("%f\n", hit_distance);
 	}
 	else if (flessthan(hit_distance, 0))
 		distance = INFINITY;
@@ -89,6 +92,7 @@ t_color	cone_intersect_color(struct s_cone *this, struct s_scene *scene,
 	dist = cone_intersect_distance(this, ray);
 	if (dist == INFINITY)
 		return ((t_color){0, 0, 0, 0xFF});
+	printf("%f\n", dist);
 	impact = vec_add(ray.origin, vec_scal_mul(ray.destination, dist));
 	if (feq(dot_product(vec_sub(impact, this->base.loc), this->axis), 0)
 			&& fleq(vec_distance(impact, this->base.loc), this->diameter / 2))
@@ -99,8 +103,10 @@ t_color	cone_intersect_color(struct s_cone *this, struct s_scene *scene,
 								 vec_normalize(vec_sub(this->vertex, impact))));
 		impact_normal = (t_ray){impact, normal};
 	}
-	if (fgreaterthan(dot_product(ray.destination, impact_normal.destination), 0))
-		impact_normal.destination = vec_neg(impact_normal.destination);
-//	impact_normal.destination = vec_scal_mul(impact_normal.destination, 1.00001);
+//	if (fgreaterthan(dot_product(ray.destination, impact_normal.destination), 0)) {
+//		printf("Naag\n");
+//		impact_normal.destination = vec_neg(impact_normal.destination);
+//		impact_normal.destination = vec_scal_mul(impact_normal.destination, 1.00001);
+//	}
 	return (apply_shading(scene, this->base.col, impact_normal, ray));
 }

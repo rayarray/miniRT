@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:36:12 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/12 11:24:19 by rleskine         ###   ########.fr       */
+/*   Updated: 2023/12/28 23:15:26 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int	main(int argc, char **argv)
 	struct s_minirt	data;	
 	int				exit_code;
 
+	double d = 0.0 / 0.0;
+	(void)d;
 	data.mlx = NULL;
 	exit_code = get_scene_from_input(&data.scene, argc, argv);
 	if (exit_code == EXIT_SUCCESS)

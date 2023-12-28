@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:53:18 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/27 16:59:58 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/28 23:23:45 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,33 @@ int imin(int a, int b)
 	return (a);
 }
 
+#include <stdio.h>
 int	feq(double a, double b)
 {
-	return (fabs(a - b) <= RT_EPSILON);
+//	return (fabs(a - b) <= RT_EPSILON);
+	double	eps;
+	if (isnan(a) || isnan(b))
+	{
+		printf("nan a %f b %f \n",a, b);
+		getchar();
+	}
+	eps = fmax(fabs(a), fabs(b)) * 0.001;
+//	printf("eps %f for %f and %f\n", eps, a, b);
+	return (fabs(a - b) <= eps);
 }
 
 int	flessthan(double a, double b)
 {
-	return (a < b + RT_EPSILON);
+	if (feq(a, b))
+		return (0);
+	return (a < b);
 }
 
 int	fgreaterthan(double a, double b)
 {
-	return (a > b - RT_EPSILON);
+	if (feq(a, b))
+		return (0);
+	return (a > b);
 }
 
 int	fleq(double a, double b)
@@ -116,6 +130,8 @@ t_vec	vec_scal_mul(t_vec a, double s)
 	return (a);
 }
 
+#include <stdio.h>
+// Returns INFINITY if no solutions are found or if all solutions are negative
 double	min_pos_discriminant(double a, double b, double c)
 {	// Source material says this method might produce errors ("catastrophic cancellation")
 	// TODO replace with a better method
@@ -123,17 +139,49 @@ double	min_pos_discriminant(double a, double b, double c)
 	double results[3];
 	
 	results[0] = INFINITY;
+	if (feq(a, 0))
+		return (INFINITY);
 	discriminant = pow(b, 2) - 4 * a * c;
-	if (feq(discriminant, 0))
-			results[0] = -b / (2 * a);
-	else if (fgreaterthan(discriminant, 0))
+	if (isnan(discriminant))
 	{
-		results[1] = (-b + sqrt(discriminant)) / (2 * a);
-		results[2] = (-b - sqrt(discriminant)) / (2 * a);
-		if (fgreaterthan(results[1], 0) && fgreaterthan(results[2], 0))
-			results[0] = fmin(results[1], results[2]);
-		else if (!(flessthan(results[1], 0) && flessthan(results[2], 0)))
-			results[0] = fmax(results[1], results[2]);
+		printf("discriminant nan\n");
+		getchar();
 	}
+	if (feq(discriminant, 0) && fgeq(-b / (2 * a), 0))	// one solution
+		results[0] = -b / (2 * a);
+	else if (fgreaterthan(discriminant, 0))	// two solutions
+	{
+		// results[1] = (-b + sqrt(discriminant)) / (2 * a);
+		// results[2] = (-b - sqrt(discriminant)) / (2 * a);
+		double q;
+		if (fgreaterthan(b, 0))
+			q = (-b + sqrt(discriminant)) / 2;
+		else
+			q = (-b - sqrt(discriminant)) / 2;
+		results[1] = q / a;
+		results[2] = c / q;
+		if (isnan(results[1]) || isnan(results[2])) {printf("isnan result\n"); getchar();}
+		if (fgeq(results[1], 0) && fgeq(results[2], 0))
+			results[0] = fmin(results[1], results[2]);
+		else if (!(fgeq(results[1], 0) || fgeq(results[2], 0)))
+//		else if (!(flessthan(results[1], 0) && flessthan(results[2], 0)))
+		{
+			results[0] = fmax(results[1], results[2]);
+//			printf("%f %f %f\n", results[0], results[1], results[2]);
+//			getchar();
+		}
+		else
+			; // No positive results
+		if (!(flessthan(results[1], 0) && flessthan(results[2], 0)) != 
+				(fgeq(results[1], 0) || fgeq(results[2], 0)))
+		{
+//			printf("flessthan %d %d\n", flessthan(results[1], 0), flessthan(results[2], 0));
+//			printf("fgeq %d %d\n", fgeq(results[1], 0), fgeq(results[2], 0));
+//			printf("%f %f %f\n", results[0], results[1], results[2]);
+//			getchar();
+		}	
+	}
+	else
+		;	// No solutions
 	return (results[0]);
 }
