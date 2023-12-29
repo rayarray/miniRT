@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:53:18 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/14 16:22:27 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/29 14:29:58 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,16 @@ int	feq(double a, double b)
 
 int	flessthan(double a, double b)
 {
-	return (a < b + RT_EPSILON);
+	if (feq(a, b))
+		return (0);
+	return (a < b);
 }
 
 int	fgreaterthan(double a, double b)
 {
-	return (a > b - RT_EPSILON);
+	if (feq(a, b))
+		return (0);
+	return (a > b);
 }
 
 int	fleq(double a, double b)
@@ -114,4 +118,34 @@ t_vec	vec_scal_mul(t_vec a, double s)
 	a.y *= s;
 	a.z *= s;
 	return (a);
+}
+
+// Returns INFINITY if no solutions are found or if all solutions are negative
+// Otherwise returns the minimum positive result.
+double	min_pos_quadratic_solver(double a, double b, double c)
+{
+	double discriminant;
+	double results[3];
+	double q;
+	
+	results[0] = INFINITY;
+	if (feq(a, 0))
+		return (INFINITY);
+	discriminant = pow(b, 2) - 4 * a * c;
+	if (feq(discriminant, 0))	// one solution
+		results[0] = -b / (2 * a);
+	else // two solutions
+	{
+		if (fgreaterthan(b, 0))
+			q = (-b - sqrt(discriminant)) / 2;
+		else
+			q = (-b + sqrt(discriminant)) / 2;
+		results[1] = q / a;
+		results[2] = c / q;
+		if (fgreaterthan(results[1], 0) && fgreaterthan(results[2], 0))
+			results[0] = fmin(results[1], results[2]);
+		else if (fgreaterthan(results[1], 0) || fgreaterthan(results[2], 0))
+			results[0] = fmax(results[1], results[2]);
+	}
+	return (results[0]);
 }
