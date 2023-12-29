@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:28:09 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/28 21:13:26 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/29 14:38:04 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	cone_dtor(struct s_cone *this)
 	_shape_base_dtor(&this->base);
 }
 
-#include <stdio.h>
 // https://davidjcobb.github.io/articles/ray-cone-intersection
 double	cone_intersect_distance(struct s_cone *this, t_ray ray)
 {
@@ -60,7 +59,7 @@ double	cone_intersect_distance(struct s_cone *this, t_ray ray)
 	rl = vec_sub(ray.origin, this->vertex);
 	b = 2 * ((dot_product(rl, ray.destination) - (cq + 1) * dot_product(rl, this->axis) * dot_product(ray.destination, this->axis)));
 	c = dot_product(rl, rl) - (cq + 1) * pow(dot_product(rl, this->axis), 2);
-	distance = min_pos_discriminant(a, b, c);
+	distance = min_pos_quadratic_solver(a, b, c);
 
  	double hit_distance = dot_product(vec_sub(this->vertex, vec_scal_mul(ray.destination, distance)), this->axis);
  	if (fgreaterthan(hit_distance, this->height))
@@ -72,8 +71,8 @@ double	cone_intersect_distance(struct s_cone *this, t_ray ray)
 		t_vec impact = vec_add(ray.origin, vec_scal_mul(ray.destination, distance));
 		if (flessthan(distance, 0) || fgreaterthan(vec_distance(impact, this->base.loc), this->diameter / 2))
 			distance = INFINITY;
-		else
-			printf("%f\n", hit_distance);
+//		else
+//			printf("%f\n", hit_distance);
 	}
 	else if (flessthan(hit_distance, 0))
 		distance = INFINITY;
@@ -92,7 +91,6 @@ t_color	cone_intersect_color(struct s_cone *this, struct s_scene *scene,
 	dist = cone_intersect_distance(this, ray);
 	if (dist == INFINITY)
 		return ((t_color){0, 0, 0, 0xFF});
-	printf("%f\n", dist);
 	impact = vec_add(ray.origin, vec_scal_mul(ray.destination, dist));
 	if (feq(dot_product(vec_sub(impact, this->base.loc), this->axis), 0)
 			&& fleq(vec_distance(impact, this->base.loc), this->diameter / 2))

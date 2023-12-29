@@ -6,11 +6,10 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:16:05 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/28 23:22:35 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/29 14:38:13 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "shape_sphere.h"
 #include "rt_typedef.h"
 #include "math.h"
@@ -38,6 +37,7 @@ void	sphere_dtor(struct s_sphere *this)
 	_shape_base_dtor(&this->base);
 }
 
+/*	// DEPRECATED and probably a little buggy as well
 double	geometric_intersect_distance(struct s_sphere *s, t_ray ray)
 {
 	t_vec	l;	// vector between origin and sphere
@@ -61,7 +61,7 @@ double	geometric_intersect_distance(struct s_sphere *s, t_ray ray)
 	else
 		result = fmax(tca - thc, tca + thc);
 	return (result);
-}
+} */
 
 // https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection.html
 static double	analytic_intersect_distance(struct s_sphere *s, t_ray ray)
@@ -71,21 +71,19 @@ static double	analytic_intersect_distance(struct s_sphere *s, t_ray ray)
 	double	c;
 
 	a = dot_product(ray.destination, ray.destination);
-	if (feq(a, 0))					// Would result in a divide by zero
-		return (INFINITY);
 	b = 2 * dot_product(ray.destination, vec_sub(ray.origin, s->base.loc));
 	c = pow(vec_length(vec_sub(ray.origin, s->base.loc)), 2) - pow(s->diameter / 2, 2);
-	return (min_pos_discriminant(a, b, c));
+	return (min_pos_quadratic_solver(a, b, c));
 }
 
 double	sphere_intersect_distance(struct s_sphere *s, t_ray ray)
 {
 	double	anal;
-	double	geom;
+//	double	geom;
 
 	anal = analytic_intersect_distance(s, ray);		// calculating distance using two methods for error checking. 
 //	geom = geometric_intersect_distance(s, ray);
-	(void)geom;
+//	(void)geom;
 //	if (anal != INFINITY && geom != INFINITY && !feq(anal, geom))
 //		printf("sphere's geometric and analytic intersect differs by %f: anal %f geom %f!\n", anal - geom, anal, geom);
 	return (anal);
