@@ -6,10 +6,11 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:32:10 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/03 11:11:24 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/03 12:38:17 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h> // for debug (vecprint)
 #include "vector.h"
 
 t_vec	vecInit(double x, double y, double z)
@@ -94,5 +95,14 @@ t_vec	unitVector(t_vec v1)
 t_vec vecOrigo(void)
 {
 	return vecInit(0, 0, 0);
+}
+
+// debug function, name is just label and newline prints newline if true
+void	vecPrint(char *name, t_vec v, int newline)
+{
+	if (newline)
+		printf(" %s x%f y%f z%f\n", name, v.x, v.y, v.z);
+	else
+		printf(" %s x%f y%f z%f ", name, v.x, v.y, v.z);
 }
 

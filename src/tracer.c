@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tracer.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/12 19:41:29 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/03 12:44:39 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	collision_test(struct s_scene *scene, t_ray ray, double length)
 	while (shape != NULL)
 	{
 		distance = intersect_distance(shape, ray);
-		if (flessthan(distance, length))
+		if (distance >= 0 && flessthan(distance, length))
 			return (1);
 		shape = shape->next;
 	}

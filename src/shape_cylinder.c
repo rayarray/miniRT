@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:43:11 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/03 12:14:41 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/03 12:56:12 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,15 +145,15 @@ t_surface_hits	cylinder_intersect_hits(struct s_cylinder *this, t_ray ray)
 	t_vec			origo;
 
 	ft_bzero(&hits, sizeof(t_surface_hits));
+	if (!infinite_cylinder_intersect(this, ray, &hits) && --hits.pass)
+		return (hits);
 	origo = this->base.loc;
 	this->base.loc = vecOrigo();
 	ray.origin = vecSub(ray.origin, origo);
-	if (!infinite_cylinder_intersect(this, ray, &hits) && --hits.pass)
-		return (hits);
 	hits.in = cylinder_clip_cap(this, ray, &hits, this->bot);
+	this->base.loc = origo;
 	if (hits.in == INFINITY)
 		return (hits);
-	this->base.loc = origo;
 	if (hits.in > hits.out)
 	{
 		hits.in = hits.out;
