@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_math.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:15:02 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/29 14:27:54 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/03 11:09:56 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,7 @@ t_vec	vec_neg(t_vec a);
 t_vec	vec_scal_mul(t_vec a, double s);
 
 double	min_pos_quadratic_solver(double a, double b, double c);
+
+t_plane_eq	plane_eq(t_point3 loc, t_vec normal);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:32:10 by rleskine          #+#    #+#             */
-/*   Updated: 2023/10/26 16:50:52 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/03 11:11:24 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,3 +91,8 @@ t_vec	unitVector(t_vec v1)
 	v1.z /= len;
 	return (v1);
 }
+t_vec vecOrigo(void)
+{
+	return vecInit(0, 0, 0);
+}
+

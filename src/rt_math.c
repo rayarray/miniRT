@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_math.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:53:18 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/29 14:29:58 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/03 11:09:49 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,4 +148,15 @@ double	min_pos_quadratic_solver(double a, double b, double c)
 			results[0] = fmax(results[1], results[2]);
 	}
 	return (results[0]);
+}
+
+t_plane_eq	plane_eq(t_point3 loc, t_vec normal)
+{
+	t_plane_eq	plane;
+
+	plane.a = normal.x;
+	plane.b = normal.y;
+	plane.c = normal.z;
+	plane.d = -(normal.x * loc.x + normal.y * loc.y + normal.z * loc.z);
+	return (plane);
 }
