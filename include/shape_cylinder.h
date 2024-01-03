@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:40:15 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/03 11:13:30 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/03 15:18:29 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ typedef struct s_surface_hits
 	int		surfout;
 	double	out;
 	int		pass;
+	double	dist;
+	int		surf;
 }	t_surface_hits;
 
 int		cylinder_ctor(struct s_cylinder *this, t_vec orientation[2],

@@ -1,0 +1,13 @@
+# A scene where the camera is looking directly at a green ball along the z axis.
+
+# Ambient lighting: type identifier 'A' | ambient lighting ratio | colors (RGB)
+# Camera: type identifier 'C' | xyz coordinates | orientation vector | FOV
+# Light: type identifier 'L' | xyz coordinates | brightness ratio | colors (RGB)
+# Sphere: type identifier 'sp' | xyz coordinates | diameter | colors (RGB)
+# Plane: type identifier | xyz coordinates of a point | normal vector | colors (RGB)
+# Cylinder: type identifer | xyz coordinates | vector of axis of cylinder | diameter | height | colors (RGB)
+
+A	0.4	255,255,255
+C	0,0,0	0,0,1	90
+L	0,4,3	0.8	255,0,0
+sp	0,0,0	3.0	0,0,128

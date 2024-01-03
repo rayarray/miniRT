@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:43:11 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/03 12:56:12 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/03 15:38:05 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	cylinder_ctor(struct s_cylinder *this, t_vec orientation[2],
 	this->axis = orientation[e_AXIS];
 	this->axis = unitVector(orientation[e_AXIS]);
 	this->center = vecAdd(this->base.loc, vecMul(this->axis, this->height / 2));
-	this->bot = plane_eq(vecInit(0, 0, 0), vec_neg(this->axis));
+	this->bot = plane_eq(vecOrigo(), vec_neg(this->axis));
 	this->top = plane_eq(vecAdd(vecOrigo(), vecMul(this->axis, this->height)), this->axis);
 	return (0);
 }
@@ -60,6 +60,7 @@ int	infinite_cylinder_intersect(struct s_cylinder *this, t_ray ray, t_surface_hi
 	double	s;
 	t_vec	dv;
 	t_vec	ov;
+	//static int counter;
 
 	ray.destination = unitVector(ray.destination);
 	rc = vecSub(ray.origin, this->base.loc);
@@ -76,6 +77,11 @@ int	infinite_cylinder_intersect(struct s_cylinder *this, t_ray ray, t_surface_hi
 	}
 	nv = unitVector(nv);
 	d = fabs(vecDot(rc, nv));
+	//if (++counter <= 10)
+	//{
+	//	vecPrint("nv", nv, 0);
+	//	printf(" d:%f\n", d);
+	//}
 	if (fleq(d, this->radius))
 	{
 		ov = vecCross(rc, this->axis);
@@ -95,7 +101,7 @@ double	cylinder_clip_cap(struct s_cylinder *this, t_ray ray, t_surface_hits *hit
 	double	dw;
 	double	t;
 
-	hit->pass++; // first pass is CYL_BOT and second pass is CYL_TOP
+	//hit->pass++; // first pass is CYL_BOT and second pass is CYL_TOP
 	dc = plane.a * ray.destination.x + plane.b * ray.destination.y
 		+ plane.c * ray.destination.z;
 	dw = plane.a * ray.origin.x + plane.b * ray.origin.y
@@ -113,7 +119,7 @@ double	cylinder_clip_cap(struct s_cylinder *this, t_ray ray, t_surface_hits *hit
 			if (fgreaterthan(t, hit->in) && flessthan(t, hit->out))
 			{
 				hit->out = t;
-				hit->surfout = hit->pass;
+				hit->surfout = hit->pass + 1;
 			}
 			if (flessthan(t, hit->in))
 				return (INFINITY);
@@ -123,13 +129,13 @@ double	cylinder_clip_cap(struct s_cylinder *this, t_ray ray, t_surface_hits *hit
 			if (fgreaterthan(t, hit->in) && flessthan(t, hit->out))
 			{
 				hit->in = t;
-				hit->surfin = hit->pass;
+				hit->surfin = hit->pass + 1;
 			}
 			if (fgreaterthan(t, hit->out))
 				return (INFINITY);
 		}
 	}
-	if (hit->pass == 1)
+	if (++hit->pass == 1)
 		return (cylinder_clip_cap(this, ray, hit, this->top));
 	else if ((hit->surfin == CYL_BOT && hit->surfout == CYL_TOP) || (hit->surfin == CYL_TOP && hit->surfout == CYL_BOT))
 		return (fmin(hit->in, hit->out));
@@ -150,15 +156,12 @@ t_surface_hits	cylinder_intersect_hits(struct s_cylinder *this, t_ray ray)
 	origo = this->base.loc;
 	this->base.loc = vecOrigo();
 	ray.origin = vecSub(ray.origin, origo);
-	hits.in = cylinder_clip_cap(this, ray, &hits, this->bot);
+	hits.dist = cylinder_clip_cap(this, ray, &hits, this->bot);
 	this->base.loc = origo;
-	if (hits.in == INFINITY)
-		return (hits);
-	if (hits.in > hits.out)
-	{
-		hits.in = hits.out;
-		hits.surfin = hits.surfout;
-	}
+	if (hits.dist == hits.in)
+		hits.surf = hits.surfin;
+	else
+		hits.surf = hits.surfout;
 	return (hits);
 }
 
@@ -170,7 +173,7 @@ double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray)
 	if (hits.pass == -1)
 		return (INFINITY);
 	else
-		return (hits.in);
+		return (hits.dist);
 }
 
 t_vec	cylinder_hit_normal(struct s_cylinder *this, t_point3 impact, int hit_side)
@@ -197,11 +200,11 @@ t_color	cylinder_intersect_color(struct s_cylinder *this, struct s_scene *scene,
 
 	(void)bounces;
 	hit = cylinder_intersect_hits(this, ray);
-	if (hit.pass == -1 || hit.in == INFINITY)
+	if (hit.pass == -1 || hit.dist == INFINITY)
 		return ((t_color){0, 0, 0, 0xFF});
-	impact = vec_add(ray.origin, vec_scal_mul(ray.destination, hit.in));
-	surface_normal = cylinder_hit_normal(this, impact, hit.surfin);
-	impact = vec_add(impact, vec_scal_mul(surface_normal, 0.00001));
+	impact = vec_add(ray.origin, vec_scal_mul(ray.destination, hit.dist));
+	surface_normal = cylinder_hit_normal(this, impact, hit.surf);
+	//impact = vec_add(impact, vec_scal_mul(surface_normal, 0.00001));
 	impact_normal = (t_ray){impact, surface_normal};
 	return (apply_shading(scene, this->base.col, impact_normal, ray));
 }
