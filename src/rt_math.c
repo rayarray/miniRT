@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:53:18 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/29 14:29:58 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/03 21:02:58 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,32 +120,84 @@ t_vec	vec_scal_mul(t_vec a, double s)
 	return (a);
 }
 
-// Returns INFINITY if no solutions are found or if all solutions are negative
-// Otherwise returns the minimum positive result.
-double	min_pos_quadratic_solver(double a, double b, double c)
+#include <stdio.h>
+/* 
+int	quadra(double a, double b, double c, double solutions[2])
+{	// For testing, can be deleted
+	double tmp;
+	double discriminant = pow(b, 2) - 4 * a * c;
+
+	if (flessthan(discriminant, 0) || feq(a, 0))
+		return 0;
+	if (feq(discriminant, 0)) {
+		solutions[0] = -b / (2 * a);
+		return 1;
+	}
+	solutions[0] = (-b - sqrt(discriminant)) / 2 * a;
+	solutions[1] = (-b + sqrt(discriminant)) / 2 * a;
+	if (fgreaterthan(solutions[0], solutions[1]))
+	{
+		tmp = solutions[0];
+		solutions[0] = solutions[1];
+		solutions[1] = tmp;
+	}
+	return 2;
+} */
+
+// Calculates solutions of a quadratic equation, stores the possible solutions
+// in results in ascending order and returns the number of solutions.
+int	quadratic_solver(double a, double b, double c, double solutions[2])
 {
-	double discriminant;
-	double results[3];
-	double q;
+	double	discriminant;
+	double	q;
+	double	tmp;
+	int		solution_count;
 	
-	results[0] = INFINITY;
-	if (feq(a, 0))
-		return (INFINITY);
+	solution_count = 0;
+//	if (feq(a, 0))
+//		return (0);
 	discriminant = pow(b, 2) - 4 * a * c;
 	if (feq(discriminant, 0))	// one solution
-		results[0] = -b / (2 * a);
-	else // two solutions
+		solutions[solution_count++] = -b / (2 * a);
+	else if (fgreaterthan(discriminant, 0)) // two solutions
 	{
 		if (fgreaterthan(b, 0))
 			q = (-b - sqrt(discriminant)) / 2;
 		else
 			q = (-b + sqrt(discriminant)) / 2;
-		results[1] = q / a;
-		results[2] = c / q;
-		if (fgreaterthan(results[1], 0) && fgreaterthan(results[2], 0))
-			results[0] = fmin(results[1], results[2]);
-		else if (fgreaterthan(results[1], 0) || fgreaterthan(results[2], 0))
-			results[0] = fmax(results[1], results[2]);
+		solutions[solution_count++] = q / a;
+		solutions[solution_count++] = c / q;
+		if (fgreaterthan(solutions[0], solutions[1]))
+		{
+			tmp = solutions[0];
+			solutions[0] = solutions[1];
+			solutions[1] = tmp;
+		}
+		if (isnan(solutions[0]) || isnan(solutions[1]))
+		{
+			printf("Fucking nan\n");
+			printf("%f %f %f\n", a, b, c);
+			printf("%f\n", solutions[1]);
+			printf("disc %f\n", discriminant);
+			getchar();
+		}
 	}
-	return (results[0]);
+
+/* 	double sols[2];
+	int p;
+	p = quadra(a, b, c, sols);
+
+	if (p != solution_count)
+		printf("solutions: %d p %d\n", solution_count, p);
+	else if (p != 0)
+	{
+		if (p == 2 && sols[1] != solutions[1])
+			printf("diff: %f %f\n", sols[1], solutions[1]);
+		if (sols[0] != solutions[0])
+			printf("diff: %f %f\n", sols[0], solutions[0]);
+	}
+	solutions[0] = sols[0];
+	solutions[1] = sols[1];
+ */
+	return (solution_count);
 }

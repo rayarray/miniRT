@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:15:02 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/29 14:27:54 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/29 23:16:20 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ t_vec	vec_neg(t_vec a);
 
 t_vec	vec_scal_mul(t_vec a, double s);
 
-double	min_pos_quadratic_solver(double a, double b, double c);
+//double	min_pos_quadratic_solver(double a, double b, double c);
+
+int	quadratic_solver(double a, double b, double c, double solutions[2]);
 
 #endif

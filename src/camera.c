@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:17:25 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/12 18:25:20 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/04 15:30:41 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ t_camera2	initCamera(t_ray center, int width, int height, double fov)
 	c.h = tan(c.h_fov / 2);
 	c.viewport_height = 2 * c.h * c.focus_dist;
 	c.viewport_width = c.viewport_height * (double)width / (double)height;
-	c.w = unitVector(c.center.destination);
+	c.w = unitVector(c.center.dir);
 	c.u = unitVector(vecCross(c.up, c.w));
 	c.v = vecCross(c.w, c.u);
 	c.viewport_u = vecMul(c.u, c.viewport_width);
 	c.viewport_v = vecMul(vecSub(vecInit(0, 0, 0), c.v), c.viewport_height);
 	c.px_delta_u = vecDiv(c.viewport_u, c.img_width);
 	c.px_delta_v = vecDiv(c.viewport_v, c.img_height);
-	c.viewport_upleft = vecSub(c.center.destination, vecMul(c.w, c.focus_dist));
+	c.viewport_upleft = vecSub(c.center.dir, vecMul(c.w, c.focus_dist));
 	c.viewport_upleft = vecSub(c.viewport_upleft, vecDiv(c.viewport_u, 2.0));
 	c.viewport_upleft = vecSub(c.viewport_upleft, vecDiv(c.viewport_v, 2.0));
 	c.pixel00_loc = vecAdd(c.viewport_upleft,
@@ -65,8 +65,8 @@ t_ray	getRay(t_camera2 c, int i, int j)
 {
 	t_ray	ray;
 
-	ray.destination = vecAdd(c.pixel00_loc,
+	ray.dir = vecAdd(c.pixel00_loc,
 			vecAdd(vecMul(c.px_delta_u, i), vecMul(c.px_delta_v, j)));
-	ray.origin = c.center.origin;
+	ray.loc = c.center.loc;
 	return (ray);
 }

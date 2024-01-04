@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 23:55:46 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/12 11:23:31 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/04 14:43:46 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	render(struct s_scene *scene, mlx_image_t *image)
 	uint32_t	y;
 	t_color		col;
 
-	camray.destination = scene->camera->dir;
-	camray.origin = scene->camera->loc;
+	camray.dir = scene->camera->dir;
+	camray.loc = scene->camera->loc;
 	camera = initCamera(camray, image->width, image->height,
 			(M_PI * scene->camera->fov) / 180);
 	y = 0 - 1;
@@ -44,7 +44,7 @@ void	render(struct s_scene *scene, mlx_image_t *image)
 		while (++x < image->width)
 		{
 			camray = getRay(camera, x, y);
-			camray.destination = vecAdd(camray.destination, scene->camera->dir);
+			camray.dir = unitVector(vecAdd(camray.dir, scene->camera->dir));
 			col = cast_ray(scene, camray, camera.max_depth);
 			mlx_put_pixel(image, x, y, coltouint32_t(col));
 		}

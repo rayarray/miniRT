@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/12 19:41:29 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/30 01:24:46 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static t_vec	pixel_to_camera_ray(int fov, uint32_t width, uint32_t height,
 	return (vec_normalize(camera_point));
 } */
 
+#include <stdio.h>
 // Tests if a given ray intersects with any shape along the ray within length.
 int	collision_test(struct s_scene *scene, t_ray ray, double length)
 {

@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:28:07 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/28 20:05:53 by tsankola         ###   ########.fr       */
+/*   Updated: 2023/12/31 15:23:10 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 # define SHAPE_CONE_H
 # include "shape.h"
 # include "rt_typedef.h"
+
+typedef enum e_cone_ray_position
+{
+	e_INSIDE_CONE,
+	e_OVER_CONE,
+	e_BESIDE_CONE,
+	e_UNDER_CONE
+}	t_cone_ray_position;
 
 typedef enum e_cone_dimension_index
 {

@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:16:05 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/29 14:38:13 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/04 14:43:46 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,17 +63,26 @@ double	geometric_intersect_distance(struct s_sphere *s, t_ray ray)
 	return (result);
 } */
 
+#include <stdio.h>
 // https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection.html
 static double	analytic_intersect_distance(struct s_sphere *s, t_ray ray)
 {
 	double	a;
 	double	b;
 	double	c;
+	double	intersects[2];
 
-	a = dot_product(ray.destination, ray.destination);
-	b = 2 * dot_product(ray.destination, vec_sub(ray.origin, s->base.loc));
-	c = pow(vec_length(vec_sub(ray.origin, s->base.loc)), 2) - pow(s->diameter / 2, 2);
-	return (min_pos_quadratic_solver(a, b, c));
+	a = dot_product(ray.dir, ray.dir);
+	b = 2 * dot_product(ray.dir, vec_sub(ray.loc, s->base.loc));
+	c = pow(vec_length(vec_sub(ray.loc, s->base.loc)), 2) - pow(s->diameter / 2, 2);
+	if (quadratic_solver(a, b, c, intersects))
+	{
+		if (fgreaterthan(intersects[0], 0))
+			return (intersects[0]);
+		if (fgreaterthan(intersects[1], 0))
+			return (intersects[1]);
+	}
+	return (INFINITY);
 }
 
 double	sphere_intersect_distance(struct s_sphere *s, t_ray ray)
@@ -101,13 +110,14 @@ t_color	sphere_intersect_color(struct s_sphere *s, struct s_scene *scene,
 	dist = sphere_intersect_distance(s, ray);
 	if (dist == INFINITY)
 		return ((t_color){0, 0, 0, 0xFF});
-	impact = vec_add(ray.origin, vec_scal_mul(ray.destination, dist));
+	impact = vec_add(ray.loc, vec_scal_mul(ray.dir, dist));
 	surface_normal = vec_normalize(vec_sub(impact, s->base.loc));
-	if (fgreaterthan(dot_product(ray.destination, surface_normal), 0))
-	{
+/* 	printf("impa %f %f %f\n", impact.x, impact.y, impact.z);
+	printf("norma %f %f %f\n", surface_normal.x, surface_normal.y, surface_normal.z);
+	getchar(); */
+	if (fgreaterthan(dot_product(ray.dir, surface_normal), 0))
 		surface_normal = vec_neg(surface_normal);
-		impact = vec_add(impact, vec_scal_mul(surface_normal, 0.00001));
-	}
+	impact = vec_add(impact, vec_scal_mul(surface_normal, 0.00001));
 	impact_normal = (t_ray){impact, surface_normal};
 	return (apply_shading(scene, s->base.col, impact_normal, ray));
 }
