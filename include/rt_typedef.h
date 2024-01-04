@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:45:14 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/03 11:10:35 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/04 10:38:19 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ typedef struct s_point2
 
 typedef struct s_ray
 {
-	t_point3	origin;
-	t_vec		destination;
+	t_point3	loc;
+	t_vec		dir;
 }	t_ray;
 
 typedef struct s_pixel

@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:43:11 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/03 15:38:05 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/04 10:45:09 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ int	infinite_cylinder_intersect(struct s_cylinder *this, t_ray ray, t_surface_hi
 	t_vec	ov;
 	//static int counter;
 
-	ray.destination = unitVector(ray.destination);
-	rc = vecSub(ray.origin, this->base.loc);
-	nv = vecCross(ray.destination, this->axis);
+	ray.dir = unitVector(ray.dir);
+	rc = vecSub(ray.loc, this->base.loc);
+	nv = vecCross(ray.dir, this->axis);
 	ln = vecLength(nv);
 	if (feq(ln, 0.0))
 	{
@@ -87,7 +87,7 @@ int	infinite_cylinder_intersect(struct s_cylinder *this, t_ray ray, t_surface_hi
 		ov = vecCross(rc, this->axis);
 		t = -vecDot(ov, nv) / ln;
 		ov = unitVector(vecCross(nv, this->axis));
-		s = fabs(sqrt(this->rad2 - d * d) / vecDot(ray.destination, ov));
+		s = fabs(sqrt(this->rad2 - d * d) / vecDot(ray.dir, ov));
 		hit->in = t - s;
 		hit->out = t + s;
 		return (1);
@@ -102,10 +102,10 @@ double	cylinder_clip_cap(struct s_cylinder *this, t_ray ray, t_surface_hits *hit
 	double	t;
 
 	//hit->pass++; // first pass is CYL_BOT and second pass is CYL_TOP
-	dc = plane.a * ray.destination.x + plane.b * ray.destination.y
-		+ plane.c * ray.destination.z;
-	dw = plane.a * ray.origin.x + plane.b * ray.origin.y
-		+ plane.c * ray.origin.z + plane.d;
+	dc = plane.a * ray.dir.x + plane.b * ray.dir.y
+		+ plane.c * ray.dir.z;
+	dw = plane.a * ray.loc.x + plane.b * ray.loc.y
+		+ plane.c * ray.loc.z + plane.d;
 	if (feq(dc, 0.0)) // parallel to bottom
 	{
 		if (fgeq(dw, 0.0))
@@ -155,7 +155,7 @@ t_surface_hits	cylinder_intersect_hits(struct s_cylinder *this, t_ray ray)
 		return (hits);
 	origo = this->base.loc;
 	this->base.loc = vecOrigo();
-	ray.origin = vecSub(ray.origin, origo);
+	ray.loc = vecSub(ray.loc, origo);
 	hits.dist = cylinder_clip_cap(this, ray, &hits, this->bot);
 	this->base.loc = origo;
 	if (hits.dist == hits.in)
@@ -202,7 +202,7 @@ t_color	cylinder_intersect_color(struct s_cylinder *this, struct s_scene *scene,
 	hit = cylinder_intersect_hits(this, ray);
 	if (hit.pass == -1 || hit.dist == INFINITY)
 		return ((t_color){0, 0, 0, 0xFF});
-	impact = vec_add(ray.origin, vec_scal_mul(ray.destination, hit.dist));
+	impact = vec_add(ray.loc, vec_scal_mul(ray.dir, hit.dist));
 	surface_normal = cylinder_hit_normal(this, impact, hit.surf);
 	//impact = vec_add(impact, vec_scal_mul(surface_normal, 0.00001));
 	impact_normal = (t_ray){impact, surface_normal};

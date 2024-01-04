@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/03 12:44:39 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/04 10:45:09 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ t_color	trace_ray(struct s_scene *scene, uint32_t width, uint32_t height,
 
 	camera_point = pixel_to_camera_ray(scene->camera->fov, width, height, pixel_point);
 	// TODO rotate camera point to camera direction using rotation matrix
-	ray.origin = scene->camera->loc;
-	ray.destination = camera_point;
+	ray.loc = scene->camera->loc;
+	ray.dir = camera_point;
 	col = cast_ray(scene, ray, BOUNCE_LIMIT);
 	return (col);
 } */
