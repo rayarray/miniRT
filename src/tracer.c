@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/05 12:36:18 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/05 16:23:32 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ int	collision_test(struct s_scene *scene, t_ray ray, double length)
 		shape->cam_inside = within_shape(shape, ray.loc);
 		distance = intersect_distance(shape, ray);
 		shape->cam_inside = cam_inside;
-		if (fgeq(distance, 0) && flessthan(distance, length))
+		if (fgeq(distance, -0.0001) && flessthan(distance, length))
 			return (1);
 		shape = shape->next;
 	}
-	vecPrint("ray.loc", ray.loc, 0);
-	printf("!intersect, dist:%f\n", distance);
+	//vecPrint("ray.loc", ray.loc, 0);
+	//printf("!intersect, dist:%f\n", distance);
 	return (0);
 }
 
