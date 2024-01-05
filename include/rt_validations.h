@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 17:49:28 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/13 16:17:45 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/04 19:57:41 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	is_double(const char *s);
 int	is_int(const char *s);
 int	is_byte(const char *s);
 int	is_double_triplet_strict(const char *s);
-int	is_int_triplet_strict(const char *s);	// deprecated
 int	is_byte_triplet_strict(const char *s);
 
 // Checks that the components in the given vector are within [-1.0, 1,0] range

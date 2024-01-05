@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:18:59 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/12 12:00:02 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/04 19:57:34 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ struct s_scene
 {
 	struct s_camera				*camera;
 	struct s_ambient_lighting	*ambient;
-	struct s_light				*lights;	// Linked list, bonus feature
+	struct s_light				*lights;
 	struct s_shape				*shapes;
 };
 

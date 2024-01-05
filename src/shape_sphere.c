@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:16:05 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/04 14:43:46 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/05 01:34:21 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,35 +37,8 @@ void	sphere_dtor(struct s_sphere *this)
 	_shape_base_dtor(&this->base);
 }
 
-/*	// DEPRECATED and probably a little buggy as well
-double	geometric_intersect_distance(struct s_sphere *s, t_ray ray)
-{
-	t_vec	l;	// vector between origin and sphere
-	double	tca;	// distance from origin to a line s that is perpendicular between destination line and l
-	double	d;	// distance between s.loc and the line s above
-	double	thc;	// distance between line s and impact point
-	double result;
-
-	l = vec_sub(s->base.loc, ray.origin);
-	tca = dot_product(l, ray.destination);
-	if (flessthan(tca, 0))
-		return (INFINITY);
-	d = sqrt(dot_product(l, l) - pow(tca, 2));		// This sqrt could be optimized away if we let d be squared
-	if (flessthan(d, 0) || fgreaterthan(d, s->diameter / 2))	// d should always be greater than or equal to zero but I guess it's better to be safe than sorry. second comparison checks if the intersection is outside the radius
-		return (INFINITY);
-	thc = sqrt(pow(s->diameter / 2, 2) - pow(d, 2));
-	if (flessthan(tca - thc, 0) && flessthan(tca + thc, 0))
-		return (INFINITY);
-	if (fgreaterthan(tca - thc, 0) && fgreaterthan(tca + thc, 0))
-		result = fmin(tca - thc, tca + thc);
-	else
-		result = fmax(tca - thc, tca + thc);
-	return (result);
-} */
-
-#include <stdio.h>
 // https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection.html
-static double	analytic_intersect_distance(struct s_sphere *s, t_ray ray)
+double	sphere_intersect_distance(struct s_sphere *s, t_ray ray)
 {
 	double	a;
 	double	b;
@@ -85,19 +58,6 @@ static double	analytic_intersect_distance(struct s_sphere *s, t_ray ray)
 	return (INFINITY);
 }
 
-double	sphere_intersect_distance(struct s_sphere *s, t_ray ray)
-{
-	double	anal;
-//	double	geom;
-
-	anal = analytic_intersect_distance(s, ray);		// calculating distance using two methods for error checking. 
-//	geom = geometric_intersect_distance(s, ray);
-//	(void)geom;
-//	if (anal != INFINITY && geom != INFINITY && !feq(anal, geom))
-//		printf("sphere's geometric and analytic intersect differs by %f: anal %f geom %f!\n", anal - geom, anal, geom);
-	return (anal);
-}
-
 t_color	sphere_intersect_color(struct s_sphere *s, struct s_scene *scene,
 	t_ray ray, int bounces)
 {
@@ -112,12 +72,9 @@ t_color	sphere_intersect_color(struct s_sphere *s, struct s_scene *scene,
 		return ((t_color){0, 0, 0, 0xFF});
 	impact = vec_add(ray.loc, vec_scal_mul(ray.dir, dist));
 	surface_normal = vec_normalize(vec_sub(impact, s->base.loc));
-/* 	printf("impa %f %f %f\n", impact.x, impact.y, impact.z);
-	printf("norma %f %f %f\n", surface_normal.x, surface_normal.y, surface_normal.z);
-	getchar(); */
 	if (fgreaterthan(dot_product(ray.dir, surface_normal), 0))
 		surface_normal = vec_neg(surface_normal);
-	impact = vec_add(impact, vec_scal_mul(surface_normal, 0.00001));
+	impact = vec_add(impact, vec_scal_mul(surface_normal, RT_EPSILON));
 	impact_normal = (t_ray){impact, surface_normal};
 	return (apply_shading(scene, s->base.col, impact_normal, ray));
 }

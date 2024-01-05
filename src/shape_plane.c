@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:39:10 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/04 14:43:46 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/05 01:35:25 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,6 @@ t_color	plane_intersect_color(struct s_plane *p, struct s_scene *scene,
 	if (fgreaterthan(dot_product(ray.dir, p->normal), 0))
 		impact_normal.dir = vec_neg(impact_normal.dir);
 	impact_normal.loc = vec_add(impact_normal.loc, 
-		vec_scal_mul(impact_normal.dir, 0.00001));
+		vec_scal_mul(impact_normal.dir, RT_EPSILON));
 	return (apply_shading(scene, p->base.col, impact_normal, ray));
 }

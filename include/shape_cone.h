@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:28:07 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/31 15:23:10 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/05 01:49:03 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SHAPE_CONE_H
 # include "shape.h"
 # include "rt_typedef.h"
+# include "rt_math.h"
 
 typedef enum e_cone_ray_position
 {
@@ -21,7 +22,7 @@ typedef enum e_cone_ray_position
 	e_OVER_CONE,
 	e_BESIDE_CONE,
 	e_UNDER_CONE
-}	t_cone_ray_position;
+}	t_cone_ray_pos;
 
 typedef enum e_cone_dimension_index
 {
@@ -54,5 +55,10 @@ double	cone_intersect_distance(struct s_cone *this, t_ray ray);
 
 t_color	cone_intersect_color(struct s_cone *this,
 			struct s_scene *scene, t_ray ray, int bounces);
+
+// shape_cone_utils.c
+t_cone_ray_pos	get_ray_position(struct s_cone *cone, t_ray ray);
+double	cone_base_intersection(struct s_cone *cone, t_ray ray);
+double	check_hit_location(struct s_cone *this, t_ray ray, double distance);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 17:58:30 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/14 23:21:53 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/04 19:56:31 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ t_color	color_apply_light(t_color surface, t_color light, double intensity)
 t_color	color_mix(t_color c1, t_color c2)
 {
 	return ((t_color){
-		c1.r * c2.r / 255,		// Rounding errors here?
-		c1.g * c2.g / 255,
-		c1.b * c2.b / 255,
+		round(c1.r * c2.r / 255.0),
+		round(c1.g * c2.g / 255),
+		round(c1.b * c2.b / 255),
 		0xFF
 	});
 }

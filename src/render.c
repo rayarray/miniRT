@@ -6,11 +6,10 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 23:55:46 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/04 14:43:46 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/04 19:53:41 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "render.h"
 
 static uint32_t	coltouint32_t(t_color col)

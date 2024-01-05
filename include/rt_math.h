@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:15:02 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/29 23:16:20 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/05 00:21:58 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,22 @@ int		fgreaterthan(double a, double b);
 int		fleq(double a, double b);
 int		fgeq(double a, double b);
 
-double	vec_distance(t_vec a, t_vec b);
-
-double	vec_length(t_vec a);
-
-// Causes divide by zero if a is zero vector.
+// Vector functions
 t_vec	vec_normalize(t_vec a);
-
+t_vec	vec_add(t_vec a, t_vec b);
+t_vec	vec_sub(t_vec a, t_vec b);
+t_vec	vec_neg(t_vec a);
+t_vec	vec_scal_mul(t_vec a, double s);
+int		vec_eq(t_vec a, t_vec b);
+double	vec_distance(t_vec a, t_vec b);
+double	vec_length(t_vec a);
 double	dot_product(t_vec a, t_vec b);
-
 t_vec	cross_product(t_vec a, t_vec b);
 
-t_vec	vec_add(t_vec a, t_vec b);
-
-t_vec	vec_sub(t_vec a, t_vec b);
-
-t_vec	vec_neg(t_vec a);
-
-t_vec	vec_scal_mul(t_vec a, double s);
-
-//double	min_pos_quadratic_solver(double a, double b, double c);
-
-int	quadratic_solver(double a, double b, double c, double solutions[2]);
+// Calculates solutions of a quadratic equation, stores the possible solutions
+// in solutions in ascending order and returns the number of solutions.
+// Should a equal 0, a divide by zero error will follow. In that case the
+// equation is not quadratic, so perhaps this function should not be utilised.
+int		quadratic_solver(double a, double b, double c, double solutions[2]);
 
 #endif

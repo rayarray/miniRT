@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:17:25 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/04 15:30:41 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/04 18:40:12 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ t_camera2	initCamera(t_ray center, int width, int height, double fov)
 	c.img_width = width;
 	c.img_height = height;
 	c.aspect_ratio = (double)width / (double)height;
-	c.up = vecInit(0, 1, 0);
+	if (fabs(center.dir.y) == 1)
+		c.up = vecInit(0, 0, 1);
+	else
+		c.up = vecInit(0, 1, 0);
 	c.h = tan(c.h_fov / 2);
 	c.viewport_height = 2 * c.h * c.focus_dist;
 	c.viewport_width = c.viewport_height * (double)width / (double)height;
