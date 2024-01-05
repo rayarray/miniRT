@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/04 10:45:09 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/05 12:36:18 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,23 @@ static t_vec	pixel_to_camera_ray(int fov, uint32_t width, uint32_t height,
 // Tests if a given ray intersects with any shape along the ray within length.
 int	collision_test(struct s_scene *scene, t_ray ray, double length)
 {
-	struct	s_shape *shape;
-	double	distance;
+	struct s_shape	*shape;
+	double			distance;
+	int				cam_inside;
 
 	shape = scene->shapes;
 	while (shape != NULL)
 	{
+		cam_inside = shape->cam_inside;
+		shape->cam_inside = within_shape(shape, ray.loc);
 		distance = intersect_distance(shape, ray);
-		if (distance >= 0 && flessthan(distance, length))
+		shape->cam_inside = cam_inside;
+		if (fgeq(distance, 0) && flessthan(distance, length))
 			return (1);
 		shape = shape->next;
 	}
+	vecPrint("ray.loc", ray.loc, 0);
+	printf("!intersect, dist:%f\n", distance);
 	return (0);
 }
 

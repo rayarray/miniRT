@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:17:25 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/04 10:45:09 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/05 12:09:27 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,13 @@ t_camera2	initCamera(t_ray center, int width, int height, double fov)
 	return (c);
 }
 
-//returns camera ray for pixel(i, j)
-t_ray	getRay(t_camera2 c, int i, int j)
+//returns normalized camera direction vector for pixel(i, j)
+t_vec	getRay(t_camera2 c, int i, int j)
 {
-	t_ray	ray;
+	t_vec	cam_dir;
 
-	ray.dir = vecAdd(c.pixel00_loc,
+	cam_dir = vecAdd(c.pixel00_loc,
 			vecAdd(vecMul(c.px_delta_u, i), vecMul(c.px_delta_v, j)));
-	ray.loc = c.center.loc;
-	return (ray);
+	//ray.loc = c.center.loc; // unnecessary
+	return (cam_dir);
 }

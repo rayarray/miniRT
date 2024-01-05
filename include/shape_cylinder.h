@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:40:15 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/03 15:18:29 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/04 13:17:52 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ struct s_cylinder
 	double			radius;
 	double			rad2;
 	double			diameter;
-	double			dia2;
 	double			height;
 	t_plane_eq		top;
 	t_plane_eq		bot;
@@ -66,5 +65,7 @@ double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray);
 
 t_color	cylinder_intersect_color(struct s_cylinder *this,
 			struct s_scene *scene, t_ray ray, int bounces);
+
+int		cylinder_within_shape(struct s_cylinder *this, t_point3 loc);
 
 #endif

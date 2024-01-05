@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shape.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 13:07:15 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/18 16:16:53 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/04 12:41:28 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ struct s_shape_vtable
 	void	(*shape_dtor)(struct s_shape *);
 	double	(*intersect_distance)(struct s_shape *, t_ray);
 	t_color	(*intersect_color)(struct s_shape *, struct s_scene *, t_ray, int);
+	int		(*within_shape)(struct s_shape *, t_point3);
 };
 
 /*
@@ -45,6 +46,7 @@ struct s_shape
 	t_elem_type					type;
 	t_vec						loc;
 	t_color						col;
+	int							cam_inside;
 };
 
 void	shape_ctor(struct s_shape *this, t_elem_type type, t_vec loc,
@@ -61,6 +63,10 @@ double	intersect_distance(struct s_shape *this, t_ray ray);
 t_color	intersect_color(struct s_shape *this, struct s_scene *scene, t_ray ray,
 			int bounces);
 
+int		within_shape(struct s_shape *this, t_point3 loc);
+
 void	shape_list_clear(struct s_shape **shape);
+
+void	shape_list_cam_check(struct s_shape *shape, t_point3 loc);
 
 #endif

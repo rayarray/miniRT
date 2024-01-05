@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shape.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 21:36:06 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/09 20:34:47 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/04 16:29:34 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 #include "parser.h"
 #include "libft.h"
 
+#include <stdio.h> // REMOVE, DEBUG
+
 void	shape_ctor(struct s_shape *this, t_elem_type type, t_vec loc,
 	t_color col)
 {
-	static const struct s_shape_vtable	vtable = {_shape_base_dtor, NULL, NULL};
+	static const struct s_shape_vtable	vtable = {_shape_base_dtor, NULL, NULL, NULL};
 
 	this->vtptr = &vtable;
 	this->type = type;
@@ -48,6 +50,11 @@ t_color	intersect_color(struct s_shape *this, struct s_scene *scene, t_ray ray,
 	return (this->vtptr->intersect_color(this, scene, ray, bounces - 1));
 }
 
+int	within_shape(struct s_shape *this, t_point3 loc)
+{
+	return (this->vtptr->within_shape(this, loc));
+}
+
 void	shape_list_clear(struct s_shape **shape)
 {
 	struct s_shape	*this;
@@ -58,5 +65,14 @@ void	shape_list_clear(struct s_shape **shape)
 		*shape = this->next;
 		this->vtptr->shape_dtor(this);
 		free(this);
+	}
+}
+
+void	shape_list_cam_check(struct s_shape *shape, t_point3 loc)
+{
+	while (shape != NULL)
+	{
+		shape->cam_inside = shape->vtptr->within_shape(shape, loc);
+		shape = shape->next;
 	}
 }

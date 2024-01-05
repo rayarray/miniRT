@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shape_plane.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:38:11 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/09 20:33:25 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/04 11:32:28 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,7 @@ double	plane_intersect_distance(struct s_plane *this, t_ray ray);
 
 t_color	plane_intersect_color(struct s_plane *this, struct s_scene *scene,
 			t_ray ray, int bounces);
+
+int	plane_within_shape(struct s_plane *this, t_point3 loc);
 
 #endif

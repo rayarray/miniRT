@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 18:06:19 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/12 11:26:48 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/05 12:15:51 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	minirt_loop_hook(struct s_minirt *minirt)
 		render(minirt->scene, minirt->image);
 		renderdone = minirt->image->width + minirt->image->height;
 	}
+	//mlx_close_window(minirt->mlx); // draw and then close
 }
 
 void	minirt_key_hook(mlx_key_data_t keydata, struct s_minirt *minirt)

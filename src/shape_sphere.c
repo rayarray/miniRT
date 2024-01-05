@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:16:05 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/04 10:45:09 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/05 12:10:54 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	sphere_ctor(struct s_sphere *this, t_vec loc, double diameter, t_color color
 		(void (*)(struct s_shape *))sphere_dtor,
 		(double (*)(struct s_shape *, t_ray))sphere_intersect_distance,
 		(t_color (*)(struct s_shape *, struct s_scene *, t_ray, int))
-		sphere_intersect_color
+		sphere_intersect_color,
+		(int (*)(struct s_shape *, t_point3))sphere_within_shape
 	};
 
 	shape_ctor(&this->base, e_SPHERE, loc, color);
@@ -100,6 +101,7 @@ double	sphere_intersect_distance(struct s_sphere *s, t_ray ray)
 	double	anal;
 	double	geom;
 
+	//printf("sphere_intersect_distance called\n");
 	anal = analytic_intersect_distance(s, ray);		// calculating distance using two methods for error checking. 
 	geom = geometric_intersect_distance(s, ray);
 	(void)geom;
@@ -127,4 +129,9 @@ t_color	sphere_intersect_color(struct s_sphere *s, struct s_scene *scene,
 	impact = vec_add(impact, vec_scal_mul(surface_normal, 0.00001));
 	impact_normal = (t_ray){impact, surface_normal};
 	return (apply_shading(scene, s->base.col, impact_normal, ray));
+}
+
+int	sphere_within_shape(struct s_sphere *s, t_point3 loc)
+{
+	return (s->diameter >= (vecLength(vecSub(s->base.loc, loc))) * 2);
 }

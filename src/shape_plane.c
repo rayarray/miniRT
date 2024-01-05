@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:39:10 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/04 10:45:09 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/04 11:41:33 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	plane_ctor(struct s_plane *plane, t_vec point, t_vec normal, t_color color)
 		(void (*)(struct s_shape *))plane_dtor,
 		(double (*)(struct s_shape *, t_ray))plane_intersect_distance,
 		(t_color (*)(struct s_shape *, struct s_scene *, t_ray, int))
-		plane_intersect_color
+		plane_intersect_color,
+		(int (*)(struct s_shape *, t_point3))plane_within_shape
 	};
 
 	shape_ctor(&plane->base, e_PLANE, point, color);
@@ -71,4 +72,11 @@ t_color	plane_intersect_color(struct s_plane *p, struct s_scene *scene,
 	impact_normal.loc = vec_add(impact_normal.loc, 
 		vec_scal_mul(impact_normal.dir, 0.00001));
 	return (apply_shading(scene, p->base.col, impact_normal, ray));
+}
+
+int	plane_within_shape(struct s_plane *this, t_point3 loc)
+{
+	(void)this;
+	(void)loc;
+	return (0);
 }

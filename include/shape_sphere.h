@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shape_sphere.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:12:00 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/09 20:32:31 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/04 11:31:02 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,7 @@ double	sphere_intersect_distance(struct s_sphere *s, t_ray ray);
 
 t_color	sphere_intersect_color(struct s_sphere *s, struct s_scene *scene,
 			t_ray ray, int bounces);
+
+int		sphere_within_shape(struct s_sphere *s, t_point3 loc);
 
 #endif

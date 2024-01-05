@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:43:11 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/04 10:45:09 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/05 12:47:49 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "shading.h"
 
 #include <stdio.h>
+
 int	cylinder_ctor(struct s_cylinder *this, t_vec orientation[2],
 	double dimensions[2], t_color color)
 {
@@ -26,7 +27,8 @@ int	cylinder_ctor(struct s_cylinder *this, t_vec orientation[2],
 		(void (*)(struct s_shape *))cylinder_dtor,
 		(double (*)(struct s_shape *, t_ray))cylinder_intersect_distance,
 		(t_color (*)(struct s_shape *, struct s_scene *, t_ray, int))
-		cylinder_intersect_color
+		cylinder_intersect_color,
+		(int (*)(struct s_shape *, t_point3))cylinder_within_shape
 	};
 
 	shape_ctor(&this->base, e_CYLINDER, orientation[e_LOCATION], color);
@@ -101,7 +103,6 @@ double	cylinder_clip_cap(struct s_cylinder *this, t_ray ray, t_surface_hits *hit
 	double	dw;
 	double	t;
 
-	//hit->pass++; // first pass is CYL_BOT and second pass is CYL_TOP
 	dc = plane.a * ray.dir.x + plane.b * ray.dir.y
 		+ plane.c * ray.dir.z;
 	dw = plane.a * ray.loc.x + plane.b * ray.loc.y
@@ -143,6 +144,20 @@ double	cylinder_clip_cap(struct s_cylinder *this, t_ray ray, t_surface_hits *hit
 		return (hit->in);
 	else
 		return (INFINITY);
+	// else if ((hit->surfin == CYL_BOT && hit->surfout == CYL_TOP) || (hit->surfin == CYL_TOP && hit->surfout == CYL_BOT))
+	// {
+	// 	hit->dist = fmin(hit->in, hit->out);
+	// 	if (hit->dist >= 0)
+	// 		return (hit->dist);
+	// 	else
+	// 		return (fmax(hit->in, hit->out));
+	// }
+	// else if (fgeq(hit->in, 0) && hit->in < hit->out)
+	// 	return (hit->in);
+	// else if (flessthan(hit->in, 0) && fgeq(hit->out, 0))
+	// 	return (hit->out);
+	//else
+	//	return (INFINITY);
 }
 
 t_surface_hits	cylinder_intersect_hits(struct s_cylinder *this, t_ray ray)
@@ -171,7 +186,10 @@ double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray)
 
 	hits = cylinder_intersect_hits(this, ray);
 	if (hits.pass == -1)
+	{
+		//printf("cylinder_intersect_distance result:%f\n", hits.dist);
 		return (INFINITY);
+	}
 	else
 		return (hits.dist);
 }
@@ -190,6 +208,29 @@ t_vec	cylinder_hit_normal(struct s_cylinder *this, t_point3 impact, int hit_side
 	return (unitVector(vecSub(impact, pt)));
 }
 
+// https://www.flipcode.com/archives/Fast_Point-In-Cylinder_Test.shtml
+int	cylinder_within_shape(struct s_cylinder *this, t_point3 loc)
+{
+	t_vec	d;
+	t_vec	pd;
+	double	dot;
+	double	dsq;
+
+	d = vecMul(this->axis, this->height);
+	pd = vecSub(loc, this->base.loc);
+	dot = pd.x * d.x + pd.y * d.y + pd.z * d.z;
+	if (fleq(dot, 0.0) || fgreaterthan(dot, this->height * this->height))
+		return (0);
+	else
+	{
+		dsq = vecDot(pd, pd) - ((dot * dot) / (this->height * this->height));
+		if (fgreaterthan(dsq, this->rad2 * 4))
+			return (0);
+		else
+			return (1);
+	}
+}
+
 t_color	cylinder_intersect_color(struct s_cylinder *this, struct s_scene *scene,
 	t_ray ray, int bounces)
 {
@@ -204,7 +245,12 @@ t_color	cylinder_intersect_color(struct s_cylinder *this, struct s_scene *scene,
 		return ((t_color){0, 0, 0, 0xFF});
 	impact = vec_add(ray.loc, vec_scal_mul(ray.dir, hit.dist));
 	surface_normal = cylinder_hit_normal(this, impact, hit.surf);
-	//impact = vec_add(impact, vec_scal_mul(surface_normal, 0.00001));
+	if (this->base.cam_inside)
+		surface_normal = vec_neg(surface_normal);
+	if (!this->base.cam_inside)
+		printf("cam_inside:%d\n", this->base.cam_inside);
+	//impact = vec_add(impact, vec_scal_mul(surface_normal, 0.0000001));
+	impact = vec_add(impact, vec_scal_mul(surface_normal, 0.00001));
 	impact_normal = (t_ray){impact, surface_normal};
 	return (apply_shading(scene, this->base.col, impact_normal, ray));
 }

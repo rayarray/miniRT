@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 23:55:46 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/04 10:45:09 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/05 12:09:52 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,16 @@ void	render(struct s_scene *scene, mlx_image_t *image)
 	camray.loc = scene->camera->loc;
 	camera = initCamera(camray, image->width, image->height,
 			(M_PI * scene->camera->fov) / 180);
+	vecPrint("camray.loc", camray.loc, 1);
+	shape_list_cam_check(scene->shapes, camray.loc);
 	y = 0 - 1;
 	while (++y < image->height)
 	{
 		x = 0 - 1;
 		while (++x < image->width)
 		{
-			camray = getRay(camera, x, y);
-			camray.dir = vecAdd(camray.dir, scene->camera->dir);
+			camray.dir = getRay(camera, x, y);
+			camray.dir = unitVector(vecAdd(camray.dir, scene->camera->dir));
 			col = cast_ray(scene, camray, camera.max_depth);
 			mlx_put_pixel(image, x, y, coltouint32_t(col));
 		}
