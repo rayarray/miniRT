@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:30:47 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/04 19:54:10 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/06 16:46:11 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_parser_error	cone_evaluator(struct s_cone **c, char **args)
 	*c = malloc(sizeof(struct s_cone));
 	if (*c == NULL)
 		return (e_SYS_ERROR);
-	if (cone_ctor(*c, (t_vec [2]){rt_atovec(args[1]), rt_atovec(args[2])}, 
+	if (cone_ctor(*c, (t_vec [2]){rt_atovec(args[1]), rt_atovec(args[2])},
 		(double [2]){rt_atof(args[3]), rt_atof(args[4])}, rt_atocol(args[5])))
 	{
 		free(*c);
@@ -49,7 +49,7 @@ t_parser_error	cylinder_evaluator(struct s_cylinder **c, char **args)
 	*c = malloc(sizeof(struct s_cylinder));
 	if (*c == NULL)
 		return (e_SYS_ERROR);
-	if (cylinder_ctor(*c, (t_vec [2]){rt_atovec(args[1]), rt_atovec(args[2])}, 
+	if (cylinder_ctor(*c, (t_vec [2]){rt_atovec(args[1]), rt_atovec(args[2])},
 		(double [2]){rt_atof(args[3]), rt_atof(args[4])}, rt_atocol(args[5])))
 	{
 		free(*c);

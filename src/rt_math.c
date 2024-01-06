@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:53:18 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/06 03:13:26 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/06 16:44:33 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	imax(int a, int b)
 	return (b);
 }
 
-int imin(int a, int b)
+int	imin(int a, int b)
 {
 	if (b < a)
 		return (b);
@@ -146,7 +146,7 @@ int	quadratic_solver(double a, double b, double c, double solutions[2])
 	double	q;
 	double	tmp;
 	int		solution_count;
-	
+
 	solution_count = 0;
 	discriminant = b * b - 4 * a * c;
 	if (feq(b * b, 4 * a * c))

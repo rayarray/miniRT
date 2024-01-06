@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:16:05 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/06 03:41:28 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/06 16:36:24 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	sphere_dtor(struct s_sphere *s)
 	_shape_base_dtor(&s->base);
 }
 
-// https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection.html
+// https://www.scratchapixel.com/lessons/3d-basic-rendering/
+// minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection.html
 double	sphere_intersect_distance(struct s_sphere *s, t_ray ray)
 {
 	double	a;
@@ -47,7 +48,8 @@ double	sphere_intersect_distance(struct s_sphere *s, t_ray ray)
 
 	a = dot_product(ray.dir, ray.dir);
 	b = 2 * dot_product(ray.dir, vec_sub(ray.loc, s->base.loc));
-	c = pow(vec_length(vec_sub(ray.loc, s->base.loc)), 2) - pow(s->diameter / 2, 2);
+	c = pow(vec_length(vec_sub(ray.loc, s->base.loc)), 2)
+		- pow(s->diameter / 2, 2);
 	if (quadratic_solver(a, b, c, intersects))
 	{
 		if (fgreaterthan(intersects[0], 0))

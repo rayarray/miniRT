@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 14:58:59 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/13 17:51:10 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/06 16:35:19 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ int	is_ratio(double d)
 int	is_direction_vector(t_vec vec)
 {
 	return ((fleq(fabs(vec.x), 1.0) && fleq(fabs(vec.y), 1.0)
-			&& fleq(fabs(vec.z), 1.0)) && 
-			!(feq(vec.x, 0) && feq(vec.y, 0) && feq(vec.z, 0)));
+			&& fleq(fabs(vec.z), 1.0))
+		&& !(feq(vec.x, 0) && feq(vec.y, 0) && feq(vec.z, 0)));
 }

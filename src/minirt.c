@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:36:12 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/28 23:15:26 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/06 16:42:59 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ int	main(int argc, char **argv)
 	struct s_minirt	data;	
 	int				exit_code;
 
-	double d = 0.0 / 0.0;
-	(void)d;
 	data.mlx = NULL;
 	exit_code = get_scene_from_input(&data.scene, argc, argv);
 	if (exit_code == EXIT_SUCCESS)

@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:28:09 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/06 03:20:12 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/06 16:38:59 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	cone_ctor(struct s_cone *c, t_vec orientation[2],
 	c->axis = vec_normalize(orientation[e_CONE_AXIS]);
 	c->angle = atan2(c->diameter / 2, c->height);
 	c->vertex = vec_add(c->base.loc,
-		vec_scal_mul(c->axis, c->height));
+			vec_scal_mul(c->axis, c->height));
 	return (0);
 }
 
@@ -47,13 +47,13 @@ void	cone_dtor(struct s_cone *c)
 static double	test_results(struct s_cone *c, t_ray ray,
 	int results, double isects[2])
 {
-	t_cone_ray_pos pos;
-	
+	t_cone_ray_pos	pos;
+
 	pos = get_ray_position(c, ray);
 	if (pos == e_OVER_CONE)
 	{
 		if (results == 1 && fgreaterthan(isects[0], 0) && vec_eq(vec_add(
-				ray.loc, vec_scal_mul(ray.dir, isects[0])), c->vertex))
+					ray.loc, vec_scal_mul(ray.dir, isects[0])), c->vertex))
 			return (check_hit_location(c, ray, isects[0]));
 		else if (results == 2 && fgreaterthan(isects[1], 0))
 			return (check_hit_location(c, ray, isects[1]));
@@ -77,8 +77,8 @@ static double	test_results(struct s_cone *c, t_ray ray,
 // https://davidjcobb.github.io/articles/ray-cone-intersection
 double	cone_intersect_distance(struct s_cone *c, t_ray ray)
 {
- 	double	cq;	// cone ratio squared: (radius / height) ^ 2
-	t_vec	rl;			// vector from ray origin to vertex
+	double	cq;
+	t_vec	rl;
 	double	terms[3];
 	double	isects[2];
 	int		results;
@@ -88,14 +88,13 @@ double	cone_intersect_distance(struct s_cone *c, t_ray ray)
 	terms[0] = dot_product(ray.dir, ray.dir) - (cq + 1)
 		* pow(dot_product(ray.dir, vec_neg(c->axis)), 2);
 	terms[1] = 2 * ((dot_product(rl, ray.dir) - (cq + 1)
-		* dot_product(rl, vec_neg(c->axis))
-		* dot_product(ray.dir, vec_neg(c->axis))));
+				* dot_product(rl, vec_neg(c->axis))
+				* dot_product(ray.dir, vec_neg(c->axis))));
 	terms[2] = dot_product(rl, rl) - (cq + 1)
 		* pow(dot_product(rl, vec_neg(c->axis)), 2);
 	results = quadratic_solver(terms[0], terms[1], terms[2], isects);
-	if (results == 0)	// TODO fix? Should not return always because if inside cone, we might be looking downwards and need to test the base intersection
-		return (INFINITY);	// Although even in that case there should be at least one (negative) result.
-
+	if (results == 0)
+		return (INFINITY);
 	return (test_results(c, ray, results, isects));
 }
 
@@ -119,12 +118,12 @@ t_color	cone_intersect_color(struct s_cone *c, struct s_scene *scene,
 	{
 		spine_vec = vec_scal_mul(vec_neg(c->axis), 1 / cos(c->angle));
 		normal = vec_normalize(vec_sub(
-				vec_normalize(vec_sub(impact, c->vertex)), spine_vec));
+					vec_normalize(vec_sub(impact, c->vertex)), spine_vec));
 		impact_normal = (t_ray){impact, normal};
 	}
 	if (get_ray_position(c, ray) == e_INSIDE_CONE)
 		impact_normal.dir = vec_neg(impact_normal.dir);
-	impact_normal.loc = vec_add(impact_normal.loc, 
-		vec_scal_mul(impact_normal.dir, RT_EPSILON));
+	impact_normal.loc = vec_add(impact_normal.loc,
+			vec_scal_mul(impact_normal.dir, RT_EPSILON));
 	return (apply_shading(scene, c->base.col, impact_normal, ray));
 }

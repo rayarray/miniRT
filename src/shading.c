@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 21:28:54 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/04 19:50:46 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/06 16:49:42 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_color	diffuse_shading(struct s_scene *scene, t_ray impact_norm,
 			intensity = DIFFUSE_COEFFICIENT * light->brightness
 				* fmax(0, dot_product(impact_norm.dir, v_l));
 			intensity /= pow(vec_length(
-					vec_sub(light->loc, impact_norm.loc)), 2);
+						vec_sub(light->loc, impact_norm.loc)), 2);
 			color = color_apply_light(color, light->color, intensity);
 		}
 		light = light->next;
@@ -66,7 +66,7 @@ t_color	specular_reflection(struct s_scene *scene, t_ray impact_norm,
 	t_vec			v_e;
 	struct s_light	*light;
 	double			intensity;
-	
+
 	light = scene->lights;
 	v_e = vec_normalize(vec_sub(eye_ray.loc, impact_norm.loc));
 	while (light != NULL)
@@ -80,36 +80,13 @@ t_color	specular_reflection(struct s_scene *scene, t_ray impact_norm,
 			intensity = SPECULAR_COEFFICIENT * light->brightness
 				* pow(fmax(0, dot_product(v_r, v_e)), SPECULAR_POWER);
 			intensity /= pow(vec_length(
-					vec_sub(light->loc, impact_norm.loc)), 2);
+						vec_sub(light->loc, impact_norm.loc)), 2);
 			color = color_reflect_light(color, light->color, intensity);
 		}
 		light = light->next;
 	}
 	return (color);
 }
-
-/* // Needs rework, not mandatory or bonus, but nice to have.
-t_color	reflection(struct s_scene *scene, t_ray impact_norm,
-	t_ray eye_ray, t_color color, int bounces)
-{
-	t_vec			v_s;
-	t_vec			v_e;
-	struct s_shape	*shape;
-	double			intensity;
-	t_color			refl_col;
-	
-	if (bounces <= 0)
-		return color;
-	shape = scene->shapes;
-	v_e = vec_normalize(vec_sub(eye_ray.origin, impact_norm.origin));
-	v_s = vec_sub(vec_scal_mul(impact_norm.destination, 2 * dot_product(v_e, impact_norm.destination)
-		/ dot_product(impact_norm.destination, impact_norm.destination)), v_e);
-	refl_col = cast_ray(scene, (t_ray){impact_norm.origin, v_s}, bounces);
-	intensity = 0.5;	// TODO each shape should have their own reflection factor or something
-	color = color_apply_light(color, refl_col, intensity);
-	shape = shape->next;
-	return (color);
-} */
 
 t_color	apply_shading(struct s_scene *scene, t_color surface_color,
 	t_ray impact_normal, t_ray spectator_ray)

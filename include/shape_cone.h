@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:28:07 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/06 03:22:24 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/06 16:51:07 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,17 @@ struct s_cone
 	double			angle;
 };
 
-int		cone_ctor(struct s_cone *c, t_vec orientation[2],
-			double dimensions[2], t_color color);
-void	cone_dtor(struct s_cone *c);
-double	cone_intersect_distance(struct s_cone *c, t_ray ray);
-t_color	cone_intersect_color(struct s_cone *c,
-			struct s_scene *scene, t_ray ray, int bounces);
+int				cone_ctor(struct s_cone *c, t_vec orientation[2],
+					double dimensions[2], t_color color);
+void			cone_dtor(struct s_cone *c);
+double			cone_intersect_distance(struct s_cone *c, t_ray ray);
+t_color			cone_intersect_color(struct s_cone *c,
+					struct s_scene *scene, t_ray ray, int bounces);
 
 // shape_cone_utils.c
 t_cone_ray_pos	get_ray_position(struct s_cone *c, t_ray ray);
-double	cone_base_intersection(struct s_cone *c, t_ray ray);
-double	check_hit_location(struct s_cone *c, t_ray ray, double distance);
+double			cone_base_intersection(struct s_cone *c, t_ray ray);
+double			check_hit_location(struct s_cone *c, t_ray ray,
+					double distance);
 
 #endif

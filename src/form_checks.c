@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 17:02:19 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/04 19:55:26 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/06 16:42:45 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	is_byte(const char *s)
 		return (0);
 	val = ft_atoi(s);
 	if (val > 255 || val < 0)
-		return 0;
+		return (0);
 	return (len);
 }
 

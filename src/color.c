@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 17:58:30 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/04 19:56:31 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/06 16:45:28 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 #include "color.h"
 #include "rt_math.h"
 
-static t_color	color_clamped(int r, int g, int b) {
+static t_color	color_clamped(int r, int g, int b)
+{
 	double	scale;
-	int max_component;
+	int		max_component;
 
-	max_component = imax(imax(r,g),b);
-	if (max_component > 255) {
+	max_component = imax(imax(r, g), b);
+	if (max_component > 255)
+	{
 		scale = (double)max_component / 255;
 		r = round((double)r / scale);
 		g = round((double)g / scale);
@@ -49,7 +51,7 @@ t_color	color_apply_light(t_color surface, t_color light, double intensity)
 	r = surface.r + round((double)light.r * intensity);
 	g = surface.g + round((double)light.g * intensity);
 	b = surface.b + round((double)light.b * intensity);
-	return color_clamped(r,g,b);
+	return (color_clamped(r, g, b));
 }
 
 t_color	color_mix(t_color c1, t_color c2)
