@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:16:05 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/05 01:34:21 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/06 03:41:28 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "color.h"
 #include "shading.h"
 
-int	sphere_ctor(struct s_sphere *this, t_vec loc, double diameter, t_color color)
+int	sphere_ctor(struct s_sphere *s, t_vec loc, double diameter, t_color color)
 {
 	static const struct s_shape_vtable	sphere_vtable = {
 		(void (*)(struct s_shape *))sphere_dtor,
@@ -26,15 +26,15 @@ int	sphere_ctor(struct s_sphere *this, t_vec loc, double diameter, t_color color
 		sphere_intersect_color
 	};
 
-	shape_ctor(&this->base, e_SPHERE, loc, color);
-	this->base.vtptr = &sphere_vtable;
-	this->diameter = diameter;
+	shape_ctor(&s->base, e_SPHERE, loc, color);
+	s->base.vtptr = &sphere_vtable;
+	s->diameter = diameter;
 	return (0);
 }
 
-void	sphere_dtor(struct s_sphere *this)
+void	sphere_dtor(struct s_sphere *s)
 {
-	_shape_base_dtor(&this->base);
+	_shape_base_dtor(&s->base);
 }
 
 // https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection.html

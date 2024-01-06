@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:38:11 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/09 20:33:25 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/06 03:22:32 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,11 @@ struct s_plane
 	t_vec			normal;
 };
 
-int		plane_ctor(struct s_plane *plane, t_vec point, t_vec normal,
+int		plane_ctor(struct s_plane *p, t_vec point, t_vec normal,
 			t_color color);
-
-void	plane_dtor(struct s_plane *plane);
-
-double	plane_intersect_distance(struct s_plane *this, t_ray ray);
-
-t_color	plane_intersect_color(struct s_plane *this, struct s_scene *scene,
+void	plane_dtor(struct s_plane *p);
+double	plane_intersect_distance(struct s_plane *p, t_ray ray);
+t_color	plane_intersect_color(struct s_plane *p, struct s_scene *scene,
 			t_ray ray, int bounces);
 
 #endif

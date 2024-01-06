@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 23:39:10 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/05 01:35:25 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/06 03:18:39 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "shading.h"
 #include "color.h"
 
-int	plane_ctor(struct s_plane *plane, t_vec point, t_vec normal, t_color color)
+int	plane_ctor(struct s_plane *p, t_vec point, t_vec normal, t_color color)
 {
 	static const struct s_shape_vtable	vtable = {
 		(void (*)(struct s_shape *))plane_dtor,
@@ -24,29 +24,29 @@ int	plane_ctor(struct s_plane *plane, t_vec point, t_vec normal, t_color color)
 		plane_intersect_color
 	};
 
-	shape_ctor(&plane->base, e_PLANE, point, color);
-	plane->base.vtptr = &vtable;
+	shape_ctor(&p->base, e_PLANE, point, color);
+	p->base.vtptr = &vtable;
 	if (!is_direction_vector(normal))
 		return (1);
-	plane->point = point;
-	plane->normal = vec_normalize(normal);
+	p->point = point;
+	p->normal = vec_normalize(normal);
 	return (0);
 }
 
-void	plane_dtor(struct s_plane *plane)
+void	plane_dtor(struct s_plane *p)
 {
-	_shape_base_dtor(&plane->base);
+	_shape_base_dtor(&p->base);
 }
 
-double	plane_intersect_distance(struct s_plane *this, t_ray ray)
+double	plane_intersect_distance(struct s_plane *p, t_ray ray)
 {
 	double	distance;
 	double	denom;
 
 	distance = -1;
-	denom = dot_product(this->normal, ray.dir);
+	denom = dot_product(p->normal, ray.dir);
 	if (!feq(denom, 0))
-		distance = dot_product(vec_sub(this->point, ray.loc), this->normal)
+		distance = dot_product(vec_sub(p->point, ray.loc), p->normal)
 			/ denom;
 	if (flessthan(distance, 0))
 		distance = INFINITY;

@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:53:18 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/05 01:09:08 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/06 03:13:26 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,10 +148,8 @@ int	quadratic_solver(double a, double b, double c, double solutions[2])
 	int		solution_count;
 	
 	solution_count = 0;
-//	discriminant = fma(b, b, fma(-4, fma(a, c, 0), 0));
 	discriminant = b * b - 4 * a * c;
-	if (feq(pow(b, 2), 4 * a * c))
-//	if (feq(discriminant, 0))
+	if (feq(b * b, 4 * a * c))
 		solutions[solution_count++] = -b / (2 * a);
 	if (fgreaterthan(discriminant, 0))
 	{

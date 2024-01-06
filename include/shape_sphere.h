@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:12:00 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/09 20:32:31 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/06 03:22:46 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,10 @@ struct s_sphere
 	double			diameter;
 };
 
-int		sphere_ctor(struct s_sphere *this, t_vec loc, double diameter,
+int		sphere_ctor(struct s_sphere *s, t_vec loc, double diameter,
 			t_color color);
-
-void	sphere_dtor(struct s_sphere *this);
-
+void	sphere_dtor(struct s_sphere *s);
 double	sphere_intersect_distance(struct s_sphere *s, t_ray ray);
-
 t_color	sphere_intersect_color(struct s_sphere *s, struct s_scene *scene,
 			t_ray ray, int bounces);
 
