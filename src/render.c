@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 23:55:46 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/04 10:45:09 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/04 19:53:41 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "render.h"
 
 static uint32_t	coltouint32_t(t_color col)
@@ -44,7 +43,7 @@ void	render(struct s_scene *scene, mlx_image_t *image)
 		while (++x < image->width)
 		{
 			camray = getRay(camera, x, y);
-			camray.dir = vecAdd(camray.dir, scene->camera->dir);
+			camray.dir = unitVector(vecAdd(camray.dir, scene->camera->dir));
 			col = cast_ray(scene, camray, camera.max_depth);
 			mlx_put_pixel(image, x, y, coltouint32_t(col));
 		}

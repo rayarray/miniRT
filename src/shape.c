@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 21:36:06 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/09 20:34:47 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/06 16:46:36 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	shape_ctor(struct s_shape *this, t_elem_type type, t_vec loc,
 
 void	_shape_base_dtor(struct s_shape *this)
 {
-	(void)this; // Nothing to free here
+	(void)this;
 }
 
 void	shape_dtor(struct s_shape *this)

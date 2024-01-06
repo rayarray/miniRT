@@ -6,11 +6,10 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 17:56:36 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/08 15:53:58 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/04 19:54:58 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <errno.h>
 #include "light.h"
 #include "rt_validations.h"
 

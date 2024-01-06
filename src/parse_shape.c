@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:30:47 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/13 17:38:16 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/06 16:57:32 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,6 @@
 
 t_parser_error	cylinder_evaluator(struct s_cylinder **c, char **args)
 {
-//	t_vec	loc;
-//	t_vec	axis;
-//	double	diameter;
-//	double	height;
-//	t_color	color;
-
 	if (args[0] == NULL || args[1] == NULL || args[2] == NULL
 		|| args[3] == NULL || args[4] == NULL || args[5] == NULL)
 		return (e_ELEMENT_ARG_ERROR);
@@ -33,12 +27,7 @@ t_parser_error	cylinder_evaluator(struct s_cylinder **c, char **args)
 	*c = malloc(sizeof(struct s_cylinder));
 	if (*c == NULL)
 		return (e_SYS_ERROR);
-//	loc = rt_atovec(args[1]);
-//	axis = rt_atovec(args[2]);
-//	diameter = rt_atof(args[3]);
-//	height = rt_atof(args[4]);
-//	color = rt_atocol(args[5]);
-	if (cylinder_ctor(*c, (t_vec [2]){rt_atovec(args[1]), rt_atovec(args[2])}, 
+	if (cylinder_ctor(*c, (t_vec [2]){rt_atovec(args[1]), rt_atovec(args[2])},
 		(double [2]){rt_atof(args[3]), rt_atof(args[4])}, rt_atocol(args[5])))
 	{
 		free(*c);

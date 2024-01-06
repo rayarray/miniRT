@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:01:09 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/13 16:41:40 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/06 17:18:14 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ t_parser_error	light_evaluator(struct s_light **l, char **args)
 	loc = rt_atovec(args[1]);
 	brightness = rt_atof(args[2]);
 	color = (t_color){0xFF, 0xFF, 0xFF, 0xFF};
-//	color = rt_atocol(args[3]);		// bonus
 	if (light_ctor(*l, loc, brightness, color))
 	{
 		free(*l);

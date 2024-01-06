@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:55 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/12 18:25:22 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/06 17:16:48 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,6 @@
 # include "scene.h"
 
 t_color	cast_ray(struct s_scene *scene, t_ray ray, int bounces);
-
-t_color	trace_ray(struct s_scene *scene, uint32_t width, uint32_t height,
-			t_pixel	pixel_point);	// DEPRECATED
-
 int		collision_test(struct s_scene *scene, t_ray ray, double length);
 
 #endif	/* TRACER_H */
