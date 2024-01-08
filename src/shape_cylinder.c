@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:43:11 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/05 18:42:55 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/08 14:21:44 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "color.h"
 #include "shading.h"
 
+// debug includes
 #include <stdio.h>
 
 int	cylinder_ctor(struct s_cylinder *this, t_vec orientation[2],
@@ -94,17 +95,17 @@ int	infinite_cylinder_intersect(struct s_cylinder *this, t_ray ray, t_surface_hi
 		hit->out = t + s;
 		//if (hit->in < 0 && hit->out < 0)
 		//	printf("inf_cyl_intsec: both results negative! %f %f", hit->in, hit->out);
-		if (hit->in < 0)
-			hit->in = -INFINITY;
-		if (hit->out < 0)
-			hit->out = INFINITY;
+		// if (hit->in < 0)
+		// 	hit->in = -INFINITY;
+		// if (hit->out < 0)
+		// 	hit->out = INFINITY;
 		//ft_printf("int_cyl_intsec: in:%f out:%f", hit->in, hit->out);
 		return (1);
 	}
 	return (0);
 }
 
-double	cylinder_end_cap(struct s_cylinder *this, t_ray ray, t_surface_hits *hit, t_plane_eq plane)
+int	cylinder_end_cap(t_ray ray, t_surface_hits *hit, t_plane_eq plane)
 {
 	double	dc;
 	double	dw;
@@ -117,7 +118,7 @@ double	cylinder_end_cap(struct s_cylinder *this, t_ray ray, t_surface_hits *hit,
 	if (feq(dc, 0.0)) // parallel to plane
 	{
 		if (fgeq(dw, 0.0))
-			return (INFINITY);
+			return (0);
 	}
 	else
 	{
@@ -126,14 +127,15 @@ double	cylinder_end_cap(struct s_cylinder *this, t_ray ray, t_surface_hits *hit,
 		{
 			if (fgreaterthan(t, hit->in) && flessthan(t, hit->out))
 			{
-				hit-> = t;
-				hit->surfout = hit->pass + 1;
+				hit->dist = t;
+				hit->surf = hit->pass;
 			}
 			if (flessthan(t, hit->in))
-				return (INFINITY);
+				return (0);
 		}
-		return (INFINITY);
+		return (0);
 	}
+	return (1);
 }
 
 double	cylinder_clip_cap(struct s_cylinder *this, t_ray ray, t_surface_hits *hit, t_plane_eq plane)
@@ -177,10 +179,10 @@ double	cylinder_clip_cap(struct s_cylinder *this, t_ray ray, t_surface_hits *hit
 	}
 	if (++hit->pass == 1)
 		return (cylinder_clip_cap(this, ray, hit, this->top));
-	if (hit->in < 0)
-		hit->in = 0;
-	if (hit->out < 0)
-		hit->out = INFINITY;
+	//if (hit->in < 0)
+	//	hit->in = 0;
+	//if (hit->out < 0)
+	//	hit->out = INFINITY;
 	if ((hit->surfin == CYL_BOT && hit->surfout == CYL_TOP) || (hit->surfin == CYL_TOP && hit->surfout == CYL_BOT))
 		return (fmin(hit->in, hit->out));
 	else if (hit->in < hit->out)
@@ -211,15 +213,15 @@ t_surface_hits	cylinder_intersect_hits(struct s_cylinder *this, t_ray ray)
 	ft_bzero(&hits, sizeof(t_surface_hits));
 	if (!infinite_cylinder_intersect(this, ray, &hits) && --hits.pass)
 	{
-		printf("after infinite_cyl_intersect=0: in:%f out:%f\n", hits.in, hits.out);
+		//printf("after infinite_cyl_intersect=0: in:%f out:%f\n", hits.in, hits.out);
 		return (hits);
 	}
-	printf("after infinite_cyl_intersect=1: in:%f out:%f\n", hits.in, hits.out);
+	//printf("after infinite_cyl_intersect=1: in:%f out:%f\n", hits.in, hits.out);
 	origo = this->base.loc;
 	this->base.loc = vecOrigo();
 	ray.loc = vecSub(ray.loc, origo);
 	hits.dist = cylinder_clip_cap(this, ray, &hits, this->bot);
-	printf("after cyl_clip_cap: in:%f out:%f\n", hits.in, hits.out);
+	//printf("after cyl_clip_cap: in:%f out:%f\n", hits.in, hits.out);
 	this->base.loc = origo;
 	if (hits.dist == hits.in)
 		hits.surf = hits.surfin;
@@ -233,6 +235,12 @@ double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray)
 	t_surface_hits	hits;
 
 	hits = cylinder_intersect_hits(this, ray);
+	if (this->base.debug == 7357 && hits.dist != INFINITY && hits.pass != -1)
+	{
+		printf("cyl_inter_dist rval:%f\n dia:%f hght:%f\n", hits.dist, this->diameter, this->height);
+		vecPrint("loc", this->base.loc, 1);
+		vecPrint("axis", this->axis, 1);
+	}
 	if (hits.pass == -1)
 	{
 		//printf("cylinder_intersect_distance result:%f\n", hits.dist);
@@ -295,8 +303,8 @@ t_color	cylinder_intersect_color(struct s_cylinder *this, struct s_scene *scene,
 	surface_normal = cylinder_hit_normal(this, impact, hit.surf);
 	if (this->base.cam_inside)
 		surface_normal = vec_neg(surface_normal);
-	if (!this->base.cam_inside)
-		printf("cam_inside:%d\n", this->base.cam_inside);
+	//if (!this->base.cam_inside)
+	//	printf("cam_inside:%d\n", this->base.cam_inside);
 	//impact = vec_add(impact, vec_scal_mul(surface_normal, 0.0000001));
 	impact = vec_add(impact, vec_scal_mul(surface_normal, 0.00001));
 	impact_normal = (t_ray){impact, surface_normal};

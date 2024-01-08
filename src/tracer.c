@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/05 16:23:32 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/08 14:20:16 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,10 @@ t_color	cast_ray(struct s_scene *scene, t_ray ray, int bounces)
 	shape = scene->shapes;
 	while (shape != NULL)
 	{
+		if (bounces == 7357)
+			shape->debug = 7357;
 		dist = intersect_distance(shape, ray);
+		shape->debug = 0;
 		if (flessthan(dist, distance_to_nearest))
 		{
 			distance_to_nearest = dist;
@@ -88,6 +91,9 @@ t_color	cast_ray(struct s_scene *scene, t_ray ray, int bounces)
 		}
 		shape = shape->next;
 	}
+	//printf("bounces:%d\n", bounces);
+	if (closest_shape && bounces == 7357)
+		printf("cast_ray debug: dist[%f]\n", distance_to_nearest);
 	if (closest_shape)
 		col = intersect_color(closest_shape, scene, ray, bounces);
 	return (col);

@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 21:36:06 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/04 16:29:34 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/08 12:48:16 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	shape_ctor(struct s_shape *this, t_elem_type type, t_vec loc,
 {
 	static const struct s_shape_vtable	vtable = {_shape_base_dtor, NULL, NULL, NULL};
 
+	ft_bzero(this, sizeof(struct s_shape));
 	this->vtptr = &vtable;
 	this->type = type;
 	this->loc = loc;

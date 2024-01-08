@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 13:07:15 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/04 12:41:28 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/08 12:04:42 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ struct s_shape
 	t_vec						loc;
 	t_color						col;
 	int							cam_inside;
+	int							debug;
 };
 
 void	shape_ctor(struct s_shape *this, t_elem_type type, t_vec loc,

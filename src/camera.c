@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:17:25 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/05 12:09:27 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/08 10:58:07 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ t_camera2	initCamera(t_ray center, int width, int height, double fov)
 	return (c);
 }
 
-//returns normalized camera direction vector for pixel(i, j)
+//returns uv-vector for given x and y pixel. needs to be combined after with
+//camera direction vector (and normalized)
 t_vec	getRay(t_camera2 c, int i, int j)
 {
 	t_vec	cam_dir;

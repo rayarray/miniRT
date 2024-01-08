@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:32:32 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/12 00:14:57 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/08 14:03:41 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@
 # include "rt_typedef.h"
 
 void	render(struct s_scene *scene, mlx_image_t *image);
+void	debug_ray(struct s_scene *scene, mlx_image_t *image, uint32_t x, uint32_t y);
 
 #endif	/* RENDER_H */
