@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:43:11 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/08 14:21:44 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/09 15:10:54 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,20 @@ t_surface_hits	cylinder_intersect_hits(struct s_cylinder *this, t_ray ray)
 	return (hits);
 }
 
+t_vec cylinder_test(struct s_cylinder *this, t_ray ray)
+{
+	t_vec	flat;
+	double	angle;
+
+	flat = vecCross(ray.dir, this->axis);
+	angle = this->axis.x * ray.dir.x + this->axis.y * ray.dir.y + this->axis.z * ray.dir.z;
+	angle /= sqrt(pow(this->axis.x, 2.0f) + pow(this->axis.y, 2.0f) + pow(this->axis.z, 2.0f))
+		* sqrt(pow(ray.dir.x, 2.0f) + pow(ray.dir.y, 2.0f) + pow(ray.dir.z, 2.0f));
+	angle = acos(angle) * 180 / M_PI;
+	printf("angle between camray & axis: %f\n", angle);
+	return (unitVector(flat));
+}
+
 double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray)
 {
 	t_surface_hits	hits;
@@ -240,6 +254,9 @@ double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray)
 		printf("cyl_inter_dist rval:%f\n dia:%f hght:%f\n", hits.dist, this->diameter, this->height);
 		vecPrint("loc", this->base.loc, 1);
 		vecPrint("axis", this->axis, 1);
+		//printf("cyl_test: %f\n", cylinder_test(this, ray));
+		//vecPrint("")
+		vecPrint("cross camdir, axis:", cylinder_test(this, ray), 1);
 	}
 	if (hits.pass == -1)
 	{
@@ -297,6 +314,8 @@ t_color	cylinder_intersect_color(struct s_cylinder *this, struct s_scene *scene,
 
 	(void)bounces;
 	hit = cylinder_intersect_hits(this, ray);
+	if (bounces > 7000)
+		printf("cyl_int_col: in[%d:%f] out[%d:%f]\n", hit.surfin, hit.in, hit.surfout, hit.out);
 	if (hit.pass == -1 || hit.dist == INFINITY)
 		return ((t_color){0, 0, 0, 0xFF});
 	impact = vec_add(ray.loc, vec_scal_mul(ray.dir, hit.dist));

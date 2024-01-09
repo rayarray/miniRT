@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 16:36:12 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/08 14:07:47 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/09 12:45:32 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	main(int argc, char **argv)
 		mlx_loop_hook(data.mlx, (void (*)(void *))minirt_loop_hook, &data);
 		mlx_key_hook(data.mlx,
 			(void (*)(mlx_key_data_t, void *))minirt_key_hook, &data);
-		mlx_cursor_hook(data.mlx, minirt_mouse_cursor_hook, &data);
+		//mlx_cursor_hook(data.mlx, minirt_mouse_cursor_hook, &data);
 		mlx_mouse_hook(data.mlx, minirt_mouse_button_hook, &data);
 		mlx_close_hook(data.mlx, (void (*)(void *))minirt_close_hook, &data);
 		mlx_loop(data.mlx);

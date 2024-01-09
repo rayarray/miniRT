@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 18:06:19 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/08 14:48:41 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:21:25 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,23 +49,31 @@ void	minirt_close_hook(struct s_minirt *minirt)
 	mlx_close_window(minirt->mlx);
 }
 
+// calls debug_ray continuously when left mouse button is pressed
 void	minirt_mouse_cursor_hook(double x, double y, void *param)
 {
-	struct s_minirt	*data;
+	static struct s_minirt	*data;
 
-	data = param;
-	debug_ray(data->scene, data->image, x, y);
+	if (!data)
+			data = param;
+	if (mlx_is_mouse_down(data->mlx, MLX_MOUSE_BUTTON_LEFT))
+		debug_ray(data->scene, data->image, x, y);
 }
 
+// renders scene on left mouse button press (built for debugging, don't use)
 void	minirt_mouse_button_hook(enum mouse_key key, enum action action, enum modifier_key modifier, void *param)
 {
-	struct s_minirt	*data;
+	static struct s_minirt	*data;
+	int32_t	x;
+	int32_t	y;
 
 	(void)modifier;
 	if (key == MLX_MOUSE_BUTTON_LEFT && action == MLX_PRESS)
 	{
 		data = param;
-		render(data->scene, data->image);
+		mlx_get_mouse_pos(data->mlx, &x, &y);
+		debug_ray(data->scene, data->image, x, y);
+		//render(data->scene, data->image);
 	}
 }
 
