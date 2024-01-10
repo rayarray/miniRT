@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:43:11 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/09 15:10:54 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/10 12:02:40 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,7 @@ t_vec cylinder_test(struct s_cylinder *this, t_ray ray)
 		* sqrt(pow(ray.dir.x, 2.0f) + pow(ray.dir.y, 2.0f) + pow(ray.dir.z, 2.0f));
 	angle = acos(angle) * 180 / M_PI;
 	printf("angle between camray & axis: %f\n", angle);
+	
 	return (unitVector(flat));
 }
 
@@ -249,6 +250,14 @@ double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray)
 	t_surface_hits	hits;
 
 	hits = cylinder_intersect_hits(this, ray);
+	if (hits.dist < 0)
+	{
+		if (hits.dist == hits.in)
+			hits.surf = hits.surfout;
+		else
+			hits.surf = hits.surfin;
+		hits.dist = fmax(hits.in, hits.out);
+	}
 	if (this->base.debug == 7357 && hits.dist != INFINITY && hits.pass != -1)
 	{
 		printf("cyl_inter_dist rval:%f\n dia:%f hght:%f\n", hits.dist, this->diameter, this->height);
@@ -318,10 +327,14 @@ t_color	cylinder_intersect_color(struct s_cylinder *this, struct s_scene *scene,
 		printf("cyl_int_col: in[%d:%f] out[%d:%f]\n", hit.surfin, hit.in, hit.surfout, hit.out);
 	if (hit.pass == -1 || hit.dist == INFINITY)
 		return ((t_color){0, 0, 0, 0xFF});
+//	if (hit.dist < 0)
+//		hit.dist = fmax(hit.in, hit.out);
 	impact = vec_add(ray.loc, vec_scal_mul(ray.dir, hit.dist));
 	surface_normal = cylinder_hit_normal(this, impact, hit.surf);
 	if (this->base.cam_inside)
 		surface_normal = vec_neg(surface_normal);
+	if (bounces > 7000)
+		vecPrint("surf_norm", surface_normal, 1);
 	//if (!this->base.cam_inside)
 	//	printf("cam_inside:%d\n", this->base.cam_inside);
 	//impact = vec_add(impact, vec_scal_mul(surface_normal, 0.0000001));
