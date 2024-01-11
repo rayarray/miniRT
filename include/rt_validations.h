@@ -16,6 +16,7 @@
 # define VALID_TERMINATORS " \t"
 # include "rt_typedef.h"
 # include "rt_math.h"
+# include "vector.h"
 # include "libft.h"
 
 // Form checks. Return number of characters traversed or 0 if not a valid input.

@@ -54,7 +54,7 @@ typedef struct s_camera2 {
 }	t_camera2;
 
 int			camera_ctor(struct s_camera *c, t_point3 loc, t_vec dir, int fov);
-t_camera2	init_camera(t_ray center, int width, int height, double fov);
+t_camera2	init_camera(t_camera2 cam, int width, int height, double fov);
 t_ray		get_ray(t_camera2 c, int i, int j);
 
 #endif	/* CAMERA_H */

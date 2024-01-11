@@ -76,7 +76,6 @@ double	cylinder_clip_cap(struct s_cylinder *this, t_ray ray,
 {
 	double	dc;
 	double	dw;
-	double	t;
 
 	dc = pln.a * ray.dir.x + pln.b * ray.dir.y + pln.c * ray.dir.z;
 	dw = pln.a * ray.loc.x + pln.b * ray.loc.y + pln.c * ray.loc.z + pln.d;
@@ -84,7 +83,6 @@ double	cylinder_clip_cap(struct s_cylinder *this, t_ray ray,
 		return (INFINITY);
 	else if (!feq(dc, 0.0))
 	{
-		t = -dw / dc;
 		if (cylinder_clip_cap2(hit, dc, dw) == 0)
 			return (INFINITY);
 	}

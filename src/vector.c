@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "vector.h"
+#include "rt_math.h"
 
 t_vec	vec_normalize(t_vec a)
 {

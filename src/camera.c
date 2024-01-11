@@ -31,7 +31,13 @@ int camera_ctor(struct s_camera *c, t_point3 loc, t_vec dir, int fov)
 
 t_vec	camera_up(t_vec center)
 {
-	(void)center;
+	if (feq(center.x, 0.0) && feq(center.z, 0.0))
+	{
+		if (center.y < 0.0)
+			return ((t_vec){0, 0, 1});
+		else
+			return ((t_vec){0, 0, -1});
+	}
 	return ((t_vec){0, 1, 0});
 }
 
@@ -41,15 +47,10 @@ t_camera2	init_camera(t_camera2 cam, int width, int height, double fov)
 	cam.focus_dist = 1;
 	cam.max_depth = BOUNCE_LIMIT;
 	cam.h_fov = fov;
-	//cam.center = center;
 	cam.img_width = width;
 	cam.img_height = height;
 	cam.aspect_ratio = (double)width / (double)height;
 	cam.up = camera_up(cam.center.dir);
-	// if (fabs(center.dir.y) == 1)		// Quick fix to handle situation when looking down or up along y-axis
-	// 	cam.up = vecInit(0, 0, 1);
-	// else
-	// 	cam.up = vecInit(0, 1, 0);
 	cam.h = tan(cam.h_fov / 2);
 	cam.viewport_height = 2 * cam.h * cam.focus_dist;
 	cam.viewport_width = cam.viewport_height * (double)width / (double)height;
@@ -59,12 +60,12 @@ t_camera2	init_camera(t_camera2 cam, int width, int height, double fov)
 	cam.viewport_u = vec_scal_mul(cam.u, cam.viewport_width);
 	cam.viewport_v = vec_scal_mul(vec_sub((t_vec){0, 0, 0}, cam.v), cam.viewport_height);
 	cam.px_delta_u = vec_scal_div(cam.viewport_u, cam.img_width);
-	cam.px_delta_v = vecDiv(cam.viewport_v, cam.img_height);
-	cam.viewport_upleft = vecSub(cam.center.dir, vecMul(cam.w, cam.focus_dist));
-	cam.viewport_upleft = vecSub(cam.viewport_upleft, vecDiv(cam.viewport_u, 2.0));
-	cam.viewport_upleft = vecSub(cam.viewport_upleft, vecDiv(cam.viewport_v, 2.0));
-	cam.pixel00_loc = vecAdd(cam.viewport_upleft,
-			vecMul(vecAdd(cam.px_delta_u, cam.px_delta_v), 0.5));
+	cam.px_delta_v = vec_scal_div(cam.viewport_v, cam.img_height);
+	cam.viewport_upleft = vec_sub(cam.center.dir, vec_scal_mul(cam.w, cam.focus_dist));
+	cam.viewport_upleft = vec_sub(cam.viewport_upleft, vec_scal_div(cam.viewport_u, 2.0));
+	cam.viewport_upleft = vec_sub(cam.viewport_upleft, vec_scal_div(cam.viewport_v, 2.0));
+	cam.pixel00_loc = vec_add(cam.viewport_upleft,
+			vec_scal_mul(vec_add(cam.px_delta_u, cam.px_delta_v), 0.5));
 	return (cam);
 }
 
