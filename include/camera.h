@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:06:28 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/11 15:13:35 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/11 15:29:47 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,17 @@ typedef struct s_camera
 {
 	t_point3	loc;
 	t_vec		dir;
-	int			fov;			// perhaps fov could be saved as radians?
+	int			fov;			// degrees
 }	t_camera;
 
-// samples_per_px: random samples per pixel
 // max_depth: maximum number of ray bounces
 typedef struct s_camera2
 {
 	double	aspect_ratio;
 	int		img_width;
 	int		img_height;
-	int		samples_per_px;	// not used currently
-	int		max_depth;		// not used currently
+	double	focus_dist;
+	int		max_depth;		// ray bounces
 	double	h_fov;			// radians!
 	t_vec	look_from;
 	t_vec	look_at;
