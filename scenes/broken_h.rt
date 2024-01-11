@@ -1,0 +1,8 @@
+# Ambient lighting: type identifier | ambient lighting ratio | colors (RGB)
+A	0.2	255,26,0
+# Camera: type identifier | xyz coordinates | orientation vector | FOV
+C	0,0,0	0,0,1	70
+# Light: type identifier | xyz coordinates | brightness ratio | colors (RGB)
+L	0,00,0.0	0.100	255,255,255
+# Sphere: type identifier | xyz coordinates | diameter | colors (RGB)
+sp	0.0,0.0,2	1	210,163,113

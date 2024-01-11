@@ -4,12 +4,15 @@
 # Sphere: type identifier 'sp' | xyz coordinates | diameter | colors (RGB)
 # Plane: type identifier 'pl' | xyz coordinates of a point | normal vector | colors (RGB)
 # Cylinder: type identifer 'cy' | xyz coordinates | vector of axis of cylinder | diameter | height | colors (RGB)
-# Cone: type identifer 'co' | xyz coordinates | vector of axis of cone | diameter of base | height | colors (RGB)
 
-A 0.4 255,255,255
-C 0,0,0 0,0,1 90
-L 0,0,1	0.1	255,255,255
-co 0,0,-1 0,0,1 4.0 2.0 0,255,0
-
-0,70710678118654752440084436210485
-1,4142135623730950488016887242097
+A	0.4	255,255,255
+C	0,0.2,0	0,-1,0	180
+L	0,0,0	0.3		255,255,255
+sp	0,0,2			1.59	0,0,255
+sp	1.41,0,1.41		1.59	0,255,255
+sp	2,0,0			1.59	0,255,0
+sp	1.41,0,-1.41	1.59	255,255,0
+sp	0,0,-2			1.59	255,0,0
+sp	-1.41,0,-1.41	1.59	255,0,255
+sp	-2,0,0			1.59	255,255,255
+sp	-1.41,0,1.41	1.59	128,128,128
