@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:06:28 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/11 13:45:15 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/11 15:13:35 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 # include "MLX42.h"
 # include "rt_typedef.h"
 
-typedef struct s_camera {
+typedef struct s_camera
+{
 	t_point3	loc;
 	t_vec		dir;
 	int			fov;			// perhaps fov could be saved as radians?
@@ -23,20 +24,17 @@ typedef struct s_camera {
 
 // samples_per_px: random samples per pixel
 // max_depth: maximum number of ray bounces
-typedef struct s_camera2 {
+typedef struct s_camera2
+{
 	double	aspect_ratio;
 	int		img_width;
 	int		img_height;
 	int		samples_per_px;	// not used currently
 	int		max_depth;		// not used currently
 	double	h_fov;			// radians!
-
 	t_vec	look_from;
 	t_vec	look_at;
 	t_vec	up;
-
-	//double	defocus_angle;	// should not be necessary
-	double	focus_dist;		// dist from camera lookfrom to plane of perfect focus (used or not?)
 	t_ray	center;
 	t_vec	pixel00_loc;
 	t_vec	px_delta_u;
@@ -44,7 +42,6 @@ typedef struct s_camera2 {
 	t_vec	u;
 	t_vec	v;
 	t_vec	w;
-
 	double	h;
 	double	viewport_height;
 	double	viewport_width;
