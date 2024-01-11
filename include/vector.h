@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:32:32 by rleskine          #+#    #+#             */
-/*   Updated: 2023/11/16 17:07:20 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 13:57:48 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,17 @@
 # include <math.h>
 # include "rt_typedef.h"
 
-t_vec	vecInit(double x, double y, double z);
-t_vec	vecScalar(double i);
-t_vec	vecAdd(t_vec v1, t_vec v2);
-t_vec	vecSub(t_vec v1, t_vec v2);
-t_vec	vecMul(t_vec v1, double t);
-t_vec	vecDiv(t_vec v1, double t);
-double	vecDot(t_vec v1, t_vec v2);
-t_vec	vecCross(t_vec v1, t_vec v2);
-double	vecLengthSquared(t_vec v1);
-double	vecLength(t_vec v1);
-t_vec	unitVector(t_vec v1);
+// Vector functions
+t_vec	vec_normalize(t_vec a);
+t_vec	vec_add(t_vec a, t_vec b);
+t_vec	vec_sub(t_vec a, t_vec b);
+t_vec	vec_neg(t_vec a);
+t_vec	vec_scal_mul(t_vec a, double s);
+t_vec	vec_scal_div(t_vec a, double div);
+// int		vec_eq(t_vec a, t_vec b);
+double	vec_distance(t_vec a, t_vec b);
+double	vec_length(t_vec a);
+double	dot_product(t_vec a, t_vec b);
+t_vec	cross_product(t_vec a, t_vec b);
 
 #endif	/* VECTOR_H */

@@ -6,103 +6,45 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:32:10 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/03 12:38:17 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/11 13:42:24 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h> // for debug (vecprint)
 #include "vector.h"
 
-t_vec	vecInit(double x, double y, double z)
+t_vec	vec_normalize(t_vec a)
 {
-	t_vec	v;
+	double	norm;
+	t_vec	unit_vector;
 
-	v.x = x;
-	v.y = y;
-	v.z = z;
-	return (v);
+	norm = sqrt(fma(a.x, a.x, fma(a.y, a.y, fma(a.z, a.z, 0))));
+	if (feq(norm, 0))
+		return (a);
+	unit_vector.x = a.x / norm;
+	unit_vector.y = a.y / norm;
+	unit_vector.z = a.z / norm;
+	return (unit_vector);
 }
 
-t_vec	vecScalar(double i)
+t_vec	vec_add(t_vec a, t_vec b)
 {
-	return (vecInit(i, i, i));
+	return ((t_vec){a.x + b.x, a.y + b.y, a.z + b.z});
 }
 
-t_vec	vecAdd(t_vec v1, t_vec v2)
+t_vec	vec_sub(t_vec a, t_vec b)
 {
-	v1.x += v2.x;
-	v1.y += v2.y;
-	v1.z += v2.z;
-	return (v1);
+	return ((t_vec){a.x - b.x, a.y - b.y, a.z - b.z});
 }
 
-t_vec	vecSub(t_vec v1, t_vec v2)
+t_vec	vec_neg(t_vec a)
 {
-	v1.x -= v2.x;
-	v1.y -= v2.y;
-	v1.z -= v2.z;
-	return (v1);
+	return ((t_vec){-a.x, -a.y, -a.z});
 }
 
-t_vec	vecMul(t_vec v1, double t)
+t_vec	vec_scal_mul(t_vec a, double s)
 {
-	v1.x *= t;
-	v1.y *= t;
-	v1.z *= t;
-	return (v1);
+	a.x *= s;
+	a.y *= s;
+	a.z *= s;
+	return (a);
 }
-
-t_vec	vecDiv(t_vec v1, double t)
-{
-	v1.x /= t;
-	v1.y /= t;
-	v1.z /= t;
-	return (v1);
-}
-
-double	vecDot(t_vec v1, t_vec v2)
-{
-	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
-}
-
-t_vec	vecCross(t_vec v1, t_vec v2)
-{
-	return (vecInit(v1.y * v2.z - v1.z * v2.y,
-			v1.z * v2.x - v1.x * v2.z,
-			v1.x * v2.y - v1.y * v2.x));
-}
-
-double	vecLengthSquared(t_vec v1)
-{
-	return (v1.x * v1.x + v1.y * v1.y + v1.z * v1.z);
-}
-
-double	vecLength(t_vec v1)
-{
-	return (sqrt(vecLengthSquared(v1)));
-}
-
-t_vec	unitVector(t_vec v1)
-{
-	double	len;
-
-	len = vecLength(v1);
-	v1.x /= len;
-	v1.y /= len;
-	v1.z /= len;
-	return (v1);
-}
-t_vec vecOrigo(void)
-{
-	return vecInit(0, 0, 0);
-}
-
-// debug function, name is just label and newline prints newline if true
-void	vecPrint(char *name, t_vec v, int newline)
-{
-	if (newline)
-		printf(" %s x%f y%f z%f\n", name, v.x, v.y, v.z);
-	else
-		printf(" %s x%f y%f z%f ", name, v.x, v.y, v.z);
-}
-

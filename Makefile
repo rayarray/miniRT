@@ -6,7 +6,7 @@
 #    By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 16:29:22 by rleskine          #+#    #+#              #
-#    Updated: 2024/01/11 13:25:24 by rleskine         ###   ########.fr        #
+#    Updated: 2024/01/11 13:43:07 by rleskine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRC			=	ambient_lighting.c camera.c parse_file_reader.c get_next_line.c \
 				parse_scene.c parse_shape.c parse_utilities.c rt_math.c \
 				rt_split.c scene.c shape.c shape_cylinder.c \
 				shape_plane.c shape_sphere.c tracer.c vector.c hooks.c color.c \
-				shading.c value_checks.c form_checks.c render.c rt_math_cylinder.c
+				shading.c value_checks.c form_checks.c render.c rt_math_cylinder.c \
+				vector2.h
 
 LIBS		=	libft.a libftprintf.a
 LIBDIRS		=	libft libft/libftprintf

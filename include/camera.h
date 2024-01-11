@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:06:28 by rleskine          #+#    #+#             */
-/*   Updated: 2023/12/12 11:15:19 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/11 13:45:15 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_camera2 {
 }	t_camera2;
 
 int			camera_ctor(struct s_camera *c, t_point3 loc, t_vec dir, int fov);
-t_camera2	initCamera(t_ray center, int width, int height, double fov);
-t_ray		getRay(t_camera2 c, int i, int j);
+t_camera2	init_camera(t_ray center, int width, int height, double fov);
+t_ray		get_ray(t_camera2 c, int i, int j);
 
 #endif	/* CAMERA_H */

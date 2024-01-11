@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_math.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:53:18 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/06 17:16:08 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 13:40:33 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,78 +66,6 @@ int	fleq(double a, double b)
 int	fgeq(double a, double b)
 {
 	return (feq(a, b) || fgreaterthan(a, b));
-}
-
-double	vec_distance(t_vec a, t_vec b)
-{
-	double	distance;
-
-	distance = sqrt(pow(a.x - b.x, 2)
-			+ pow(a.y - b.y, 2)
-			+ pow(a.z - b.z, 2));
-	return (distance);
-}
-
-double	vec_length(t_vec a)
-{
-	return (sqrt(fma(a.x, a.x, fma(a.y, a.y, fma(a.z, a.z, 0)))));
-}
-
-int	vec_eq(t_vec a, t_vec b)
-{
-	return (feq(a.x, b.x) && feq(a.y, b.y) && feq(a.z, b.z));
-}
-
-t_vec	vec_normalize(t_vec a)
-{
-	double	norm;
-	t_vec	unit_vector;
-
-	norm = sqrt(fma(a.x, a.x, fma(a.y, a.y, fma(a.z, a.z, 0))));
-	if (feq(norm, 0))
-		return (a);
-	unit_vector.x = a.x / norm;
-	unit_vector.y = a.y / norm;
-	unit_vector.z = a.z / norm;
-	return (unit_vector);
-}
-
-double	dot_product(t_vec a, t_vec b)
-{
-	return (fma(a.x, b.x, fma(a.y, b.y, fma(a.z, b.z, 0))));
-}
-
-t_vec	cross_product(t_vec a, t_vec b)
-{
-	t_vec	normal;
-
-	normal.x = a.y * b.z - a.z * b.y;
-	normal.y = a.z * b.x - a.x * b.z;
-	normal.z = a.x * b.y - a.y * b.x;
-	return (normal);
-}
-
-t_vec	vec_add(t_vec a, t_vec b)
-{
-	return ((t_vec){a.x + b.x, a.y + b.y, a.z + b.z});
-}
-
-t_vec	vec_sub(t_vec a, t_vec b)
-{
-	return ((t_vec){a.x - b.x, a.y - b.y, a.z - b.z});
-}
-
-t_vec	vec_neg(t_vec a)
-{
-	return ((t_vec){-a.x, -a.y, -a.z});
-}
-
-t_vec	vec_scal_mul(t_vec a, double s)
-{
-	a.x *= s;
-	a.y *= s;
-	a.z *= s;
-	return (a);
 }
 
 int	quadratic_solver(double a, double b, double c, double solutions[2])
