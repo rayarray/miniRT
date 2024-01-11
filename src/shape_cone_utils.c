@@ -6,11 +6,46 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 20:19:08 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/06 16:40:07 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 16:28:03 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shape_cone.h"
+
+static int	vec_eq(t_vec a, t_vec b)
+{
+	return (feq(a.x, b.x) && feq(a.y, b.y) && feq(a.z, b.z));
+}
+
+double	test_results(struct s_cone *c, t_ray ray,
+	int results, double isects[2])
+{
+	t_cone_ray_pos	pos;
+
+	pos = get_ray_position(c, ray);
+	if (pos == e_OVER_CONE)
+	{
+		if (results == 1 && fgreaterthan(isects[0], 0) && vec_eq(vec_add(
+					ray.loc, vec_scal_mul(ray.dir, isects[0])), c->vertex))
+			return (check_hit_location(c, ray, isects[0]));
+		else if (results == 2 && fgreaterthan(isects[1], 0))
+			return (check_hit_location(c, ray, isects[1]));
+		return (INFINITY);
+	}
+	else if (pos == e_BESIDE_CONE)
+	{
+		if (fgreaterthan(isects[0], 0))
+			return (check_hit_location(c, ray, isects[0]));
+		else if (results == 2 && fgreaterthan(isects[1], 0))
+			return (check_hit_location(c, ray, isects[1]));
+		return (INFINITY);
+	}
+	if (pos == e_INSIDE_CONE && fgreaterthan(isects[0], 0))
+		return (check_hit_location(c, ray, isects[0]));
+	else if (pos == e_INSIDE_CONE && results == 2 && fgreaterthan(isects[1], 0))
+		return (check_hit_location(c, ray, isects[1]));
+	return (cone_base_intersection(c, ray));
+}
 
 t_cone_ray_pos	get_ray_position(struct s_cone *c, t_ray ray)
 {

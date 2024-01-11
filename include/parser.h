@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 17:02:32 by tsankola          #+#    #+#             */
-/*   Updated: 2023/12/18 18:07:16 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 16:22:38 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ t_parser_error	light_evaluator(struct s_light **l, char **args);
 t_parser_error	cylinder_evaluator(struct s_cylinder **c, char **args);
 t_parser_error	plane_evaluator(struct s_plane **p, char **args);
 t_parser_error	sphere_evaluator(struct s_sphere **s, char **args);
+t_parser_error	cone_evaluator(struct s_cone **c, char **args);
 t_parser_error	shape_evaluator(struct s_shape **shapes, char **args,
 					t_elem_type type);
 

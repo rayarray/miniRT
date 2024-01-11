@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tracer.h                                           :+:      :+:    :+:   */
+/*   shape_common.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 16:00:55 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/06 17:16:48 by tsankola         ###   ########.fr       */
+/*   Created: 2024/01/11 14:52:35 by tsankola          #+#    #+#             */
+/*   Updated: 2024/01/11 14:54:38 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TRACER_H
-# define TRACER_H
-# define BOUNCE_LIMIT 1
-# include "rt_typedef.h"
-# include "scene.h"
+#include "shape.h"
+#include "rt_typedef.h"
 
-t_color	cast_ray(struct s_scene *scene, t_ray ray, int bounces);
-int		collision_test(struct s_scene *scene, t_ray ray, double length);
+void	shape_dtor(struct s_shape *this)
+{
+	this->vtptr->shape_dtor(this);
+}
 
-#endif	/* TRACER_H */
+double	intersect_distance(struct s_shape *this, t_ray ray)
+{
+	return (this->vtptr->intersect_distance(this, ray));
+}
+
+t_color	intersect_color(struct s_shape *this, struct s_scene *scene, t_ray ray,
+			int bounces)
+{
+	return (this->vtptr->intersect_color(this, scene, ray, bounces - 1));
+}

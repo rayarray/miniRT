@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 21:28:54 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/06 16:49:42 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 15:49:12 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,6 @@ t_color	apply_shading(struct s_scene *scene, t_color surface_color,
 	color = apply_ambient(scene->ambient);
 	color = diffuse_shading(scene, impact_normal, color);
 	color = color_mix(surface_color, color);
-	color = specular_reflection(scene, impact_normal, spectator_ray, color);
+	(void)spectator_ray;
 	return (color);
 }

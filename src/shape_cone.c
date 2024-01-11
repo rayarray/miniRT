@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:28:09 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/06 16:38:59 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 16:28:13 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,36 +42,6 @@ int	cone_ctor(struct s_cone *c, t_vec orientation[2],
 void	cone_dtor(struct s_cone *c)
 {
 	_shape_base_dtor(&c->base);
-}
-
-static double	test_results(struct s_cone *c, t_ray ray,
-	int results, double isects[2])
-{
-	t_cone_ray_pos	pos;
-
-	pos = get_ray_position(c, ray);
-	if (pos == e_OVER_CONE)
-	{
-		if (results == 1 && fgreaterthan(isects[0], 0) && vec_eq(vec_add(
-					ray.loc, vec_scal_mul(ray.dir, isects[0])), c->vertex))
-			return (check_hit_location(c, ray, isects[0]));
-		else if (results == 2 && fgreaterthan(isects[1], 0))
-			return (check_hit_location(c, ray, isects[1]));
-		return (INFINITY);
-	}
-	else if (pos == e_BESIDE_CONE)
-	{
-		if (fgreaterthan(isects[0], 0))
-			return (check_hit_location(c, ray, isects[0]));
-		else if (results == 2 && fgreaterthan(isects[1], 0))
-			return (check_hit_location(c, ray, isects[1]));
-		return (INFINITY);
-	}
-	if (pos == e_INSIDE_CONE && fgreaterthan(isects[0], 0))
-		return (check_hit_location(c, ray, isects[0]));
-	else if (pos == e_INSIDE_CONE && results == 2 && fgreaterthan(isects[1], 0))
-		return (check_hit_location(c, ray, isects[1]));
-	return (cone_base_intersection(c, ray));
 }
 
 // https://davidjcobb.github.io/articles/ray-cone-intersection

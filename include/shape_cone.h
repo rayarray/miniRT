@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:28:07 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/06 16:51:07 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 16:27:26 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ t_color			cone_intersect_color(struct s_cone *c,
 					struct s_scene *scene, t_ray ray, int bounces);
 
 // shape_cone_utils.c
+double			test_results(struct s_cone *c, t_ray ray,
+					int results, double isects[2]);
 t_cone_ray_pos	get_ray_position(struct s_cone *c, t_ray ray);
 double			cone_base_intersection(struct s_cone *c, t_ray ray);
 double			check_hit_location(struct s_cone *c, t_ray ray,

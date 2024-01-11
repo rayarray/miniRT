@@ -6,7 +6,7 @@
 #    By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 16:29:22 by rleskine          #+#    #+#              #
-#    Updated: 2024/01/04 20:22:53 by tsankola         ###   ########.fr        #
+#    Updated: 2024/01/11 16:30:10 by tsankola         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,9 +22,10 @@ _HDR			=	ambient_lighting.h camera.h color.h get_next_line.h light.h \
 SRC			=	ambient_lighting.c camera.c parse_file_reader.c get_next_line.c \
 				get_next_line_utils.c light.c minirt.c parse_conversions.c \
 				parse_scene.c parse_shape.c parse_utilities.c rt_math.c \
-				rt_split.c scene.c shape.c shape_cylinder.c shape_cone.c \
+				rt_split.c scene.c shape.c shape_cylinder.c \
 				shape_plane.c shape_sphere.c tracer.c vector.c hooks.c color.c \
-				shading.c value_checks.c form_checks.c render.c \
+				shading.c value_checks.c form_checks.c render.c rt_math_cylinder.c \
+				vector2.c shape_common.c rt_math_comparisons.c shape_cone.c \
 				shape_cone_utils.c
 
 LIBS		=	libft.a libftprintf.a

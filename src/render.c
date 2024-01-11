@@ -34,7 +34,8 @@ void	render(struct s_scene *scene, mlx_image_t *image)
 
 	camray.dir = scene->camera->dir;
 	camray.loc = scene->camera->loc;
-	camera = initCamera(camray, image->width, image->height,
+	camera.center = camray;
+	camera = init_camera(camera, image->width, image->height,
 			(M_PI * scene->camera->fov) / 180);
 	y = 0 - 1;
 	while (++y < image->height)
@@ -42,8 +43,8 @@ void	render(struct s_scene *scene, mlx_image_t *image)
 		x = 0 - 1;
 		while (++x < image->width)
 		{
-			camray = getRay(camera, x, y);
-			camray.dir = unitVector(vecAdd(camray.dir, scene->camera->dir));
+			camray = get_ray(camera, x, y);
+			camray.dir = vec_normalize(vec_add(camray.dir, scene->camera->dir));
 			col = cast_ray(scene, camray, camera.max_depth);
 			mlx_put_pixel(image, x, y, coltouint32_t(col));
 		}

@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:45:14 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/04 14:43:46 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 16:23:56 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,13 @@ typedef struct s_pixel
 	uint32_t	x;
 	uint32_t	y;
 }	t_pixel;
+
+typedef struct s_plane_eq
+{
+	double	a;
+	double	b;
+	double	c;
+	double	d;
+}	t_plane_eq;
 
 #endif
