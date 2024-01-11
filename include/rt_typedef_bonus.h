@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_typedef.h                                       :+:      :+:    :+:   */
+/*   rt_typedef_bonus.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:45:14 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/11 16:23:56 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:23:43 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RT_TYPEDEF_H
-# define RT_TYPEDEF_H
+#ifndef RT_TYPEDEF_BONUS_H
+# define RT_TYPEDEF_BONUS_H
 # include <stdint.h>
 
 // Shapes should be between e_LIGHT and e_NAE

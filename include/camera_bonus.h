@@ -6,12 +6,12 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:06:28 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/11 18:03:15 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:23:43 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CAMERA_H
-# define CAMERA_H
+#ifndef CAMERA_BONUS_H
+# define CAMERA_BONUS_H
 # include "MLX42.h"
 # include "rt_typedef_bonus.h"
 
@@ -53,4 +53,4 @@ int			camera_ctor(struct s_camera *c, t_point3 loc, t_vec dir, int fov);
 t_camera2	init_camera(t_camera2 cam, int width, int height, double fov);
 t_ray		get_ray(t_camera2 c, int i, int j);
 
-#endif	/* CAMERA_H */
+#endif	/* CAMERA_BONUS_H */

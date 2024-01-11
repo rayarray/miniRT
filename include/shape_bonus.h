@@ -6,12 +6,12 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 13:07:15 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/11 17:49:08 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:23:43 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHAPE_H
-# define SHAPE_H
+#ifndef SHAPE_BONUS_H
+# define SHAPE_BONUS_H
 # include <stdlib.h>
 # include "rt_typedef_bonus.h"
 # include "scene_bonus.h"

@@ -6,12 +6,12 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 21:31:29 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/11 17:49:08 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:23:43 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHADING_H
-# define SHADING_H
+#ifndef SHADING_BONUS_H
+# define SHADING_BONUS_H
 # define DIFFUSE_COEFFICIENT 4.0
 # define SPECULAR_COEFFICIENT 8.0
 # define SPECULAR_POWER 16.0
@@ -34,4 +34,4 @@ t_color	specular_reflection(struct s_scene *scene, t_ray impact_normal,
 t_color	apply_shading(struct s_scene *scene, t_color surface_color,
 			t_ray impact_normal, t_ray spectator_ray);
 
-#endif /* SHADING_H */
+#endif /* SHADING_BONUS_H */

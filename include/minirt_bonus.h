@@ -6,12 +6,12 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:02:44 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/11 18:03:14 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:27:02 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#ifndef MINIRT_BONUS_H
+# define MINIRT_BONUS_H
 # define TITLE "miniRT"
 # define WIDTH	800
 # define HEIGHT	512

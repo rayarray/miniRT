@@ -6,12 +6,12 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:40:15 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/11 17:49:08 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:26:27 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHAPE_CYLINDER_H
-# define SHAPE_CYLINDER_H
+#ifndef SHAPE_CYLINDER_BONUS_H
+# define SHAPE_CYLINDER_BONUS_H
 # include "rt_typedef_bonus.h"
 # include "shape_bonus.h"
 

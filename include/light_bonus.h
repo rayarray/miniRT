@@ -6,12 +6,12 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 13:10:48 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/11 17:49:08 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:23:43 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIGHT_H
-# define LIGHT_H
+#ifndef LIGHT_BONUS_H
+# define LIGHT_BONUS_H
 # include "rt_typedef_bonus.h"
 
 struct s_light

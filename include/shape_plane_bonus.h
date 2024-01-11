@@ -6,12 +6,12 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:38:11 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/11 17:49:08 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:23:43 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHAPE_PLANE_H
-# define SHAPE_PLANE_H
+#ifndef SHAPE_PLANE_BONUS_H
+# define SHAPE_PLANE_BONUS_H
 # include "rt_typedef_bonus.h"
 # include "shape_bonus.h"
 

@@ -6,12 +6,12 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 13:09:16 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/11 17:49:08 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:23:43 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef AMBIENT_LIGHTING_H
-# define AMBIENT_LIGHTING_H
+#ifndef AMBIENT_LIGHTING_BONUS_H
+# define AMBIENT_LIGHTING_BONUS_H
 # include "rt_typedef_bonus.h"
 
 struct s_ambient_lighting

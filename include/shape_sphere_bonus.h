@@ -6,12 +6,12 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:12:00 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/11 17:49:08 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:23:43 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHAPE_SPHERE_H
-# define SHAPE_SPHERE_H
+#ifndef SHAPE_SPHERE_BONUS_H
+# define SHAPE_SPHERE_BONUS_H
 # include "shape_bonus.h"
 # include "rt_typedef_bonus.h"
 

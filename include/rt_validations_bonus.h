@@ -6,12 +6,12 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 17:49:28 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/11 18:01:40 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:23:43 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RT_VALIDATIONS_H
-# define RT_VALIDATIONS_H
+#ifndef RT_VALIDATIONS_BONUS_H
+# define RT_VALIDATIONS_BONUS_H
 # define TRIPLET_DELIM ','
 # define VALID_TERMINATORS " \t"
 # include "rt_typedef_bonus.h"

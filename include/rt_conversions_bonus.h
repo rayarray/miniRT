@@ -6,12 +6,12 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 19:55:32 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/11 18:01:40 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:23:43 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RT_CONVERSIONS_H
-# define RT_CONVERSIONS_H
+#ifndef RT_CONVERSIONS_BONUS_H
+# define RT_CONVERSIONS_BONUS_H
 # include "libft.h"
 # include "parser_bonus.h"
 # include "rt_math_bonus.h"

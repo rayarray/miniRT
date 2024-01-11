@@ -6,12 +6,12 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 18:15:02 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/11 17:49:08 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:23:43 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RT_MATH_H
-# define RT_MATH_H
+#ifndef RT_MATH_BONUS_H
+# define RT_MATH_BONUS_H
 # define RT_EPSILON 0.0000001
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846

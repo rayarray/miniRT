@@ -6,12 +6,12 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:32:32 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/11 17:49:08 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:23:43 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VECTOR_H
-# define VECTOR_H
+#ifndef VECTOR_BONUS_H
+# define VECTOR_BONUS_H
 # include <math.h>
 # include "rt_typedef_bonus.h"
 
@@ -28,4 +28,4 @@ double	vec_length(t_vec a);
 double	dot_product(t_vec a, t_vec b);
 t_vec	cross_product(t_vec a, t_vec b);
 
-#endif	/* VECTOR_H */
+#endif	/* VECTOR_BONUS_H */

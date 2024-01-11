@@ -6,12 +6,12 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:28:07 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/11 17:49:08 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:26:35 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHAPE_CONE_H
-# define SHAPE_CONE_H
+#ifndef SHAPE_CONE_BONUS_H
+# define SHAPE_CONE_BONUS_H
 # include "shape_bonus.h"
 # include "rt_typedef_bonus.h"
 # include "rt_math_bonus.h"
