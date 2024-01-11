@@ -6,7 +6,7 @@
 /*   By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:40:15 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/11 10:52:31 by rleskine         ###   ########.fr       */
+/*   Updated: 2024/01/11 13:28:02 by rleskine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,26 @@ typedef struct s_cylinder_products
 	double	s;
 }	t_cylinder_products;
 
-int		cylinder_ctor(struct s_cylinder *this, t_vec orientation[2],
-			double dimensions[2], t_color color);
+int				cylinder_ctor(struct s_cylinder *this, t_vec orientation[2],
+					double dimensions[2], t_color color);
 
-void	cylinder_dtor(struct s_cylinder *this);
+void			cylinder_dtor(struct s_cylinder *this);
 
-double	cylinder_intersect_distance(struct s_cylinder *this, t_ray ray);
+double			cylinder_intersect_distance(struct s_cylinder *this, t_ray ray);
 
-t_color	cylinder_intersect_color(struct s_cylinder *this,
-			struct s_scene *scene, t_ray ray, int bounces);
+t_color			cylinder_intersect_color(struct s_cylinder *this,
+					struct s_scene *scene, t_ray ray, int bounces);
+
+int				infinite_cylinder_intersect(struct s_cylinder *this, t_ray ray,
+					t_surface_hits *hit, t_cylinder_products var);
+
+int				cylinder_clip_cap2(t_surface_hits *hit, double dc, double dw);
+
+double			cylinder_clip_cap(struct s_cylinder *this, t_ray ray,
+					t_surface_hits *hit, t_plane_eq pln);
+
+t_surface_hits	cylinder_intersect_hits(struct s_cylinder *this, t_ray ray);
+
+int				cylinder_within_shape(struct s_cylinder *this, t_point3 loc);
 
 #endif
