@@ -1,0 +1,13 @@
+# Ambient lighting: type identifier 'A' | ambient lighting ratio | colors (RGB)
+# Camera: type identifier 'C' | xyz coordinates | orientation vector | FOV
+# Light: type identifier 'L' | xyz coordinates | brightness ratio | colors (RGB)
+# Sphere: type identifier 'sp' | xyz coordinates | diameter | colors (RGB)
+# Plane: type identifier 'pl' | xyz coordinates of a point | normal vector | colors (RGB)
+# Cylinder: type identifer 'cy' | xyz coordinates | vector of axis of cylinder | diameter | height | colors (RGB)
+
+A 0.4 255,255,255
+#L 0,2,-2 1 255,255,255
+L 0,0,0.5 1
+C 0,0,0 0,0,1 60
+cy 0,0,-1 0,1,0 3 2 32,255,32
+sp -1,0,0 0.4 32,255,32
