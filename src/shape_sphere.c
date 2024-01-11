@@ -6,13 +6,13 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 19:16:05 by tsankola          #+#    #+#             */
-/*   Updated: 2024/01/06 16:36:24 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:11:48 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
 #include "shape_sphere.h"
 #include "rt_typedef.h"
-#include "math.h"
 #include "rt_math.h"
 #include "color.h"
 #include "shading.h"
