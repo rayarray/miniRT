@@ -6,7 +6,7 @@
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 16:00:39 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/06 17:09:47 by tsankola         ###   ########.fr       */
+/*   Updated: 2024/01/11 15:50:00 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@
 // Tests if a given ray intersects with any shape along the ray within length.
 int	collision_test(struct s_scene *scene, t_ray ray, double length)
 {
-	struct	s_shape *shape;
-	double	distance;
+	struct s_shape	*shape;
+	double			distance;
 
 	shape = scene->shapes;
 	while (shape != NULL)
 	{
 		distance = intersect_distance(shape, ray);
-		if (distance >= 0 && flessthan(distance, length))	// I think the distance check here could produce an error (if less than 0) because in that case intersect_distance behaves badly. -Tommi
+		if (flessthan(distance, length))
 			return (1);
 		shape = shape->next;
 	}
