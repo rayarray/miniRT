@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   render_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 16:36:13 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/11 18:01:40 by tsankola         ###   ########.fr       */
+/*   Created: 2023/10/25 13:32:32 by rleskine          #+#    #+#             */
+/*   Updated: 2024/01/11 18:03:14 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "libft.h"
+#ifndef RENDER_H
+# define RENDER_H
+# include <math.h>
+# include "MLX42.h"
+# include "color_bonus.h"
+# include "camera_bonus.h"
+# include "scene_bonus.h"
+# include "tracer_bonus.h"
+# include "rt_typedef_bonus.h"
 
-void	ft_putstr_fd(char *s, int fd)
-{
-	if (s == NULL)
-		return ;
-	write(fd, s, ft_strlen(s));
-}
+void	render(struct s_scene *scene, mlx_image_t *image);
+
+#endif	/* RENDER_H */

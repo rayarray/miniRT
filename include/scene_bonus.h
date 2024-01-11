@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   scene_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 16:36:13 by rleskine          #+#    #+#             */
+/*   Created: 2023/10/26 16:18:59 by rleskine          #+#    #+#             */
 /*   Updated: 2024/01/11 18:01:40 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "libft.h"
+#ifndef SCENE_H
+# define SCENE_H
+# include "libft.h"
+# include "shape_bonus.h"
+# include "vector_bonus.h"
+# include "camera_bonus.h"
+# include "ambient_lighting_bonus.h"
+# include "light_bonus.h"
 
-void	ft_putstr_fd(char *s, int fd)
+struct s_scene
 {
-	if (s == NULL)
-		return ;
-	write(fd, s, ft_strlen(s));
-}
+	struct s_camera				*camera;
+	struct s_ambient_lighting	*ambient;
+	struct s_light				*lights;
+	struct s_shape				*shapes;
+};
+
+struct s_scene	*new_scene(void);
+void			scene_dtor(struct s_scene **scene);
+
+#endif	/* SCENE_H */

@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   light_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 16:36:13 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/11 18:01:40 by tsankola         ###   ########.fr       */
+/*   Created: 2023/10/14 13:10:48 by tsankola          #+#    #+#             */
+/*   Updated: 2024/01/11 17:49:08 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "libft.h"
+#ifndef LIGHT_H
+# define LIGHT_H
+# include "rt_typedef_bonus.h"
 
-void	ft_putstr_fd(char *s, int fd)
+struct s_light
 {
-	if (s == NULL)
-		return ;
-	write(fd, s, ft_strlen(s));
-}
+	struct s_light	*next;
+	t_vec			loc;
+	double			brightness;
+	t_color			color;
+};
+
+int		light_ctor(struct s_light *l, t_vec pos, double brightness, t_color c);
+
+void	light_dtor(struct s_light **l);
+
+#endif

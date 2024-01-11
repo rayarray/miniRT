@@ -1,21 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   shape_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 16:36:13 by rleskine          #+#    #+#             */
+/*   Created: 2023/11/08 21:36:06 by tsankola          #+#    #+#             */
 /*   Updated: 2024/01/11 18:01:40 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include <stdlib.h>
+#include "shape_bonus.h"
+#include "parser_bonus.h"
 #include "libft.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	shape_ctor(struct s_shape *this, t_elem_type type, t_vec loc,
+	t_color col)
 {
-	if (s == NULL)
-		return ;
-	write(fd, s, ft_strlen(s));
+	static const struct s_shape_vtable	vtable = {_shape_base_dtor, NULL, NULL};
+
+	this->vtptr = &vtable;
+	this->type = type;
+	this->loc = loc;
+	this->col = col;
+	this->next = NULL;
+}
+
+void	_shape_base_dtor(struct s_shape *this)
+{
+	(void)this;
+}
+
+void	shape_list_clear(struct s_shape **shape)
+{
+	struct s_shape	*this;
+
+	while (*shape != NULL)
+	{
+		this = *shape;
+		*shape = this->next;
+		this->vtptr->shape_dtor(this);
+		free(this);
+	}
 }

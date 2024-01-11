@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ambient_lighting_bonus.h                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 16:36:13 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/11 18:01:40 by tsankola         ###   ########.fr       */
+/*   Created: 2023/10/14 13:09:16 by tsankola          #+#    #+#             */
+/*   Updated: 2024/01/11 17:49:08 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "libft.h"
+#ifndef AMBIENT_LIGHTING_H
+# define AMBIENT_LIGHTING_H
+# include "rt_typedef_bonus.h"
 
-void	ft_putstr_fd(char *s, int fd)
+struct s_ambient_lighting
 {
-	if (s == NULL)
-		return ;
-	write(fd, s, ft_strlen(s));
-}
+	double	light_ratio;
+	t_color	color;
+};
+
+int	ambient_lighting_ctor(struct s_ambient_lighting *a_lt,
+		double lighting_ratio, t_color color);
+
+#endif

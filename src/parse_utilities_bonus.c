@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   parse_utilities_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 16:36:13 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/11 18:01:40 by tsankola         ###   ########.fr       */
+/*   Created: 2023/10/12 21:00:37 by tsankola          #+#    #+#             */
+/*   Updated: 2024/01/11 17:49:08 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "libft.h"
+#include "parser_bonus.h"
 
-void	ft_putstr_fd(char *s, int fd)
+// Frees an allocated string array. Returns *array which should be NULL
+char	**free_strarray(char ***array)
 {
-	if (s == NULL)
-		return ;
-	write(fd, s, ft_strlen(s));
+	char	**i;
+
+	if (!array || !*array)
+		return (NULL);
+	i = *array;
+	while (i && *i != NULL)
+		free(*(i++));
+	free(*array);
+	*array = NULL;
+	return (*array);
 }

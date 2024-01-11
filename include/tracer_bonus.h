@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   tracer_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 16:36:13 by rleskine          #+#    #+#             */
-/*   Updated: 2024/01/11 18:01:40 by tsankola         ###   ########.fr       */
+/*   Created: 2023/10/26 16:00:55 by rleskine          #+#    #+#             */
+/*   Updated: 2024/01/11 17:49:08 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "libft.h"
+#ifndef TRACER_H
+# define TRACER_H
+# define BOUNCE_LIMIT 1
+# include "rt_typedef_bonus.h"
+# include "scene_bonus.h"
 
-void	ft_putstr_fd(char *s, int fd)
-{
-	if (s == NULL)
-		return ;
-	write(fd, s, ft_strlen(s));
-}
+t_color	cast_ray(struct s_scene *scene, t_ray ray, int bounces);
+int		collision_test(struct s_scene *scene, t_ray ray, double length);
+
+#endif	/* TRACER_H */

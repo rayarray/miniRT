@@ -6,27 +6,34 @@
 #    By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 16:29:22 by rleskine          #+#    #+#              #
-#    Updated: 2024/01/11 16:30:10 by tsankola         ###   ########.fr        #
+#    Updated: 2024/01/11 18:00:55 by tsankola         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	miniRT
 
 # include headers here so that program recompiles if a header file changes
-_HDR			=	ambient_lighting.h camera.h color.h get_next_line.h light.h \
-				minirt.h parser.h rt_conversions.h rt_math.h rt_typedef.h \
-				rt_validations.h scene.h shading.h shape_cylinder.h shape.h \
-				shape_plane.h shape_sphere.h tracer.h vector.h render.h \
-				shape_cone.h
+_HDR		=	ambient_lighting_bonus.h camera_bonus.h color_bonus.h \
+				get_next_line_bonus.h light_bonus.h minirt_bonus.h \
+				parser_bonus.h rt_conversions_bonus.h rt_math_bonus.h \
+				rt_typedef_bonus.h 	rt_validations_bonus.h scene_bonus.h \
+				shading_bonus.h shape_cylinder_bonus.h shape_bonus.h \
+				shape_plane_bonus.h shape_sphere_bonus.h tracer_bonus.h \
+				vector_bonus.h render_bonus.h shape_cone_bonus.h
 
-SRC			=	ambient_lighting.c camera.c parse_file_reader.c get_next_line.c \
-				get_next_line_utils.c light.c minirt.c parse_conversions.c \
-				parse_scene.c parse_shape.c parse_utilities.c rt_math.c \
-				rt_split.c scene.c shape.c shape_cylinder.c \
-				shape_plane.c shape_sphere.c tracer.c vector.c hooks.c color.c \
-				shading.c value_checks.c form_checks.c render.c rt_math_cylinder.c \
-				vector2.c shape_common.c rt_math_comparisons.c shape_cone.c \
-				shape_cone_utils.c
+SRC			=	ambient_lighting_bonus.c camera_bonus.c \
+				parse_file_reader_bonus.c get_next_line_bonus.c \
+				get_next_line_utils_bonus.c light_bonus.c minirt_bonus.c \
+				parse_conversions_bonus.c parse_scene_bonus.c \
+				parse_shape_bonus.c parse_utilities_bonus.c rt_math_bonus.c \
+				rt_split_bonus.c scene_bonus.c shape_bonus.c \
+				shape_cylinder_bonus.c shape_plane_bonus.c \
+				shape_sphere_bonus.c tracer_bonus.c vector_bonus.c \
+				hooks_bonus.c color_bonus.c shading_bonus.c \
+				value_checks_bonus.c form_checks_bonus.c render_bonus.c \
+				rt_math_cylinder_bonus.c vector2_bonus.c shape_common_bonus.c \
+				rt_math_comparisons_bonus.c shape_cone_bonus.c \
+				shape_cone_utils_bonus.c
 
 LIBS		=	libft.a libftprintf.a
 LIBDIRS		=	libft libft/libftprintf

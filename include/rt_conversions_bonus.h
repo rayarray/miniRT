@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   rt_conversions_bonus.h                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 16:36:13 by rleskine          #+#    #+#             */
+/*   Created: 2023/10/14 19:55:32 by tsankola          #+#    #+#             */
 /*   Updated: 2024/01/11 18:01:40 by tsankola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "libft.h"
+#ifndef RT_CONVERSIONS_H
+# define RT_CONVERSIONS_H
+# include "libft.h"
+# include "parser_bonus.h"
+# include "rt_math_bonus.h"
+# include "rt_typedef_bonus.h"
 
-void	ft_putstr_fd(char *s, int fd)
-{
-	if (s == NULL)
-		return ;
-	write(fd, s, ft_strlen(s));
-}
+// String conversions
+t_elem_type		rt_atoetype(const char *a);
+double			rt_atof(const char *a);
+t_vec			rt_atovec(const char *a);
+t_color			rt_atocol(const char *a);
+
+#endif
