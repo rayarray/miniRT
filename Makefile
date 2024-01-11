@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rleskine <rleskine@student.hive.fi>        +#+  +:+       +#+         #
+#    By: tsankola <tsankola@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 16:29:22 by rleskine          #+#    #+#              #
-#    Updated: 2024/01/11 13:43:07 by rleskine         ###   ########.fr        #
+#    Updated: 2024/01/11 14:55:47 by tsankola         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRC			=	ambient_lighting.c camera.c parse_file_reader.c get_next_line.c \
 				rt_split.c scene.c shape.c shape_cylinder.c \
 				shape_plane.c shape_sphere.c tracer.c vector.c hooks.c color.c \
 				shading.c value_checks.c form_checks.c render.c rt_math_cylinder.c \
-				vector2.c
+				vector2.c shape_common.c
 
 LIBS		=	libft.a libftprintf.a
 LIBDIRS		=	libft libft/libftprintf
